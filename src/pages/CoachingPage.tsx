@@ -1,5 +1,5 @@
 import React from 'react';
-import { COACHING_PACKAGES, REGULATORY_DISCLAIMER_SHORT } from '../data/content';
+import { COACHING_PACKAGES, REGULATORY_DISCLAIMER_SHORT, HERO_BACKGROUNDS, HERO_FALLBACKS } from '../data/content';
 import { CoachingPackage } from '../types';
 import { Target, Clock, Check, ArrowRight, ShieldCheck, Calendar, FileText, Sparkles, Smartphone } from 'lucide-react';
 import { PageId } from '../types/navigation';
@@ -24,38 +24,40 @@ export const CoachingPage: React.FC<CoachingPageProps> = ({
       {/* Header Banner with authentic Hero Background */}
       <section className="relative py-20 lg:py-24 border-b border-slate-200 overflow-hidden bg-[#F8FAFC]">
         <HeroBackground
-          imageSrc={coachingHeroBg}
-          fallbackSrc="/images/mentorship_coaching_1791394783951.jpg"
-          accent="blue"
-          overlayOpacity="medium"
+          imageSrc={HERO_BACKGROUNDS.coaching}
+          fallbackSrc={HERO_FALLBACKS.coaching || coachingHeroBg}
+          overlayOpacity="subtle"
+          imageOpacity="opacity-95 md:opacity-100"
         />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="flex items-center gap-2 text-xs uppercase tracking-widest text-[#2563EB] font-bold mb-3">
-            <Target className="w-4 h-4" />
-            <span>1-to-1 Private Coaching</span>
-          </div>
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-[#17202A] max-w-4xl">
-            Personalised Guidance for Your Financial and Business Roadmap.
-          </h1>
-          <p className="text-base sm:text-lg text-[#52606D] max-w-3xl mt-4 leading-relaxed">
-            Tailored, objective guidance for individuals who want direct feedback on their investment knowledge, financial roadmap, business strategy, and AI integration.
-          </p>
+          <div className="max-w-4xl bg-white/70 sm:bg-white/45 backdrop-blur-xs p-6 sm:p-8 rounded-3xl border border-white/80 shadow-xs">
+            <div className="flex items-center gap-2 text-xs uppercase tracking-widest text-[#2563EB] font-bold mb-3">
+              <Target className="w-4 h-4" />
+              <span>1-to-1 Private Coaching</span>
+            </div>
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-[#17202A]">
+              Personalised Guidance for Your Financial and Business Roadmap.
+            </h1>
+            <p className="text-base sm:text-lg text-[#17202A]/85 mt-4 leading-relaxed">
+              Tailored, objective guidance for individuals who want direct feedback on their investment knowledge, financial roadmap, business strategy, and AI integration.
+            </p>
 
-          <div className="mt-6 flex flex-wrap items-center gap-3">
-            <button
-              onClick={() => onBookSession(COACHING_PACKAGES[0])}
-              className="py-3 px-6 bg-[#2563EB] hover:bg-blue-700 text-white font-semibold text-xs rounded-xl shadow-xs transition-all flex items-center gap-2 cursor-pointer"
-            >
-              <span>Book a Coaching Consultation</span>
-              <ArrowRight className="w-4 h-4" />
-            </button>
-            <button
-              onClick={() => onOpenAppDownload('Coaching Booking')}
-              className="py-3 px-6 bg-white hover:bg-slate-50 text-[#17202A] border border-slate-200 font-semibold text-xs rounded-xl transition-all flex items-center gap-2 cursor-pointer"
-            >
-              <Smartphone className="w-4 h-4 text-[#2563EB]" />
-              <span>Schedule in Mobile App</span>
-            </button>
+            <div className="mt-6 flex flex-wrap items-center gap-3">
+              <button
+                onClick={() => onBookSession(COACHING_PACKAGES[0])}
+                className="py-3 px-6 bg-[#2563EB] hover:bg-blue-700 text-white font-semibold text-xs rounded-xl shadow-xs transition-all flex items-center gap-2 cursor-pointer"
+              >
+                <span>Book a Coaching Consultation</span>
+                <ArrowRight className="w-4 h-4" />
+              </button>
+              <button
+                onClick={() => onOpenAppDownload('Coaching Booking')}
+                className="py-3 px-6 bg-white hover:bg-slate-50 text-[#17202A] border border-slate-200 font-semibold text-xs rounded-xl transition-all flex items-center gap-2 cursor-pointer"
+              >
+                <Smartphone className="w-4 h-4 text-[#2563EB]" />
+                <span>Schedule in Mobile App</span>
+              </button>
+            </div>
           </div>
         </div>
       </section>

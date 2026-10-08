@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ACADEMY_LEVELS, COURSES, REGULATORY_DISCLAIMER_SHORT } from '../data/content';
+import { ACADEMY_LEVELS, COURSES, REGULATORY_DISCLAIMER_SHORT, HERO_BACKGROUNDS, HERO_FALLBACKS } from '../data/content';
 import { Course } from '../types';
 import { BookOpen, Check, ArrowRight, ShieldCheck, Smartphone, HelpCircle, Layers, TrendingUp } from 'lucide-react';
 import { PageId } from '../types/navigation';
@@ -49,40 +49,42 @@ export const AcademyPage: React.FC<AcademyPageProps> = ({
       {/* Header Banner with authentic Hero Background */}
       <section className="relative py-20 lg:py-24 border-b border-slate-200 overflow-hidden bg-[#F8FAFC]">
         <HeroBackground
-          imageSrc={academyHeroBg}
-          fallbackSrc="/images/academy_curriculum_1791394772347.jpg"
-          accent="emerald"
-          overlayOpacity="medium"
+          imageSrc={HERO_BACKGROUNDS.academy}
+          fallbackSrc={HERO_FALLBACKS.academy || academyHeroBg}
+          overlayOpacity="subtle"
+          imageOpacity="opacity-95 md:opacity-100"
         />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="flex items-center gap-2 text-xs uppercase tracking-widest text-[#00A878] font-bold mb-3">
-            <BookOpen className="w-4 h-4" />
-            <span>EB Wealth Academy Curriculum</span>
-          </div>
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-[#17202A] max-w-4xl">
-            Learn Investing Without the Jargon.
-          </h1>
-          <p className="text-base sm:text-lg text-[#52606D] max-w-3xl mt-4 leading-relaxed">
-            From your very first index fund to comprehensive balance sheet analysis and UK tax optimization. Designed for complete beginners, intermediate investors, and professionals wanting to understand investing before committing significant capital.
-          </p>
+          <div className="max-w-4xl bg-white/70 sm:bg-white/45 backdrop-blur-xs p-6 sm:p-8 rounded-3xl border border-white/80 shadow-xs">
+            <div className="flex items-center gap-2 text-xs uppercase tracking-widest text-[#00A878] font-bold mb-3">
+              <BookOpen className="w-4 h-4" />
+              <span>EB Wealth Academy Curriculum</span>
+            </div>
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-[#17202A]">
+              Learn Investing Without the Jargon.
+            </h1>
+            <p className="text-base sm:text-lg text-[#17202A]/85 mt-4 leading-relaxed">
+              From your very first index fund to comprehensive balance sheet analysis and UK tax optimization. Designed for complete beginners, intermediate investors, and professionals wanting to understand investing before committing significant capital.
+            </p>
 
-          <div className="pt-6 flex flex-wrap gap-3">
-            <button
-              onClick={() => onOpenAppDownload('EB Wealth Academy')}
-              className="py-3 px-6 bg-[#00A878] hover:bg-[#009267] text-white font-semibold text-xs rounded-xl shadow-xs transition-all flex items-center gap-2 cursor-pointer"
-            >
-              <Smartphone className="w-4 h-4" />
-              <span>Access All Levels in App</span>
-            </button>
-            <button
-              onClick={() => {
-                const el = document.getElementById('levels-section');
-                if (el) el.scrollIntoView({ behavior: 'smooth' });
-              }}
-              className="py-3 px-6 bg-white hover:bg-slate-50 text-[#17202A] border border-slate-200 font-semibold text-xs rounded-xl transition-all cursor-pointer"
-            >
-              Explore 6 Progression Levels
-            </button>
+            <div className="pt-6 flex flex-wrap gap-3">
+              <button
+                onClick={() => onOpenAppDownload('EB Wealth Academy')}
+                className="py-3 px-6 bg-[#00A878] hover:bg-[#009267] text-white font-semibold text-xs rounded-xl shadow-xs transition-all flex items-center gap-2 cursor-pointer"
+              >
+                <Smartphone className="w-4 h-4" />
+                <span>Access All Levels in App</span>
+              </button>
+              <button
+                onClick={() => {
+                  const el = document.getElementById('levels-section');
+                  if (el) el.scrollIntoView({ behavior: 'smooth' });
+                }}
+                className="py-3 px-6 bg-white hover:bg-slate-50 text-[#17202A] border border-slate-200 font-semibold text-xs rounded-xl transition-all cursor-pointer"
+              >
+                Explore 6 Progression Levels
+              </button>
+            </div>
           </div>
         </div>
       </section>

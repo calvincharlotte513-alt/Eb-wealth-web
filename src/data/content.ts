@@ -2,6 +2,30 @@ import { Course, MentorshipTier, CoachingPackage, AIService, Testimonial } from 
 
 export const FOUNDER_IMAGE_URL = 'https://res.cloudinary.com/frl7thhq/image/upload/v1791447447/9a493f0e-a0ed-4fd1-ae45-37d9f285a283.png';
 
+// Cloudinary Hero Backgrounds specifically provided for all pages
+export const HERO_BACKGROUNDS = {
+  home: 'https://res.cloudinary.com/frl7thhq/image/upload/v1791465333/e6cc4392-70e8-45cc-91ed-c9e870a8bd7f.png',
+  about: 'https://res.cloudinary.com/frl7thhq/image/upload/v1791465314/f95bb6fb-06c5-468b-b068-12d5e4127cab.png',
+  academy: 'https://res.cloudinary.com/frl7thhq/image/upload/v1791465292/a796c6bb-aebc-46cd-888a-0c68d1ebd91b.png',
+  mentorship: 'https://res.cloudinary.com/frl7thhq/image/upload/v1791465221/199519bd-f834-4298-a101-ba8d2acd129e.png',
+  coaching: 'https://res.cloudinary.com/frl7thhq/image/upload/v1791465195/ab32930a-ff39-4e0c-a137-2530d3c40363.png',
+  aiGrowth: 'https://res.cloudinary.com/frl7thhq/image/upload/v1791465144/4f2d5a36-710e-489b-987e-0fd0e83852ef.png',
+  tools: 'https://res.cloudinary.com/frl7thhq/image/upload/v1791465292/a796c6bb-aebc-46cd-888a-0c68d1ebd91b.png',
+  compliance: 'https://res.cloudinary.com/frl7thhq/image/upload/v1791465314/f95bb6fb-06c5-468b-b068-12d5e4127cab.png'
+};
+
+// Guaranteed local bundled fallbacks matching each Cloudinary hero image exactly
+export const HERO_FALLBACKS = {
+  home: '/images/hero_bg_home.png',
+  about: '/images/hero_bg_about.png',
+  academy: '/images/hero_bg_academy.png',
+  mentorship: '/images/hero_bg_mentorship.png',
+  coaching: '/images/hero_bg_coaching.png',
+  aiGrowth: '/images/hero_bg_aigrowth.png',
+  tools: '/images/hero_bg_academy.png',
+  compliance: '/images/hero_bg_about.png'
+};
+
 export const CORE_PHILOSOPHY = [
   { step: '01', name: 'EDUCATE', desc: 'Clear, foundational financial literacy stripped of confusing industry jargon.' },
   { step: '02', name: 'UNDERSTAND', desc: 'Deep comprehension of assets, UK tax wrappers, business models, and market mechanics.' },

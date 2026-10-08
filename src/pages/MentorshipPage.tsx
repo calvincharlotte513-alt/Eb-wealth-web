@@ -1,5 +1,5 @@
 import React from 'react';
-import { MENTORSHIP_TIERS, REGULATORY_DISCLAIMER_SHORT } from '../data/content';
+import { MENTORSHIP_TIERS, REGULATORY_DISCLAIMER_SHORT, HERO_BACKGROUNDS, HERO_FALLBACKS } from '../data/content';
 import { MentorshipTier } from '../types';
 import { Compass, Check, ArrowRight, ShieldCheck, Users, Calendar, Target, Smartphone } from 'lucide-react';
 import { PageId } from '../types/navigation';
@@ -24,38 +24,40 @@ export const MentorshipPage: React.FC<MentorshipPageProps> = ({
       {/* Header Banner with authentic Hero Background */}
       <section className="relative py-20 lg:py-24 border-b border-slate-200 overflow-hidden bg-[#F8FAFC]">
         <HeroBackground
-          imageSrc={mentorshipImage}
-          fallbackSrc="/images/mentorship_coaching_1791394783951.jpg"
-          accent="emerald"
-          overlayOpacity="medium"
+          imageSrc={HERO_BACKGROUNDS.mentorship}
+          fallbackSrc={HERO_FALLBACKS.mentorship || mentorshipImage}
+          overlayOpacity="subtle"
+          imageOpacity="opacity-95 md:opacity-100"
         />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="flex items-center gap-2 text-xs uppercase tracking-widest text-[#00A878] font-bold mb-3">
-            <Compass className="w-4 h-4" />
-            <span>Structured Mentorship & Accountability</span>
-          </div>
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-[#17202A] max-w-4xl">
-            Consistency Builds Wealth. Mentorship Keeps You Accountable.
-          </h1>
-          <p className="text-base sm:text-lg text-[#52606D] max-w-3xl mt-4 leading-relaxed">
-            Investing knowledge without execution, emotional discipline, and regular accountability rarely produces long-term results. Our cohorts and 1-on-1 programs keep you focused on mathematical fundamentals and sustainable execution.
-          </p>
+          <div className="max-w-4xl bg-white/70 sm:bg-white/45 backdrop-blur-xs p-6 sm:p-8 rounded-3xl border border-white/80 shadow-xs">
+            <div className="flex items-center gap-2 text-xs uppercase tracking-widest text-[#00A878] font-bold mb-3">
+              <Compass className="w-4 h-4" />
+              <span>Structured Mentorship & Accountability</span>
+            </div>
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-[#17202A]">
+              Consistency Builds Wealth. Mentorship Keeps You Accountable.
+            </h1>
+            <p className="text-base sm:text-lg text-[#17202A]/85 mt-4 leading-relaxed">
+              Investing knowledge without execution, emotional discipline, and regular accountability rarely produces long-term results. Our cohorts and 1-on-1 programs keep you focused on mathematical fundamentals and sustainable execution.
+            </p>
 
-          <div className="mt-6 flex flex-wrap items-center gap-3">
-            <button
-              onClick={() => onApply()}
-              className="py-3 px-6 bg-[#00A878] hover:bg-[#009267] text-white font-semibold text-xs rounded-xl shadow-xs transition-all flex items-center gap-2 cursor-pointer"
-            >
-              <span>Apply for Mentorship Intake</span>
-              <ArrowRight className="w-4 h-4" />
-            </button>
-            <button
-              onClick={() => onOpenAppDownload('Mentorship Portal')}
-              className="py-3 px-6 bg-white hover:bg-slate-50 text-[#17202A] border border-slate-200 font-semibold text-xs rounded-xl transition-all flex items-center gap-2 cursor-pointer"
-            >
-              <Smartphone className="w-4 h-4 text-[#2563EB]" />
-              <span>Explore Mobile Community</span>
-            </button>
+            <div className="mt-6 flex flex-wrap items-center gap-3">
+              <button
+                onClick={() => onApply()}
+                className="py-3 px-6 bg-[#00A878] hover:bg-[#009267] text-white font-semibold text-xs rounded-xl shadow-xs transition-all flex items-center gap-2 cursor-pointer"
+              >
+                <span>Apply for Mentorship Intake</span>
+                <ArrowRight className="w-4 h-4" />
+              </button>
+              <button
+                onClick={() => onOpenAppDownload('Mentorship Portal')}
+                className="py-3 px-6 bg-white hover:bg-slate-50 text-[#17202A] border border-slate-200 font-semibold text-xs rounded-xl transition-all flex items-center gap-2 cursor-pointer"
+              >
+                <Smartphone className="w-4 h-4 text-[#2563EB]" />
+                <span>Explore Mobile Community</span>
+              </button>
+            </div>
           </div>
         </div>
       </section>

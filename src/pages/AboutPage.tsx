@@ -1,7 +1,7 @@
 import React from 'react';
 import { ShieldCheck, Award, TrendingUp, Sparkles, Quote, Check, ArrowRight, BookOpen, Compass, Brain, Lock, Users } from 'lucide-react';
 import { PageId } from '../types/navigation';
-import { FOUNDER_IMAGE_URL, CORE_PHILOSOPHY, REGULATORY_DISCLAIMER_SHORT } from '../data/content';
+import { FOUNDER_IMAGE_URL, CORE_PHILOSOPHY, REGULATORY_DISCLAIMER_SHORT, HERO_BACKGROUNDS, HERO_FALLBACKS } from '../data/content';
 import { HeroBackground } from '../components/HeroBackground';
 import aboutHeroBg from '../assets/images/hero_eb_wealth_1791394753165.jpg';
 
@@ -21,23 +21,25 @@ export const AboutPage: React.FC<AboutPageProps> = ({
       {/* Header Banner with authentic Hero Background */}
       <section className="relative py-20 lg:py-24 border-b border-slate-200 overflow-hidden bg-[#F8FAFC]">
         <HeroBackground
-          imageSrc={aboutHeroBg}
-          fallbackSrc="/images/hero_eb_wealth_1791394753165.jpg"
-          accent="emerald"
-          overlayOpacity="medium"
+          imageSrc={HERO_BACKGROUNDS.about}
+          fallbackSrc={HERO_FALLBACKS.about || aboutHeroBg}
+          overlayOpacity="subtle"
+          imageOpacity="opacity-95 md:opacity-100"
         />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="flex items-center gap-2 text-xs uppercase tracking-widest text-[#00A878] font-bold mb-3">
-            <span>The Empowerment Body Legacy</span>
-            <span aria-hidden="true" className="text-slate-300">·</span>
-            <span>Origin, Purpose & Leadership</span>
+          <div className="max-w-4xl bg-white/70 sm:bg-white/45 backdrop-blur-xs p-6 sm:p-8 rounded-3xl border border-white/80 shadow-xs">
+            <div className="flex items-center gap-2 text-xs uppercase tracking-widest text-[#00A878] font-bold mb-3">
+              <span>The Empowerment Body Legacy</span>
+              <span aria-hidden="true" className="text-slate-300">·</span>
+              <span>Origin, Purpose & Leadership</span>
+            </div>
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-[#17202A]">
+              Building Wealth Through Knowledge, Discipline & Systems.
+            </h1>
+            <p className="text-base sm:text-lg text-[#17202A]/85 mt-4 leading-relaxed">
+              EB Wealth was born under the <strong>Empowerment Body</strong> brand with a clear conviction: financial literacy and wealth creation should be accessible, structured, and free of sales agendas or confusing industry jargon.
+            </p>
           </div>
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-[#17202A] max-w-4xl">
-            Building Wealth Through Knowledge, Discipline & Systems.
-          </h1>
-          <p className="text-base sm:text-lg text-[#52606D] max-w-3xl mt-4 leading-relaxed">
-            EB Wealth was born under the <strong>Empowerment Body</strong> brand with a clear conviction: financial literacy and wealth creation should be accessible, structured, and free of sales agendas or confusing industry jargon.
-          </p>
         </div>
       </section>
 

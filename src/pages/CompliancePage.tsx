@@ -1,6 +1,6 @@
 import React from 'react';
 import { ShieldAlert, Lock, FileText, CheckCircle2, ShieldCheck } from 'lucide-react';
-import { REGULATORY_DISCLAIMER_FULL } from '../data/content';
+import { REGULATORY_DISCLAIMER_FULL, HERO_BACKGROUNDS, HERO_FALLBACKS } from '../data/content';
 import { PageId } from '../types/navigation';
 import { HeroBackground } from '../components/HeroBackground';
 import complianceHeroBg from '../assets/images/hero_eb_wealth_1791394753165.jpg';
@@ -15,22 +15,24 @@ export const CompliancePage: React.FC<CompliancePageProps> = () => {
       {/* Header Banner with authentic Hero Background */}
       <section className="relative py-20 lg:py-24 border-b border-slate-200 overflow-hidden bg-[#F8FAFC]">
         <HeroBackground
-          imageSrc={complianceHeroBg}
-          fallbackSrc="/images/hero_eb_wealth_1791394753165.jpg"
-          accent="emerald"
-          overlayOpacity="medium"
+          imageSrc={HERO_BACKGROUNDS.compliance}
+          fallbackSrc={HERO_FALLBACKS.compliance || complianceHeroBg}
+          overlayOpacity="subtle"
+          imageOpacity="opacity-95 md:opacity-100"
         />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="flex items-center gap-2 text-xs uppercase tracking-widest text-[#00A878] font-bold mb-3">
-            <ShieldCheck className="w-4 h-4" />
-            <span>Statutory Governance & Disclosures</span>
+          <div className="max-w-4xl bg-white/70 sm:bg-white/45 backdrop-blur-xs p-6 sm:p-8 rounded-3xl border border-white/80 shadow-xs">
+            <div className="flex items-center gap-2 text-xs uppercase tracking-widest text-[#00A878] font-bold mb-3">
+              <ShieldCheck className="w-4 h-4" />
+              <span>Statutory Governance & Disclosures</span>
+            </div>
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-[#17202A]">
+              Regulatory Disclosures, Risk Warnings & Policies.
+            </h1>
+            <p className="text-base sm:text-lg text-[#17202A]/85 mt-4 leading-relaxed">
+              EB Wealth operates with complete institutional transparency. Review our full non-advisory notices, investment risk disclosures, privacy protections, and terms of service below.
+            </p>
           </div>
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-[#17202A] max-w-4xl">
-            Regulatory Disclosures, Risk Warnings & Policies.
-          </h1>
-          <p className="text-base sm:text-lg text-[#52606D] max-w-3xl mt-4 leading-relaxed">
-            EB Wealth operates with complete institutional transparency. Review our full non-advisory notices, investment risk disclosures, privacy protections, and terms of service below.
-          </p>
         </div>
       </section>
 

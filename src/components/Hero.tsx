@@ -1,6 +1,6 @@
 import React from 'react';
 import { ArrowRight, Smartphone, ShieldCheck, CheckCircle2 } from 'lucide-react';
-import { FOUNDER_IMAGE_URL } from '../data/content';
+import { FOUNDER_IMAGE_URL, HERO_BACKGROUNDS, HERO_FALLBACKS } from '../data/content';
 import { HeroBackground } from './HeroBackground';
 import heroBgImage from '../assets/images/hero_eb_wealth_1791394753165.jpg';
 
@@ -13,20 +13,20 @@ interface HeroProps {
 export const Hero: React.FC<HeroProps> = ({ onGetStarted, onExploreApp, onExploreAcademy }) => {
   return (
     <section className="relative pt-28 pb-16 lg:pt-36 lg:pb-24 overflow-hidden border-b border-slate-200/70 bg-[#F8FAFC]">
-      {/* High-definition background image with bright editorial light overlays */}
+      {/* High-definition background image vividly visible across entire hero banner */}
       <HeroBackground
-        imageSrc={heroBgImage}
-        fallbackSrc="/images/hero_eb_wealth_1791394753165.jpg"
-        accent="emerald"
-        overlayOpacity="medium"
+        imageSrc={HERO_BACKGROUNDS.home}
+        fallbackSrc={HERO_FALLBACKS.home || heroBgImage}
+        overlayOpacity="subtle"
+        imageOpacity="opacity-95 md:opacity-100"
       />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
-          {/* Left Column: Core Positioning & CTAs */}
-          <div className="lg:col-span-7 space-y-6">
+          {/* Left Column: Core Positioning & CTAs with subtle frosted card backing for text clarity over the visible background image */}
+          <div className="lg:col-span-7 space-y-6 bg-white/70 sm:bg-white/40 backdrop-blur-xs p-6 sm:p-7 rounded-3xl border border-white/80 shadow-sm">
             {/* Quiet editorial kicker */}
-            <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[#00A878]">
+            <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[#00A878] bg-white/90 px-3 py-1 rounded-full border border-emerald-100 shadow-2xs w-fit">
               <span className="w-2 h-2 rounded-full bg-[#00A878]"></span>
               <span>Empowerment Body Ecosystem · UK Financial & Business Education</span>
             </div>
@@ -38,7 +38,7 @@ export const Hero: React.FC<HeroProps> = ({ onGetStarted, onExploreApp, onExplor
             </h1>
 
             {/* Exact supporting copy specified in brief */}
-            <p className="text-lg sm:text-xl text-[#52606D] font-normal leading-relaxed max-w-2xl">
+            <p className="text-lg sm:text-xl text-[#17202A]/90 font-normal leading-relaxed max-w-2xl">
               EB Wealth helps you build the knowledge, confidence and systems to make smarter long-term decisions across investing, wealth building, personal development and business.
             </p>
 
@@ -62,18 +62,18 @@ export const Hero: React.FC<HeroProps> = ({ onGetStarted, onExploreApp, onExplor
             </div>
 
             {/* Trust and who it serves indicators */}
-            <div className="pt-6 border-t border-slate-200/80 grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs text-[#52606D]">
-              <div className="flex items-start gap-2">
+            <div className="pt-5 border-t border-slate-300/60 grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs text-[#17202A]">
+              <div className="flex items-start gap-2 bg-white/60 p-2 rounded-lg">
                 <CheckCircle2 className="w-4 h-4 text-[#00A878] shrink-0 mt-0.5" />
-                <span>For complete beginners & intermediate investors</span>
+                <span className="font-medium">For beginners & intermediate investors</span>
               </div>
-              <div className="flex items-start gap-2">
+              <div className="flex items-start gap-2 bg-white/60 p-2 rounded-lg">
                 <CheckCircle2 className="w-4 h-4 text-[#2563EB] shrink-0 mt-0.5" />
-                <span>UK tax-sheltered investing (ISAs & SIPPs)</span>
+                <span className="font-medium">UK tax-sheltered investing (ISAs & SIPPs)</span>
               </div>
-              <div className="flex items-start gap-2">
+              <div className="flex items-start gap-2 bg-white/60 p-2 rounded-lg">
                 <CheckCircle2 className="w-4 h-4 text-[#F4B942] shrink-0 mt-0.5" />
-                <span>Practical AI leverage for entrepreneurs</span>
+                <span className="font-medium">Practical AI leverage for entrepreneurs</span>
               </div>
             </div>
           </div>

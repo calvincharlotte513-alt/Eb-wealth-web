@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { AI_GROWTH_SERVICES } from '../data/content';
+import { AI_GROWTH_SERVICES, HERO_BACKGROUNDS, HERO_FALLBACKS } from '../data/content';
 import { Cpu, ArrowRight, CheckCircle2, TrendingUp, Zap, Clock, ShieldCheck, Sparkles } from 'lucide-react';
 import { PageId } from '../types/navigation';
 import { HeroBackground } from '../components/HeroBackground';
@@ -35,40 +35,42 @@ export const AIBusinessGrowthPage: React.FC<AIBusinessGrowthPageProps> = ({
       {/* Header Banner with authentic Hero Background */}
       <section className="relative py-20 lg:py-24 border-b border-slate-200 overflow-hidden bg-[#F8FAFC]">
         <HeroBackground
-          imageSrc={aiBusinessGrowthImage}
-          fallbackSrc="/images/ai_business_growth_1791394794528.jpg"
-          accent="blue"
-          overlayOpacity="medium"
+          imageSrc={HERO_BACKGROUNDS.aiGrowth}
+          fallbackSrc={HERO_FALLBACKS.aiGrowth || aiBusinessGrowthImage}
+          overlayOpacity="subtle"
+          imageOpacity="opacity-95 md:opacity-100"
         />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="flex items-center gap-2 text-xs uppercase tracking-widest text-[#2563EB] font-bold mb-3">
-            <Cpu className="w-4 h-4" />
-            <span>Practical AI for Businesses & Entrepreneurs</span>
-          </div>
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-[#17202A] max-w-4xl">
-            Practical AI That Creates Business Leverage.
-          </h1>
-          <p className="text-base sm:text-lg text-[#52606D] max-w-3xl mt-4 leading-relaxed">
-            AI should save time, increase revenue, or improve operations. EB Wealth helps businesses implement AI purposefully rather than wasting hundreds of hours randomly experimenting with generic chatbot prompts.
-          </p>
+          <div className="max-w-4xl bg-white/70 sm:bg-white/45 backdrop-blur-xs p-6 sm:p-8 rounded-3xl border border-white/80 shadow-xs">
+            <div className="flex items-center gap-2 text-xs uppercase tracking-widest text-[#2563EB] font-bold mb-3">
+              <Cpu className="w-4 h-4" />
+              <span>Practical AI for Businesses & Entrepreneurs</span>
+            </div>
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-[#17202A]">
+              Practical AI That Creates Business Leverage.
+            </h1>
+            <p className="text-base sm:text-lg text-[#17202A]/85 mt-4 leading-relaxed">
+              AI should save time, increase revenue, or improve operations. EB Wealth helps businesses implement AI purposefully rather than wasting hundreds of hours randomly experimenting with generic chatbot prompts.
+            </p>
 
-          <div className="mt-8 flex flex-wrap items-center gap-3">
-            <button
-              onClick={onScheduleAudit}
-              className="py-3 px-6 bg-[#2563EB] hover:bg-blue-700 text-white font-semibold text-xs rounded-xl shadow-xs transition-all flex items-center gap-2 cursor-pointer"
-            >
-              <span>Schedule AI Systems Audit</span>
-              <ArrowRight className="w-4 h-4" />
-            </button>
-            <button
-              onClick={() => {
-                const el = document.getElementById('services-grid');
-                if (el) el.scrollIntoView({ behavior: 'smooth' });
-              }}
-              className="py-3 px-6 bg-white hover:bg-slate-50 text-[#17202A] border border-slate-200 font-semibold text-xs rounded-xl transition-all cursor-pointer"
-            >
-              Explore AI Service Frameworks
-            </button>
+            <div className="mt-8 flex flex-wrap items-center gap-3">
+              <button
+                onClick={onScheduleAudit}
+                className="py-3 px-6 bg-[#2563EB] hover:bg-blue-700 text-white font-semibold text-xs rounded-xl shadow-xs transition-all flex items-center gap-2 cursor-pointer"
+              >
+                <span>Schedule AI Systems Audit</span>
+                <ArrowRight className="w-4 h-4" />
+              </button>
+              <button
+                onClick={() => {
+                  const el = document.getElementById('services-grid');
+                  if (el) el.scrollIntoView({ behavior: 'smooth' });
+                }}
+                className="py-3 px-6 bg-white hover:bg-slate-50 text-[#17202A] border border-slate-200 font-semibold text-xs rounded-xl transition-all cursor-pointer"
+              >
+                Explore AI Service Frameworks
+              </button>
+            </div>
           </div>
         </div>
       </section>
