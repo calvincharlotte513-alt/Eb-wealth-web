@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, ArrowRight, Smartphone, Sparkles } from 'lucide-react';
+import { Menu, X, ArrowRight, Smartphone, Sparkles, Mail } from 'lucide-react';
 import { PageId } from '../types/navigation';
 
 interface NavbarProps {
@@ -8,13 +8,15 @@ interface NavbarProps {
   onOpenDownloadModal: (feature?: string) => void;
   onOpenManageApk?: () => void;
   onOpenGetStarted: () => void;
+  onOpenCompanyDispatch?: () => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
   currentPage,
   onNavigate,
   onOpenDownloadModal,
-  onOpenGetStarted
+  onOpenGetStarted,
+  onOpenCompanyDispatch
 }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -107,7 +109,19 @@ export const Navbar: React.FC<NavbarProps> = ({
           </nav>
 
           {/* Header Action Buttons: Secondary CTA "Open EB Wealth App" + Primary CTA "Get Started" */}
-          <div className="hidden sm:flex items-center gap-3">
+          <div className="hidden sm:flex items-center gap-2.5">
+            {onOpenCompanyDispatch && (
+              <button
+                onClick={onOpenCompanyDispatch}
+                className="py-2 px-3 text-xs font-semibold text-[#17202A] bg-white hover:bg-slate-50 border border-slate-200 rounded-xl transition-all cursor-pointer flex items-center gap-1.5 shadow-2xs"
+                title="View Dispatched Applications & Company Notification Routing"
+              >
+                <span className="w-2 h-2 rounded-full bg-[#00A878] animate-pulse"></span>
+                <Mail className="w-3.5 h-3.5 text-[#2563EB]" />
+                <span className="hidden xl:inline">Company Inbox</span>
+              </button>
+            )}
+
             <button
               onClick={() => onOpenDownloadModal('EB Wealth App')}
               className="py-2.5 px-4 text-xs font-semibold text-[#17202A] bg-[#F8FAFC] hover:bg-[#EFF6FF] border border-slate-200 hover:border-blue-300 rounded-xl transition-all cursor-pointer flex items-center gap-2"
@@ -205,6 +219,18 @@ export const Navbar: React.FC<NavbarProps> = ({
               <Smartphone className="w-3.5 h-3.5 text-[#2563EB]" />
               <span>Open EB Wealth App</span>
             </button>
+            {onOpenCompanyDispatch && (
+              <button
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  onOpenCompanyDispatch();
+                }}
+                className="w-full py-2 px-4 bg-white text-[#17202A] border border-slate-200 text-xs font-medium rounded-xl text-center flex items-center justify-center gap-2 cursor-pointer hover:bg-slate-50"
+              >
+                <Mail className="w-3.5 h-3.5 text-[#2563EB]" />
+                <span>Company Dispatch & Inbound Leads</span>
+              </button>
+            )}
           </div>
         </div>
       )}

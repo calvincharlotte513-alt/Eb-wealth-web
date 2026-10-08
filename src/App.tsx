@@ -25,6 +25,7 @@ import { CourseDetailModal } from './components/CourseDetailModal';
 import { AIAuditModal } from './components/AIAuditModal';
 import { LegalModal } from './components/LegalModal';
 import { GetStartedModal } from './components/GetStartedModal';
+import { CompanyDispatchModal } from './components/CompanyDispatchModal';
 
 import { Course, CoachingPackage, MentorshipTier } from './types';
 import { PageId } from './types/navigation';
@@ -97,6 +98,7 @@ export default function App() {
   const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
 
   const [aiAuditModalOpen, setAiAuditModalOpen] = useState(false);
+  const [companyDispatchModalOpen, setCompanyDispatchModalOpen] = useState(false);
 
   const [legalModalOpen, setLegalModalOpen] = useState(false);
   const [legalModalType, setLegalModalType] = useState<'disclaimer' | 'privacy' | 'terms'>('disclaimer');
@@ -136,6 +138,7 @@ export default function App() {
         onNavigate={navigateTo}
         onOpenDownloadModal={handleOpenAppDownload}
         onOpenGetStarted={() => setGetStartedModalOpen(true)}
+        onOpenCompanyDispatch={() => setCompanyDispatchModalOpen(true)}
       />
 
       {/* Dynamic Multi-Page Router View */}
@@ -216,6 +219,7 @@ export default function App() {
         onOpenDownloadModal={handleOpenAppDownload}
         onOpenLegal={handleOpenLegal}
         onOpenGetStarted={() => setGetStartedModalOpen(true)}
+        onOpenCompanyDispatch={() => setCompanyDispatchModalOpen(true)}
       />
 
       {/* Pathfinder Onboarding Modal */}
@@ -264,6 +268,12 @@ export default function App() {
         isOpen={legalModalOpen}
         onClose={() => setLegalModalOpen(false)}
         type={legalModalType}
+      />
+
+      {/* Company Notification Center & Leads Management */}
+      <CompanyDispatchModal
+        isOpen={companyDispatchModalOpen}
+        onClose={() => setCompanyDispatchModalOpen(false)}
       />
     </div>
   );

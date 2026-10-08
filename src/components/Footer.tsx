@@ -9,13 +9,15 @@ interface FooterProps {
   onOpenManageApk?: () => void;
   onOpenLegal: (type: 'disclaimer' | 'privacy' | 'terms') => void;
   onOpenGetStarted?: () => void;
+  onOpenCompanyDispatch?: () => void;
 }
 
 export const Footer: React.FC<FooterProps> = ({
   onNavigate,
   onOpenDownloadModal,
   onOpenLegal,
-  onOpenGetStarted
+  onOpenGetStarted,
+  onOpenCompanyDispatch
 }) => {
   const handleNav = (page: PageId) => {
     onNavigate(page);
@@ -218,6 +220,17 @@ export const Footer: React.FC<FooterProps> = ({
                   Privacy Policy & Cookies
                 </button>
               </li>
+              {onOpenCompanyDispatch && (
+                <li>
+                  <button
+                    onClick={onOpenCompanyDispatch}
+                    className="text-[#2563EB] hover:text-blue-700 font-semibold transition-colors cursor-pointer flex items-center gap-1.5 pt-1"
+                  >
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#00A878] animate-pulse"></span>
+                    <span>Company Dispatch & Inbound Leads</span>
+                  </button>
+                </li>
+              )}
               <li>
                 <span className="text-[11px] text-slate-400">Jurisdiction: United Kingdom</span>
               </li>
