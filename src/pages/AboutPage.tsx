@@ -1,6 +1,9 @@
 import React from 'react';
-import { ShieldCheck, Award, TrendingUp, Sparkles, Quote, Check, ArrowRight, BookOpen, Compass, Mail, Phone } from 'lucide-react';
+import { ShieldCheck, Award, TrendingUp, Sparkles, Quote, Check, ArrowRight, BookOpen, Compass, Brain, Lock, Users } from 'lucide-react';
 import { PageId } from '../types/navigation';
+import { FOUNDER_IMAGE_URL, CORE_PHILOSOPHY, REGULATORY_DISCLAIMER_SHORT } from '../data/content';
+import { HeroBackground } from '../components/HeroBackground';
+import aboutHeroBg from '../assets/images/hero_eb_wealth_1791394753165.jpg';
 
 interface AboutPageProps {
   onNavigate: (page: PageId) => void;
@@ -14,136 +17,179 @@ export const AboutPage: React.FC<AboutPageProps> = ({
   onOpenDisclosures
 }) => {
   return (
-    <div className="pt-24 pb-20 text-neutral-100 bg-neutral-950">
-      {/* Header Banner */}
-      <section className="relative py-16 border-b border-neutral-900 bg-gradient-to-b from-neutral-900/60 to-neutral-950">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center gap-2 text-xs uppercase tracking-widest text-emerald-400 font-semibold mb-3">
-            <span>About Empowerment Body & EB Wealth</span>
-            <span aria-hidden="true" className="text-neutral-600">·</span>
-            <span className="text-neutral-400">Our Origins & Vision</span>
+    <div className="pt-24 pb-20 text-[#17202A] bg-[#F8FAFC]">
+      {/* Header Banner with authentic Hero Background */}
+      <section className="relative py-20 lg:py-24 border-b border-slate-200 overflow-hidden bg-[#F8FAFC]">
+        <HeroBackground
+          imageSrc={aboutHeroBg}
+          fallbackSrc="/images/hero_eb_wealth_1791394753165.jpg"
+          accent="emerald"
+          overlayOpacity="medium"
+        />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="flex items-center gap-2 text-xs uppercase tracking-widest text-[#00A878] font-bold mb-3">
+            <span>The Empowerment Body Legacy</span>
+            <span aria-hidden="true" className="text-slate-300">·</span>
+            <span>Origin, Purpose & Leadership</span>
           </div>
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white font-display max-w-4xl">
-            Building Sovereign Wealth Through Discipline, Capital & AI Leverage.
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-[#17202A] max-w-4xl">
+            Building Wealth Through Knowledge, Discipline & Systems.
           </h1>
-          <p className="text-base sm:text-lg text-neutral-300 max-w-3xl mt-4 leading-relaxed">
-            The mission of EB Wealth is rooted in Empowerment Body: transforming high earners from reactive workers into calm, self-directed capital allocators equipped with institutional tools.
+          <p className="text-base sm:text-lg text-[#52606D] max-w-3xl mt-4 leading-relaxed">
+            EB Wealth was born under the <strong>Empowerment Body</strong> brand with a clear conviction: financial literacy and wealth creation should be accessible, structured, and free of sales agendas or confusing industry jargon.
           </p>
         </div>
       </section>
 
-      {/* Main Section: The CEO & Founder Executive Profile */}
-      <section className="py-20 border-b border-neutral-900">
+      {/* Main Section: The CEO & Founder Profile */}
+      <section className="py-20 border-b border-slate-200 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-            {/* Left Column: High-Res CEO Photo in a Tailored Suit */}
+            {/* Left Column: High-Res CEO Photo */}
             <div className="lg:col-span-5 space-y-6">
-              <div className="relative group">
-                {/* Subtle luxury glow border */}
-                <div className="absolute -inset-1 rounded-2xl bg-gradient-to-tr from-emerald-500/40 via-amber-500/30 to-blue-600/40 blur-md opacity-75 group-hover:opacity-100 transition duration-500" />
-
-                <div className="relative rounded-2xl overflow-hidden bg-neutral-900 border border-neutral-800 shadow-2xl">
+              <div className="relative rounded-3xl overflow-hidden bg-white border border-slate-200 shadow-xl p-3">
+                <div className="relative rounded-2xl overflow-hidden aspect-[3/4] bg-slate-100">
                   <img
-                    src="https://res.cloudinary.com/frl7thhq/image/upload/v1791447447/9a493f0e-a0ed-4fd1-ae45-37d9f285a283.png"
+                    src={FOUNDER_IMAGE_URL}
                     alt="Founder and Chief Executive Officer of EB Wealth"
-                    className="w-full h-auto object-cover object-center aspect-[3/4] transition duration-500 group-hover:scale-[1.02]"
+                    className="w-full h-full object-cover object-top"
+                    loading="eager"
                     referrerPolicy="no-referrer"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      if (!target.src.includes('ceo_suit_portrait')) {
+                        target.src = '/images/ceo_suit_portrait_1791395753240.jpg';
+                      }
+                    }}
                   />
 
                   {/* Scrim overlay at bottom */}
-                  <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-neutral-950 via-neutral-950/70 to-transparent p-6 pt-16">
-                    <span className="text-xs uppercase tracking-widest text-emerald-400 font-semibold block mb-0.5">
-                      Empowerment Body & EB Wealth
+                  <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#17202A]/90 via-[#17202A]/40 to-transparent p-6 text-white">
+                    <span className="text-xs uppercase tracking-widest text-[#ECFDF5] font-semibold block mb-0.5">
+                      Empowerment Body Leadership
                     </span>
-                    <h3 className="text-xl font-bold text-white font-display">
+                    <h3 className="text-xl font-bold">
                       Founder & Chief Executive Officer
                     </h3>
-                    <p className="text-xs text-neutral-300 mt-0.5">
+                    <p className="text-xs text-slate-200 mt-0.5">
                       Private Capital Strategist · AI Systems Architect
                     </p>
                   </div>
                 </div>
-              </div>
 
-              {/* Verified Credentials Bar */}
-              <div className="p-5 bg-neutral-900/80 border border-neutral-800 rounded-2xl space-y-3">
-                <div className="flex items-center justify-between pb-3 border-b border-neutral-800 text-xs">
-                  <span className="text-neutral-400">Executive Credentials</span>
-                  <span className="text-emerald-400 font-mono text-[11px]">VERIFIED LEADERSHIP</span>
-                </div>
-                <div className="space-y-2 text-xs text-neutral-300">
-                  <div className="flex items-center gap-2">
-                    <Check className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-                    <span>Founder & CEO, Empowerment Body Global & EB Wealth</span>
+                {/* Verified Credentials Bar */}
+                <div className="p-4 bg-[#F8FAFC] border border-slate-200/80 rounded-2xl mt-3 space-y-2.5">
+                  <div className="flex items-center justify-between text-xs">
+                    <span className="text-[#52606D]">Parent Brand:</span>
+                    <strong className="text-[#17202A]">Empowerment Body</strong>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <Check className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-                    <span>Over a decade advising high-net-worth portfolios & private deals</span>
+                  <div className="flex items-center justify-between text-xs">
+                    <span className="text-[#52606D]">Primary Philosophy:</span>
+                    <strong className="text-[#00A878]">Knowledge · Discipline · Growth</strong>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <Check className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-                    <span>Pioneer in applied AI prompt architectures for enterprise efficiency</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Check className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-                    <span>Direct fiduciary advisor to founders, family offices, and operators</span>
+                  <div className="flex items-center justify-between text-xs">
+                    <span className="text-[#52606D]">Jurisdiction:</span>
+                    <strong className="text-[#17202A]">United Kingdom</strong>
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* Right Column: In-Depth Biography & Vision Narrative */}
-            <div className="lg:col-span-7 space-y-8">
-              <div className="space-y-4">
-                <span className="text-xs font-semibold uppercase tracking-widest text-emerald-400">
-                  Leadership Biography
-                </span>
-                <h2 className="text-3xl sm:text-4xl font-bold text-white font-display">
-                  A Message From the Chief Executive Officer
-                </h2>
-                <div className="space-y-4 text-sm sm:text-base text-neutral-300 leading-relaxed">
-                  <p>
-                    Throughout my career across private capital, real estate syndications, and business operations, I observed a tragic paradox: brilliant, hardworking individuals who generate enormous top-line income, yet remain in constant financial vulnerability.
-                  </p>
-                  <p>
-                    They are burdened by predatory advisor fees, trapped in high-tax structures, and exposed to unpredictable inflation. At the same time, their businesses are choked by operational friction, forcing founders to sacrifice their physical well-being and personal peace for incremental gains.
-                  </p>
-                  <p>
-                    <strong>Empowerment Body</strong> was born to eliminate this compromise. We recognize that true sovereignty is multifaceted: it demands physical discipline, ruthless operational clarity, and institutional-grade capital stewardship.
-                  </p>
-                  <p>
-                    At EB Wealth, we remove the middlemen. We provide our members with the exact frameworks used by family offices to allocate into private debt, syndicated real estate, and global index alpha. And through our proprietary AI prompt engineering architectures, we give executives the technological leverage to multiply their operational output without expanding headcount.
-                  </p>
-                </div>
-              </div>
-
-              {/* CEO Manifesto Quote Box */}
-              <div className="p-6 sm:p-7 bg-neutral-900/90 border-l-4 border-emerald-500 border-y border-r border-neutral-800 rounded-r-2xl relative shadow-lg">
-                <Quote className="w-8 h-8 text-emerald-500/20 absolute right-4 top-4" />
-                <p className="text-base sm:text-lg italic text-neutral-200 font-serif leading-relaxed">
-                  "Wealth is quiet power. It is not about conspicuous consumption or frantic speculation. True wealth is having a fortress balance sheet, zero dependency on any single employer or customer, and automated systems that work for you around the clock."
+            {/* Right Column: In-Depth Narrative */}
+            <div className="lg:col-span-7 space-y-6 text-[#52606D] text-sm sm:text-base leading-relaxed">
+              <div className="p-6 rounded-2xl bg-[#ECFDF5]/60 border border-[#00A878]/20">
+                <Quote className="w-8 h-8 text-[#00A878] mb-2" />
+                <p className="italic font-medium text-[#17202A] leading-relaxed">
+                  "EB Wealth does not exist to sell get-rich-quick fantasies or encourage high-risk speculation. We exist to equip individuals with the mental frameworks, financial tools, and technological leverage to build durable sovereign wealth across generations."
                 </p>
-                <div className="mt-4 flex items-center justify-between text-xs">
-                  <span className="font-semibold text-emerald-400">— Founder & CEO, EB Wealth</span>
-                  <span className="text-neutral-500">Executive Manifesto</span>
+                <div className="mt-3 text-xs font-bold text-[#00A878]">
+                  — Founder & CEO, EB Wealth & Empowerment Body
                 </div>
               </div>
 
-              {/* Action Buttons */}
-              <div className="pt-2 flex flex-wrap items-center gap-4">
+              <h3 className="text-2xl font-bold text-[#17202A]">
+                The Empowerment Body Philosophy
+              </h3>
+
+              <p>
+                The foundation of Empowerment Body is holistic sovereignty: an individual cannot be truly free if their physical health is broken, but neither can they be free if their finances are fragile, undisciplined, and completely dependent on an employer or an uncertain pension.
+              </p>
+
+              <p>
+                Over the past decade, we observed two critical problems in the financial world:
+              </p>
+
+              <ul className="space-y-3 pl-4">
+                <li className="flex items-start gap-2.5">
+                  <div className="w-5 h-5 rounded-full bg-rose-100 text-rose-700 flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">✕</div>
+                  <span><strong>The Wall Street / City of London Jargon Barrier:</strong> High-fee advisors deliberately complicate basic investing, convincing ordinary people that they cannot manage their own money without handing over 1% to 2% annual fee drag.</span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <div className="w-5 h-5 rounded-full bg-rose-100 text-rose-700 flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">✕</div>
+                  <span><strong>Social Media Trading Hype:</strong> Flashy influencers promoting cryptocurrency gambling, day trading, and luxury lifestyles, leading beginner investors straight into catastrophic losses.</span>
+                </li>
+              </ul>
+
+              <p>
+                EB Wealth provides the antidote: <strong>calm, mathematically sound, long-term wealth building</strong>. We teach index funds, company fundamental analysis, UK tax shelters (ISAs and SIPPs), and how modern AI tools can create immense commercial leverage.
+              </p>
+
+              {/* 4 Pillars of Success */}
+              <div className="pt-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="p-4 rounded-xl bg-[#F8FAFC] border border-slate-200">
+                  <div className="flex items-center gap-2 text-xs font-bold text-[#17202A] mb-1">
+                    <Brain className="w-4 h-4 text-[#00A878]" />
+                    <span>Education First</span>
+                  </div>
+                  <p className="text-xs text-[#52606D]">
+                    We educate before you invest. Understanding risk and company economics removes fear.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-xl bg-[#F8FAFC] border border-slate-200">
+                  <div className="flex items-center gap-2 text-xs font-bold text-[#17202A] mb-1">
+                    <Lock className="w-4 h-4 text-[#2563EB]" />
+                    <span>Tax Efficiency</span>
+                  </div>
+                  <p className="text-xs text-[#52606D]">
+                    Maximizing UK government wrappers legally shields your growth from HMRC tax drag.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-xl bg-[#F8FAFC] border border-slate-200">
+                  <div className="flex items-center gap-2 text-xs font-bold text-[#17202A] mb-1">
+                    <Users className="w-4 h-4 text-[#F4B942]" />
+                    <span>Mentorship & Habits</span>
+                  </div>
+                  <p className="text-xs text-[#52606D]">
+                    Consistency compounds wealth. Having accountability prevents emotional impulse trading.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-xl bg-[#F8FAFC] border border-slate-200">
+                  <div className="flex items-center gap-2 text-xs font-bold text-[#17202A] mb-1">
+                    <TrendingUp className="w-4 h-4 text-[#14B8A6]" />
+                    <span>AI Business Leverage</span>
+                  </div>
+                  <p className="text-xs text-[#52606D]">
+                    Practical prompt engineering and automated workflows create commercial scale for owners.
+                  </p>
+                </div>
+              </div>
+
+              <div className="pt-4 flex flex-wrap gap-4">
                 <button
                   onClick={onOpenMentorship}
-                  className="py-3 px-6 bg-gradient-to-r from-emerald-600 to-teal-500 hover:from-emerald-500 hover:to-teal-400 text-white font-semibold text-xs rounded-xl transition-all shadow-md flex items-center gap-2 cursor-pointer"
+                  className="py-3 px-6 bg-[#00A878] hover:bg-[#009267] text-white text-xs font-semibold rounded-xl shadow-xs transition-all cursor-pointer flex items-center gap-2"
                 >
-                  <Compass className="w-4 h-4" />
-                  <span>Connect with Leadership in EB Wealth App</span>
+                  <span>Apply for Mentorship</span>
+                  <ArrowRight className="w-4 h-4" />
                 </button>
                 <button
                   onClick={() => onNavigate('academy')}
-                  className="py-3 px-5 bg-neutral-900 hover:bg-neutral-800 text-neutral-200 hover:text-white font-semibold text-xs rounded-xl border border-neutral-800 transition-colors flex items-center gap-2 cursor-pointer"
+                  className="py-3 px-6 bg-[#F8FAFC] hover:bg-slate-100 text-[#17202A] border border-slate-200 text-xs font-semibold rounded-xl transition-all cursor-pointer"
                 >
-                  <BookOpen className="w-4 h-4 text-emerald-400" />
-                  <span>Explore EB Wealth Academy</span>
+                  Explore EB Academy
                 </button>
               </div>
             </div>
@@ -151,133 +197,44 @@ export const AboutPage: React.FC<AboutPageProps> = ({
         </div>
       </section>
 
-      {/* The Story of Empowerment Body Section */}
-      <section className="py-20 border-b border-neutral-900 bg-neutral-900/40">
+      {/* 6-Step Framework Detailed Section */}
+      <section className="py-20 border-b border-slate-200 bg-[#F8FAFC]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl mx-auto text-center mb-16">
-            <span className="text-xs uppercase tracking-widest text-amber-400 font-semibold mb-2 block">
-              Foundational Pillars
+          <div className="text-center max-w-3xl mx-auto mb-14">
+            <span className="text-xs font-bold uppercase tracking-widest text-[#00A878]">
+              Methodology
             </span>
-            <h2 className="text-3xl sm:text-4xl font-bold text-white font-display">
-              The Empowerment Body Philosophy
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-[#17202A] mt-1">
+              EDUCATE → UNDERSTAND → ANALYSE → BUILD → TRACK → GROW
             </h2>
-            <p className="text-sm sm:text-base text-neutral-300 mt-3">
-              Why we view capital allocation as the ultimate expression of personal sovereignty.
+            <p className="text-sm text-[#52606D] mt-2">
+              Every stage of your financial journey is supported with dedicated frameworks and mentorship.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="p-7 bg-neutral-950 border border-neutral-800 rounded-2xl space-y-4">
-              <div className="w-12 h-12 bg-emerald-500/10 border border-emerald-500/30 rounded-xl flex items-center justify-center text-emerald-400">
-                <ShieldCheck className="w-6 h-6" />
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {CORE_PHILOSOPHY.map((item) => (
+              <div key={item.step} className="p-6 bg-white border border-slate-200 rounded-2xl shadow-xs">
+                <div className="text-xs font-mono font-bold text-[#00A878] mb-1">
+                  PHASE {item.step}
+                </div>
+                <h4 className="text-lg font-bold text-[#17202A] mb-2">{item.name}</h4>
+                <p className="text-xs text-[#52606D] leading-relaxed">{item.desc}</p>
               </div>
-              <h3 className="text-xl font-bold text-white font-display">
-                01. Capital Sovereignty
-              </h3>
-              <p className="text-xs sm:text-sm text-neutral-300 leading-relaxed">
-                Relying solely on active earned income is a point of vulnerability. We teach members how to build compounding asset engines that generate sustainable cashflow independent of their physical labor.
-              </p>
-            </div>
-
-            <div className="p-7 bg-neutral-950 border border-neutral-800 rounded-2xl space-y-4">
-              <div className="w-12 h-12 bg-blue-500/10 border border-blue-500/30 rounded-xl flex items-center justify-center text-blue-400">
-                <TrendingUp className="w-6 h-6" />
-              </div>
-              <h3 className="text-xl font-bold text-white font-display">
-                02. Asymmetrical Upside
-              </h3>
-              <p className="text-xs sm:text-sm text-neutral-300 leading-relaxed">
-                Wall Street sells high-fee, average-return funds. We train our community to spot institutional mispricings in private debt, commercial real estate syndicates, and distressed opportunities with capped downside.
-              </p>
-            </div>
-
-            <div className="p-7 bg-neutral-950 border border-neutral-800 rounded-2xl space-y-4">
-              <div className="w-12 h-12 bg-amber-500/10 border border-amber-500/30 rounded-xl flex items-center justify-center text-amber-400">
-                <Sparkles className="w-6 h-6" />
-              </div>
-              <h3 className="text-xl font-bold text-white font-display">
-                03. Technological Leverage
-              </h3>
-              <p className="text-xs sm:text-sm text-neutral-300 leading-relaxed">
-                Capital without time is an incomplete victory. By deploying custom AI prompt engineering workflows and autonomous pipelines, we recover hundreds of hours annually so you can live with presence and clarity.
-              </p>
-            </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Global Impact & Community Presence */}
-      <section className="py-20 border-b border-neutral-900">
+      {/* Prominent Regulatory Disclaimer */}
+      <section className="py-12 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div className="space-y-5">
-              <span className="text-xs font-semibold uppercase tracking-widest text-emerald-400">
-                A Worldwide Community
-              </span>
-              <h2 className="text-3xl sm:text-4xl font-bold text-white font-display">
-                An Intimate Network of Founders, Investors & Allocators
-              </h2>
-              <p className="text-sm text-neutral-300 leading-relaxed">
-                EB Wealth is not an impersonal mass-market course platform. Our community spans over 24 countries, bringing together serial founders, physicians, high-earning tech directors, and private equity operators committed to generational legacy.
-              </p>
-              <div className="grid grid-cols-2 gap-4 pt-2">
-                <div className="p-4 bg-neutral-900 border border-neutral-800 rounded-xl">
-                  <div className="text-2xl font-bold text-white font-display">£50M+</div>
-                  <div className="text-xs text-neutral-400 mt-1">Advised Capital Volume</div>
-                </div>
-                <div className="p-4 bg-neutral-900 border border-neutral-800 rounded-xl">
-                  <div className="text-2xl font-bold text-emerald-400 font-display">UK-Based</div>
-                  <div className="text-xs text-neutral-400 mt-1">Global Private Clients</div>
-                </div>
-              </div>
+          <div className="p-6 rounded-2xl bg-[#F8FAFC] border border-slate-200 text-xs text-[#52606D] leading-relaxed">
+            <div className="flex items-center gap-2 font-bold text-[#17202A] mb-2">
+              <ShieldCheck className="w-4 h-4 text-[#00A878]" />
+              <span>UK Regulatory Statement</span>
             </div>
-
-            <div className="p-8 bg-neutral-900/80 border border-neutral-800 rounded-3xl space-y-6">
-              <h3 className="text-xl font-bold text-white font-display">
-                Connect Directly With Our Advisory Office
-              </h3>
-              <p className="text-xs text-neutral-300 leading-relaxed">
-                Whether you represent a private family office seeking syndication deal flow or an entrepreneur preparing for a liquidity event, we invite private inquiries.
-              </p>
-              <div className="space-y-3 text-xs text-neutral-300">
-                <div className="flex items-center gap-3 p-3 bg-neutral-950 rounded-xl border border-neutral-800/80">
-                  <Mail className="w-4 h-4 text-emerald-400 shrink-0" />
-                  <a href="mailto:ebnetworks@outlook.com" className="hover:text-white transition-colors">
-                    ebnetworks@outlook.com
-                  </a>
-                </div>
-                <div className="flex items-center gap-3 p-3 bg-neutral-950 rounded-xl border border-neutral-800/80">
-                  <Phone className="w-4 h-4 text-emerald-400 shrink-0" />
-                  <a href="tel:+447365230302" className="hover:text-white transition-colors">
-                    +447365230302
-                  </a>
-                </div>
-              </div>
-              <button
-                onClick={onOpenMentorship}
-                className="w-full py-3 bg-gradient-to-r from-emerald-600 to-teal-500 hover:from-emerald-500 hover:to-teal-400 text-white font-semibold text-xs rounded-xl transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer"
-              >
-                <span>Download App to Initiate Application</span>
-                <ArrowRight className="w-4 h-4" />
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Compliance Notice */}
-      <section className="py-8 bg-neutral-950">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="p-4 bg-neutral-900/60 border border-neutral-800 rounded-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs text-neutral-400">
-            <span>
-              <strong>Regulatory Notice:</strong> Biographies, executive statements, and historical achievements are provided for educational and informational background. EB Wealth does not act as a registered broker-dealer.
-            </span>
-            <button
-              onClick={onOpenDisclosures}
-              className="text-emerald-400 hover:text-emerald-300 underline font-medium whitespace-nowrap cursor-pointer"
-            >
-              Statutory Disclosures
-            </button>
+            <p>{REGULATORY_DISCLAIMER_SHORT}</p>
           </div>
         </div>
       </section>

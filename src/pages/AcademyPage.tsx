@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
-import { COURSES } from '../data/content';
+import { ACADEMY_LEVELS, COURSES, REGULATORY_DISCLAIMER_SHORT } from '../data/content';
 import { Course } from '../types';
-import { BookOpen, Clock, Check, ArrowRight, ShieldAlert, Smartphone, Download, HelpCircle } from 'lucide-react';
+import { BookOpen, Check, ArrowRight, ShieldCheck, Smartphone, HelpCircle, Layers, TrendingUp } from 'lucide-react';
 import { PageId } from '../types/navigation';
+import { LearnByDoing } from '../components/LearnByDoing';
+import { HeroBackground } from '../components/HeroBackground';
+import academyHeroBg from '../assets/images/academy_curriculum_1791394772347.jpg';
 
 interface AcademyPageProps {
   onNavigate: (page: PageId) => void;
@@ -17,219 +20,239 @@ export const AcademyPage: React.FC<AcademyPageProps> = ({
   onOpenAppDownload,
   onOpenDisclosures
 }) => {
-  const [filterLevel, setFilterLevel] = useState<string>('all');
+  const [selectedLevel, setSelectedLevel] = useState<number>(1);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
-  const filteredCourses = filterLevel === 'all'
-    ? COURSES
-    : COURSES.filter((c) => c.level.toLowerCase() === filterLevel.toLowerCase() || c.level === 'All Levels');
+  const activeLevel = ACADEMY_LEVELS.find((l) => l.levelNumber === selectedLevel) || ACADEMY_LEVELS[0];
 
   const faqs = [
     {
-      q: 'Where do I watch the masterclasses after downloading the app?',
-      a: 'All masterclasses, spreadsheets, and strategy tools are located directly in the EB Wealth Mobile App under the "Academy" tab. You can stream in HD or download modules for offline access.'
+      q: 'Is the Academy suitable if I have zero prior investing experience?',
+      a: 'Yes, absolutely. Level 1 starts from absolute ground zero: explaining what a share is, why leaving money in cash guarantees loss of purchasing power to inflation, and how passive index funds allow ordinary people to build wealth without guessing stock picks.'
     },
     {
-      q: 'How do I install the EB Wealth APK on Android?',
-      a: 'Simply click "Download EB Wealth APK", open your notifications or Downloads folder, and tap "Install". If prompted, enable "Install unknown apps" in your browser or device settings.'
+      q: 'Does EB Wealth provide specific stock tips or tell me what to buy?',
+      a: 'No. EB Wealth provides pure financial education, analytical frameworks, and mentorship. We do not provide regulated personal investment advice or tell you which specific stocks to buy. We teach you how to analyze investments independently.'
     },
     {
-      q: 'Are live Q&A strategy labs hosted in the app?',
-      a: 'Yes. Live strategy labs with our senior advisors and private Q&A sessions are broadcast directly inside the app with integrated interactive chat and replay archives.'
+      q: 'Why is there a dedicated module for UK Investing?',
+      a: 'UK tax wrappers—such as the Stocks & Shares ISA (£20,000 annual allowance) and the Self-Invested Personal Pension (SIPP)—offer substantial legal tax advantages. Understanding how HMRC treats dividends, capital gains, and pension relief saves investors tens of thousands of pounds over a compounding horizon.'
     },
     {
-      q: 'Will there be an iOS / Apple App Store release?',
-      a: 'Yes, our iOS TestFlight version is currently in private testing for existing members and will be released on the Apple App Store shortly.'
+      q: 'How can I access the course material and video modules?',
+      a: 'Curricula are accessible through our web portal and the official EB Wealth Mobile App, allowing you to learn on the go, practice with interactive walkthrough simulators, and track your progress.'
     }
   ];
 
   return (
-    <div className="pt-24 pb-20 text-neutral-100 bg-neutral-950">
-      {/* Header Banner */}
-      <section className="relative py-16 border-b border-neutral-900 bg-gradient-to-b from-neutral-900/60 to-neutral-950">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center gap-2 text-xs uppercase tracking-widest text-emerald-400 font-semibold mb-3">
-            <Smartphone className="w-4 h-4" />
-            <span>EB Wealth Mobile Application</span>
-            <span aria-hidden="true" className="text-neutral-600">·</span>
-            <span className="text-neutral-400">All Courses Hosted In-App</span>
+    <div className="pt-24 pb-20 text-[#17202A] bg-[#F8FAFC]">
+      {/* Header Banner with authentic Hero Background */}
+      <section className="relative py-20 lg:py-24 border-b border-slate-200 overflow-hidden bg-[#F8FAFC]">
+        <HeroBackground
+          imageSrc={academyHeroBg}
+          fallbackSrc="/images/academy_curriculum_1791394772347.jpg"
+          accent="emerald"
+          overlayOpacity="medium"
+        />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="flex items-center gap-2 text-xs uppercase tracking-widest text-[#00A878] font-bold mb-3">
+            <BookOpen className="w-4 h-4" />
+            <span>EB Wealth Academy Curriculum</span>
           </div>
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white font-display max-w-4xl">
-            Demystifying Capital Allocation & Private Market Alpha.
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-[#17202A] max-w-4xl">
+            Learn Investing Without the Jargon.
           </h1>
-          <p className="text-base sm:text-lg text-neutral-300 max-w-3xl mt-4 leading-relaxed">
-            All 4 flagship masterclasses, due diligence financial models, and syndicate analysis tools are hosted exclusively in the official <strong>EB Wealth Mobile App</strong>. Download the APK below for instant access.
+          <p className="text-base sm:text-lg text-[#52606D] max-w-3xl mt-4 leading-relaxed">
+            From your very first index fund to comprehensive balance sheet analysis and UK tax optimization. Designed for complete beginners, intermediate investors, and professionals wanting to understand investing before committing significant capital.
           </p>
 
-          <div className="mt-6 flex flex-wrap items-center gap-4">
+          <div className="pt-6 flex flex-wrap gap-3">
             <button
-              onClick={() => onOpenAppDownload('EB Wealth Complete Academy Suite')}
-              className="py-3 px-6 bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 text-neutral-950 font-bold text-xs sm:text-sm rounded-xl transition-all shadow-md flex items-center gap-2 cursor-pointer"
+              onClick={() => onOpenAppDownload('EB Wealth Academy')}
+              className="py-3 px-6 bg-[#00A878] hover:bg-[#009267] text-white font-semibold text-xs rounded-xl shadow-xs transition-all flex items-center gap-2 cursor-pointer"
             >
-              <Download className="w-4 h-4" />
-              <span>Download EB Wealth APK (v2.4.0)</span>
+              <Smartphone className="w-4 h-4" />
+              <span>Access All Levels in App</span>
             </button>
-            <span className="text-xs text-neutral-400">
-              Direct Android APK installer · 42.8 MB
-            </span>
-          </div>
-
-          {/* Filter Bar */}
-          <div className="mt-8 flex flex-wrap items-center gap-2 p-1.5 bg-neutral-900 border border-neutral-800 rounded-xl inline-flex">
-            {[
-              { id: 'all', label: 'All Curricula (4 Flagship Tracks)' },
-              { id: 'beginner', label: 'Foundations' },
-              { id: 'intermediate', label: 'Alternative Assets' },
-              { id: 'advanced', label: 'Generational Trusts' }
-            ].map((tab) => (
-              <button
-                key={tab.id}
-                onClick={() => setFilterLevel(tab.id)}
-                className={`px-4 py-2 text-xs font-semibold rounded-lg transition-all cursor-pointer ${
-                  filterLevel === tab.id
-                    ? 'bg-neutral-800 text-white shadow-sm'
-                    : 'text-neutral-400 hover:text-white'
-                }`}
-              >
-                {tab.label}
-              </button>
-            ))}
+            <button
+              onClick={() => {
+                const el = document.getElementById('levels-section');
+                if (el) el.scrollIntoView({ behavior: 'smooth' });
+              }}
+              className="py-3 px-6 bg-white hover:bg-slate-50 text-[#17202A] border border-slate-200 font-semibold text-xs rounded-xl transition-all cursor-pointer"
+            >
+              Explore 6 Progression Levels
+            </button>
           </div>
         </div>
       </section>
 
-      {/* Main Course Catalog */}
-      <section className="py-20 border-b border-neutral-900">
+      {/* The 6 Levels Interactive Explorer */}
+      <section id="levels-section" className="py-20 border-b border-slate-200 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
-            {filteredCourses.map((course) => (
-              <div
-                key={course.id}
-                className={`p-7 sm:p-8 rounded-3xl border transition-all duration-300 flex flex-col justify-between ${
-                  course.featured
-                    ? 'bg-gradient-to-b from-neutral-900 to-neutral-950 border-emerald-500/50 shadow-2xl shadow-emerald-950/20'
-                    : 'bg-neutral-900/60 border-neutral-800 hover:border-neutral-700'
+          <div className="max-w-2xl mb-8">
+            <span className="text-xs font-bold uppercase tracking-wider text-[#00A878]">
+              Step-by-Step Pathway
+            </span>
+            <h2 className="text-3xl font-extrabold text-[#17202A] mt-1">
+              The 6 Academy Levels
+            </h2>
+            <p className="text-sm text-[#52606D] mt-1">
+              Select any level below to inspect topics, learning outcomes, and target experience level.
+            </p>
+          </div>
+
+          {/* Level Tabs */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 mb-10">
+            {ACADEMY_LEVELS.map((lvl) => (
+              <button
+                key={lvl.levelNumber}
+                onClick={() => setSelectedLevel(lvl.levelNumber)}
+                className={`p-4 rounded-2xl text-left border transition-all cursor-pointer flex flex-col justify-between ${
+                  selectedLevel === lvl.levelNumber
+                    ? 'bg-[#ECFDF5] border-[#00A878] ring-2 ring-[#00A878]/10'
+                    : 'bg-[#F8FAFC] border-slate-200 hover:bg-white'
                 }`}
               >
                 <div>
-                  <div className="flex items-center gap-2 text-xs text-neutral-400 mb-2">
-                    <span className="text-emerald-400 font-semibold uppercase tracking-wider">
-                      {course.level}
-                    </span>
-                    <span aria-hidden="true">·</span>
-                    <span className="flex items-center gap-1">
-                      <Clock className="w-3 h-3 text-neutral-500" />
-                      {course.duration}
-                    </span>
-                    <span aria-hidden="true">·</span>
-                    <span>{course.modulesCount} Modules</span>
+                  <span className={`text-xs font-mono font-bold block mb-1 ${
+                    selectedLevel === lvl.levelNumber ? 'text-[#00A878]' : 'text-slate-400'
+                  }`}>
+                    LEVEL 0{lvl.levelNumber}
+                  </span>
+                  <div className={`text-xs font-bold leading-snug ${
+                    selectedLevel === lvl.levelNumber ? 'text-[#17202A]' : 'text-[#52606D]'
+                  }`}>
+                    {lvl.title.split('—')[1]?.trim() || lvl.title}
                   </div>
+                </div>
+              </button>
+            ))}
+          </div>
 
-                  <h3 className="text-2xl font-bold text-white tracking-tight font-display mb-1">
-                    {course.title}
+          {/* Detailed Level Viewer */}
+          <div className="p-8 sm:p-10 rounded-3xl bg-[#F8FAFC] border border-slate-200 shadow-sm">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+              <div className="lg:col-span-8 space-y-6">
+                <div className="flex items-center gap-3">
+                  <span className="px-3 py-1 bg-[#00A878] text-white font-mono text-xs font-bold rounded-lg">
+                    Level {activeLevel.levelNumber}
+                  </span>
+                  <span className="text-xs font-semibold text-[#52606D]">
+                    {activeLevel.badge} · {activeLevel.duration}
+                  </span>
+                </div>
+
+                <div>
+                  <h3 className="text-2xl sm:text-3xl font-extrabold text-[#17202A]">
+                    {activeLevel.title}
                   </h3>
-                  <p className="text-xs text-emerald-400 font-medium mb-3">
-                    {course.subtitle}
+                  <h4 className="text-base font-semibold text-[#00A878] mt-1">
+                    {activeLevel.headline}
+                  </h4>
+                  <p className="text-sm text-[#52606D] mt-3 leading-relaxed">
+                    {activeLevel.description}
                   </p>
+                </div>
 
-                  <p className="text-xs sm:text-sm text-neutral-300 leading-relaxed mb-6">
-                    {course.description}
-                  </p>
-
-                  {/* Syllabus Modules Teaser */}
-                  <div className="space-y-2 mb-6">
-                    <span className="text-xs font-semibold uppercase tracking-wider text-neutral-400 block mb-1">
-                      Module Highlights:
-                    </span>
-                    {course.modules.map((m, mIdx) => (
-                      <div key={mIdx} className="p-3 bg-neutral-950/80 rounded-xl border border-neutral-800/80 text-xs text-neutral-200 flex items-start gap-2">
-                        <Check className="w-3.5 h-3.5 text-emerald-400 shrink-0 mt-0.5" />
-                        <span>{m.title}</span>
+                <div className="pt-2">
+                  <div className="text-xs font-bold text-[#17202A] uppercase tracking-wider mb-3">
+                    Curriculum Lessons & Topics Covered:
+                  </div>
+                  <div className="space-y-3">
+                    {activeLevel.topics.map((topic, i) => (
+                      <div key={i} className="flex items-start gap-3 text-xs sm:text-sm text-[#17202A] bg-white p-3.5 rounded-xl border border-slate-200/80">
+                        <div className="w-5 h-5 rounded-full bg-[#ECFDF5] text-[#00A878] flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">
+                          ✓
+                        </div>
+                        <span className="leading-snug">{topic}</span>
                       </div>
                     ))}
                   </div>
                 </div>
 
-                {/* Access Tier & Action Bar */}
-                <div className="pt-6 border-t border-neutral-800 flex items-center justify-between gap-4">
-                  <div>
-                    <span className="text-[11px] text-neutral-500 uppercase tracking-wider block">Access Mode</span>
-                    <div className="text-sm sm:text-base font-semibold text-emerald-400">
-                      In-App Masterclass
-                    </div>
-                  </div>
+                <div className="pt-4 flex flex-wrap gap-3">
+                  <button
+                    onClick={() => {
+                      const matchCourse = COURSES.find((c) => c.id === `course-level-${activeLevel.levelNumber}`) || COURSES[0];
+                      onSelectCourse(matchCourse);
+                    }}
+                    className="py-3 px-6 bg-[#00A878] hover:bg-[#009267] text-white text-xs font-semibold rounded-xl shadow-xs transition-all flex items-center gap-2 cursor-pointer"
+                  >
+                    <span>Inspect Course Syllabus Modal</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </button>
+                  <button
+                    onClick={() => onOpenAppDownload(`EB Wealth Academy: Level ${activeLevel.levelNumber}`)}
+                    className="py-3 px-6 bg-[#EFF6FF] hover:bg-[#DBEAFE] text-[#2563EB] text-xs font-semibold rounded-xl transition-all flex items-center gap-2 cursor-pointer"
+                  >
+                    <Smartphone className="w-3.5 h-3.5" />
+                    <span>Start Level in App</span>
+                  </button>
+                </div>
+              </div>
 
-                  <div className="flex items-center gap-2">
-                    <button
-                      onClick={() => onSelectCourse(course)}
-                      className="py-2.5 px-3.5 text-xs font-semibold text-neutral-300 hover:text-white bg-neutral-800 hover:bg-neutral-700 rounded-xl transition-colors cursor-pointer"
-                    >
-                      Inspect Syllabus
-                    </button>
-                    <button
-                      onClick={() => onOpenAppDownload(`EB Wealth Academy: ${course.title}`)}
-                      className="py-2.5 px-4 text-xs font-semibold text-neutral-950 bg-gradient-to-r from-emerald-400 to-teal-300 hover:from-emerald-300 hover:to-teal-200 rounded-xl transition-all shadow-sm flex items-center gap-1.5 cursor-pointer"
-                    >
-                      <Download className="w-3.5 h-3.5" />
-                      <span>Access in App</span>
-                    </button>
+              {/* Sidebar Info Card */}
+              <div className="lg:col-span-4 bg-white p-6 rounded-2xl border border-slate-200 space-y-4">
+                <div className="text-xs font-bold text-[#17202A] uppercase tracking-wider">
+                  Level Profile
+                </div>
+                <div className="space-y-3 text-xs">
+                  <div>
+                    <span className="text-[#52606D] block">Target Audience:</span>
+                    <strong className="text-[#17202A]">{activeLevel.targetAudience}</strong>
+                  </div>
+                  <div>
+                    <span className="text-[#52606D] block">Duration / Pace:</span>
+                    <strong className="text-[#17202A]">{activeLevel.duration}</strong>
+                  </div>
+                  <div>
+                    <span className="text-[#52606D] block">Learning Format:</span>
+                    <strong className="text-[#17202A]">HD Video Lessons + In-App Interactive Simulators + Downloadable Spreadsheets</strong>
+                  </div>
+                </div>
+
+                <div className="pt-4 border-t border-slate-100">
+                  <div className="text-[11px] text-[#52606D] leading-relaxed">
+                    All Academy modules adhere strictly to educational guidelines. We teach the analytical principles; you maintain complete self-directed sovereignty.
                   </div>
                 </div>
               </div>
-            ))}
-          </div>
-
-          {/* Bundle Callout */}
-          <div className="p-8 sm:p-10 bg-gradient-to-r from-neutral-900 via-neutral-900/90 to-emerald-950/40 border border-emerald-500/30 rounded-3xl flex flex-col md:flex-row items-center justify-between gap-6">
-            <div className="space-y-2 max-w-xl">
-              <span className="text-xs uppercase tracking-widest text-emerald-400 font-semibold">
-                Complete Mobile Learning Pass
-              </span>
-              <h3 className="text-2xl sm:text-3xl font-bold text-white font-display">
-                EB Wealth Mobile Academy Bundle
-              </h3>
-              <p className="text-xs sm:text-sm text-neutral-300">
-                Download the official APK to unlock all 4 flagship curricula, offline streaming, proprietary pro forma spreadsheets, and live weekly strategy replays.
-              </p>
-            </div>
-            <div className="text-right shrink-0">
-              <button
-                onClick={() => onOpenAppDownload('EB Wealth Full Mobile Academy Pass')}
-                className="py-3 px-6 bg-emerald-500 hover:bg-emerald-400 text-neutral-950 font-bold text-xs sm:text-sm rounded-xl transition-all shadow-md flex items-center gap-2 cursor-pointer"
-              >
-                <Download className="w-4 h-4" />
-                <span>Download App to Unlock All</span>
-              </button>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Frequently Asked Questions */}
-      <section className="py-20 border-b border-neutral-900 bg-neutral-900/30">
+      {/* Interactive Platform Simulator Section */}
+      <LearnByDoing onOpenAppDownload={onOpenAppDownload} />
+
+      {/* FAQs Section */}
+      <section className="py-20 border-b border-slate-200 bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <span className="text-xs uppercase tracking-widest text-emerald-400 font-semibold mb-2 block">
-              Curriculum Inquiries
+            <span className="text-xs font-bold uppercase tracking-widest text-[#00A878]">
+              Common Questions
             </span>
-            <h2 className="text-3xl font-bold text-white font-display">
-              Frequently Asked Questions
-            </h2>
+            <h3 className="text-2xl sm:text-3xl font-extrabold text-[#17202A] mt-1">
+              Frequently Asked Questions About the Academy
+            </h3>
           </div>
 
-          <div className="space-y-4">
-            {faqs.map((faq, i) => (
+          <div className="space-y-3">
+            {faqs.map((faq, idx) => (
               <div
-                key={i}
-                className="p-5 bg-neutral-950 border border-neutral-800 rounded-2xl cursor-pointer"
-                onClick={() => setOpenFaq(openFaq === i ? null : i)}
+                key={idx}
+                className="bg-[#F8FAFC] border border-slate-200 rounded-2xl p-5 cursor-pointer"
+                onClick={() => setOpenFaq(openFaq === idx ? null : idx)}
               >
-                <div className="flex items-center justify-between font-semibold text-white text-sm">
-                  <span>{faq.q}</span>
-                  <span className="text-emerald-400 text-lg">{openFaq === i ? '−' : '+'}</span>
+                <div className="flex items-center justify-between">
+                  <h4 className="text-sm font-bold text-[#17202A]">{faq.q}</h4>
+                  <span className="text-xs font-bold text-[#00A878]">
+                    {openFaq === idx ? '−' : '+'}
+                  </span>
                 </div>
-                {openFaq === i && (
-                  <p className="text-xs text-neutral-300 mt-3 pt-3 border-t border-neutral-900 leading-relaxed">
+                {openFaq === idx && (
+                  <p className="mt-3 text-xs sm:text-sm text-[#52606D] leading-relaxed pt-2 border-t border-slate-200">
                     {faq.a}
                   </p>
                 )}
@@ -239,22 +262,15 @@ export const AcademyPage: React.FC<AcademyPageProps> = ({
         </div>
       </section>
 
-      {/* Regulatory Notice Banner */}
-      <section className="py-8 bg-neutral-950">
+      {/* Regulatory Notice */}
+      <section className="py-12 bg-[#F8FAFC]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="p-4 bg-neutral-900/60 border border-neutral-800 rounded-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs text-neutral-400">
-            <div className="flex items-center gap-2">
-              <ShieldAlert className="w-4 h-4 text-amber-400 shrink-0" />
-              <span>
-                <strong>Regulatory Notice:</strong> EB Wealth Academy is an educational publishing platform and does not provide individualized investment advice.
-              </span>
+          <div className="p-6 rounded-2xl bg-white border border-slate-200 text-xs text-[#52606D]">
+            <div className="flex items-center gap-2 font-bold text-[#17202A] mb-1.5">
+              <ShieldCheck className="w-4 h-4 text-[#00A878]" />
+              <span>Regulatory Disclosure</span>
             </div>
-            <button
-              onClick={onOpenDisclosures}
-              className="text-emerald-400 hover:text-emerald-300 underline font-medium whitespace-nowrap cursor-pointer"
-            >
-              Statutory Disclosures
-            </button>
+            <p>{REGULATORY_DISCLAIMER_SHORT}</p>
           </div>
         </div>
       </section>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { X, ShieldAlert, FileText, Lock } from 'lucide-react';
+import { X, ShieldAlert, FileText, Lock, ShieldCheck } from 'lucide-react';
 import { REGULATORY_DISCLAIMER_FULL } from '../data/content';
 
 interface LegalModalProps {
@@ -12,11 +12,11 @@ export const LegalModal: React.FC<LegalModalProps> = ({ isOpen, onClose, type })
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md overflow-y-auto">
-      <div className="relative w-full max-w-2xl bg-neutral-900 border border-neutral-800 rounded-2xl shadow-2xl p-6 md:p-8 text-neutral-100 my-8">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-sm overflow-y-auto">
+      <div className="relative w-full max-w-2xl bg-white border border-slate-200 rounded-3xl shadow-2xl p-6 sm:p-8 text-[#17202A] my-8 animate-in fade-in zoom-in-95 duration-200">
         <button
           onClick={onClose}
-          className="absolute top-5 right-5 text-neutral-400 hover:text-white transition-colors p-1 rounded-lg hover:bg-neutral-800"
+          className="absolute top-5 right-5 text-slate-400 hover:text-[#17202A] transition-colors p-1.5 rounded-xl hover:bg-slate-100 cursor-pointer"
           aria-label="Close modal"
         >
           <X className="w-5 h-5" />
@@ -24,15 +24,15 @@ export const LegalModal: React.FC<LegalModalProps> = ({ isOpen, onClose, type })
 
         {type === 'disclaimer' && (
           <div>
-            <div className="flex items-center gap-2 text-xs font-semibold tracking-wider text-amber-400 uppercase mb-2">
-              <ShieldAlert className="w-4 h-4" />
+            <div className="flex items-center gap-2 text-xs font-semibold tracking-wider text-[#00A878] uppercase mb-1">
+              <ShieldCheck className="w-4 h-4" />
               <span>Statutory Transparency & Legal Notice</span>
             </div>
-            <h3 className="text-2xl font-bold text-white mb-4">
-              Regulatory Disclosures & Risk Disclaimers
+            <h3 className="text-2xl font-bold text-[#17202A] mb-4">
+              Regulatory Disclosures & Risk Warnings
             </h3>
-            <div className="max-h-[60vh] overflow-y-auto pr-2 text-xs text-neutral-300 leading-relaxed space-y-4 border-t border-b border-neutral-800 py-4 font-normal">
-              <pre className="whitespace-pre-wrap font-sans text-xs text-neutral-300 leading-relaxed">
+            <div className="max-h-[60vh] overflow-y-auto pr-2 text-xs text-[#52606D] leading-relaxed space-y-4 border-t border-b border-slate-100 py-4 font-normal bg-[#F8FAFC] p-4 rounded-xl">
+              <pre className="whitespace-pre-wrap font-sans text-xs text-[#52606D] leading-relaxed">
                 {REGULATORY_DISCLAIMER_FULL.trim()}
               </pre>
             </div>
@@ -41,23 +41,23 @@ export const LegalModal: React.FC<LegalModalProps> = ({ isOpen, onClose, type })
 
         {type === 'privacy' && (
           <div>
-            <div className="flex items-center gap-2 text-xs font-semibold tracking-wider text-emerald-400 uppercase mb-2">
+            <div className="flex items-center gap-2 text-xs font-semibold tracking-wider text-[#2563EB] uppercase mb-1">
               <Lock className="w-4 h-4" />
-              <span>Data Protection & Confidentiality</span>
+              <span>Data Protection & Privacy Policy (UK GDPR)</span>
             </div>
-            <h3 className="text-2xl font-bold text-white mb-4">Privacy Policy</h3>
-            <div className="max-h-[60vh] overflow-y-auto pr-2 text-xs text-neutral-300 leading-relaxed space-y-3 border-t border-b border-neutral-800 py-4">
+            <h3 className="text-2xl font-bold text-[#17202A] mb-4">Privacy Policy</h3>
+            <div className="max-h-[60vh] overflow-y-auto pr-2 text-xs text-[#52606D] leading-relaxed space-y-3 border-t border-b border-slate-100 py-4">
               <p>
-                <strong>1. Data Governance:</strong> EB Wealth ("Empowerment Body") adheres strictly to international data protection standards (including GDPR and CCPA principles). We do not sell, rent, or monetize personal client data or financial portfolio submissions.
+                <strong>1. Data Governance:</strong> EB Wealth ("Empowerment Body") adheres strictly to UK Data Protection legislation and UK GDPR principles. We do not sell, rent, or monetize personal client data or submitted questionnaires.
               </p>
               <p>
-                <strong>2. Information We Collect:</strong> Information gathered through our assessment tools, academy enrollment forms, or mentorship applications is strictly used to evaluate candidacy, coordinate private advisory sessions, and deliver requested educational curricula.
+                <strong>2. Information We Collect:</strong> Information gathered through our assessment calculators, Academy waitlists, or mentorship applications is strictly used to evaluate candidacy, coordinate coaching sessions, and deliver requested educational curricula.
               </p>
               <p>
-                <strong>3. Payment Security:</strong> All financial transactions and credit card processing are handled via Stripe using TLS 1.3 256-bit cryptographic encryption. EB Wealth never stores raw credit card details on our servers.
+                <strong>3. Communications:</strong> We will communicate solely in relation to the services or programs you have requested. You may opt out of educational emails at any time.
               </p>
               <p>
-                <strong>4. Communication & Discretion:</strong> Private advisory exchanges via direct messaging channels (WhatsApp, Signal, email) are treated with executive discretion and institutional non-disclosure protection.
+                <strong>4. Executive Discretion:</strong> All advisory communications via video conference, email, WhatsApp, or Signal are treated with professional discretion.
               </p>
             </div>
           </div>
@@ -65,20 +65,23 @@ export const LegalModal: React.FC<LegalModalProps> = ({ isOpen, onClose, type })
 
         {type === 'terms' && (
           <div>
-            <div className="flex items-center gap-2 text-xs font-semibold tracking-wider text-blue-400 uppercase mb-2">
+            <div className="flex items-center gap-2 text-xs font-semibold tracking-wider text-[#00A878] uppercase mb-1">
               <FileText className="w-4 h-4" />
-              <span>Terms of Service & Membership Agreement</span>
+              <span>Terms of Service</span>
             </div>
-            <h3 className="text-2xl font-bold text-white mb-4">Terms of Membership</h3>
-            <div className="max-h-[60vh] overflow-y-auto pr-2 text-xs text-neutral-300 leading-relaxed space-y-3 border-t border-b border-neutral-800 py-4">
+            <h3 className="text-2xl font-bold text-[#17202A] mb-4">Terms of Engagement</h3>
+            <div className="max-h-[60vh] overflow-y-auto pr-2 text-xs text-[#52606D] leading-relaxed space-y-3 border-t border-b border-slate-100 py-4">
               <p>
-                <strong>1. Intellectual Property:</strong> All curriculum frameworks, financial modeling templates, prompt engineering architectures, and private research documents are the exclusive intellectual property of EB Wealth. Redistribution or public resale is strictly prohibited.
+                <strong>1. Educational Agreement:</strong> By accessing EB Wealth, you acknowledge and agree that all courses, mentorship, tools, and content are provided solely for educational, informational, and general consulting purposes.
               </p>
               <p>
-                <strong>2. Code of Conduct:</strong> Mentorship circles and private masterminds maintain a high standard of professional courtesy and confidentiality. Violation of peer discretion will result in immediate revocation of membership without refund.
+                <strong>2. No Regulated Advice:</strong> EB Wealth is not authorised by the Financial Conduct Authority (FCA). Nothing on this platform constitutes regulated financial advice or investment recommendations.
               </p>
               <p>
-                <strong>3. Cancellation & Refunds:</strong> EB Wealth Academy purchases carry a 14-day conditional satisfaction guarantee. Custom 1-on-1 mentorship programs and coaching retainers are non-refundable once individual advisory hours have commenced.
+                <strong>3. Intellectual Property:</strong> All educational curricula, spreadsheets, frameworks, and system prompts remain the exclusive intellectual property of Empowerment Body / EB Wealth.
+              </p>
+              <p>
+                <strong>4. Governing Law:</strong> These terms are governed in accordance with the laws of England and Wales.
               </p>
             </div>
           </div>
@@ -87,9 +90,9 @@ export const LegalModal: React.FC<LegalModalProps> = ({ isOpen, onClose, type })
         <div className="pt-4 flex justify-end">
           <button
             onClick={onClose}
-            className="px-4 py-2 bg-neutral-800 hover:bg-neutral-700 text-white text-xs font-semibold rounded-xl transition-colors"
+            className="py-2.5 px-6 bg-[#00A878] hover:bg-[#009267] text-white text-xs font-semibold rounded-xl cursor-pointer"
           >
-            Acknowledge & Close
+            I Understand
           </button>
         </div>
       </div>

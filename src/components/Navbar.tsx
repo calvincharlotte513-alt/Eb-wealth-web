@@ -1,26 +1,27 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Download, Smartphone, Upload } from 'lucide-react';
+import { Menu, X, ArrowRight, Smartphone, Sparkles } from 'lucide-react';
 import { PageId } from '../types/navigation';
 
 interface NavbarProps {
   currentPage: PageId;
   onNavigate: (page: PageId) => void;
   onOpenDownloadModal: (feature?: string) => void;
-  onOpenManageApk: () => void;
+  onOpenManageApk?: () => void;
+  onOpenGetStarted: () => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
   currentPage,
   onNavigate,
   onOpenDownloadModal,
-  onOpenManageApk
+  onOpenGetStarted
 }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+      setIsScrolled(window.scrollY > 15);
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
@@ -32,249 +33,179 @@ export const Navbar: React.FC<NavbarProps> = ({
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const navLinks: { id: PageId | 'app'; label: string }[] = [
+    { id: 'home', label: 'Home' },
+    { id: 'about', label: 'About EB' },
+    { id: 'academy', label: 'Academy' },
+    { id: 'mentorship', label: 'Mentorship' },
+    { id: 'coaching', label: '1-to-1 Coaching' },
+    { id: 'ai-growth', label: 'AI Business Growth' },
+    { id: 'app', label: 'App' }
+  ];
+
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-40 transition-all duration-200 ${
         isScrolled
-          ? 'bg-neutral-950/90 backdrop-blur-md border-b border-white/10 shadow-lg shadow-black/20'
-          : 'bg-neutral-950/70 backdrop-blur-sm border-b border-white/5'
+          ? 'bg-white/95 backdrop-blur-md border-b border-slate-200/90 shadow-sm'
+          : 'bg-white/80 backdrop-blur-sm border-b border-slate-200/50'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 md:h-20">
-          {/* Zone 1: Brand Wordmark (Single text element in display face) */}
-          <button
-            onClick={() => handleNavClick('home')}
-            className="text-lg md:text-xl font-bold tracking-tight text-white font-display hover:text-emerald-400 transition-colors shrink-0 cursor-pointer"
-          >
-            EB Wealth
-          </button>
-
-          {/* Zone 2: 4-6 clean text navigation links */}
-          <nav className="hidden md:flex items-center gap-7 text-xs lg:text-sm font-medium text-neutral-300">
+        <div className="flex items-center justify-between h-20">
+          {/* Logo / Brand */}
+          <div className="flex items-center gap-3">
             <button
-              onClick={() => handleNavClick('about')}
-              className={`hover:text-white transition-colors cursor-pointer py-1 relative ${
-                currentPage === 'about'
-                  ? 'text-white font-semibold after:w-full after:h-[2px] after:bg-emerald-400 after:absolute after:bottom-0 after:left-0'
-                  : 'text-neutral-400 hover:text-white'
-              }`}
+              onClick={() => handleNavClick('home')}
+              className="text-left group cursor-pointer flex items-center gap-2.5"
             >
-              About
+              <div className="w-10 h-10 rounded-xl bg-[#ECFDF5] border border-[#00A878]/30 flex items-center justify-center font-bold text-[#00A878] group-hover:bg-[#00A878] group-hover:text-white transition-all shadow-sm">
+                EB
+              </div>
+              <div className="flex flex-col">
+                <span className="text-xl font-bold tracking-tight text-[#17202A] leading-none group-hover:text-[#00A878] transition-colors">
+                  EB Wealth
+                </span>
+                <span className="text-[11px] font-medium text-[#52606D] mt-0.5 tracking-tight">
+                  by Empowerment Body
+                </span>
+              </div>
             </button>
-            <button
-              onClick={() => handleNavClick('academy')}
-              className={`hover:text-white transition-colors cursor-pointer py-1 relative ${
-                currentPage === 'academy'
-                  ? 'text-white font-semibold after:w-full after:h-[2px] after:bg-emerald-400 after:absolute after:bottom-0 after:left-0'
-                  : 'text-neutral-400 hover:text-white'
-              }`}
-            >
-              Academy
-            </button>
-            <button
-              onClick={() => handleNavClick('mentorship')}
-              className={`hover:text-white transition-colors cursor-pointer py-1 relative ${
-                currentPage === 'mentorship'
-                  ? 'text-white font-semibold after:w-full after:h-[2px] after:bg-amber-400 after:absolute after:bottom-0 after:left-0'
-                  : 'text-neutral-400 hover:text-white'
-              }`}
-            >
-              Mentorship
-            </button>
-            <button
-              onClick={() => handleNavClick('coaching')}
-              className={`hover:text-white transition-colors cursor-pointer py-1 relative ${
-                currentPage === 'coaching'
-                  ? 'text-white font-semibold after:w-full after:h-[2px] after:bg-blue-400 after:absolute after:bottom-0 after:left-0'
-                  : 'text-neutral-400 hover:text-white'
-              }`}
-            >
-              Coaching
-            </button>
-            <button
-              onClick={() => handleNavClick('ai-growth')}
-              className={`hover:text-white transition-colors cursor-pointer py-1 relative ${
-                currentPage === 'ai-growth'
-                  ? 'text-white font-semibold after:w-full after:h-[2px] after:bg-blue-400 after:absolute after:bottom-0 after:left-0'
-                  : 'text-neutral-400 hover:text-white'
-              }`}
-            >
-              AI Growth
-            </button>
-            <button
-              onClick={() => handleNavClick('tools')}
-              className={`hover:text-white transition-colors cursor-pointer py-1 relative ${
-                currentPage === 'tools'
-                  ? 'text-white font-semibold after:w-full after:h-[2px] after:bg-emerald-400 after:absolute after:bottom-0 after:left-0'
-                  : 'text-neutral-400 hover:text-white'
-              }`}
-            >
-              Tools
-            </button>
-          </nav>
-
-          {/* Zone 3: Direct App Download Action */}
-          <div className="hidden sm:flex items-center gap-2.5 shrink-0">
-            <button
-              onClick={() => handleNavClick('tools')}
-              className="px-3 py-2 text-xs font-medium text-neutral-300 hover:text-white hover:bg-white/5 rounded-lg transition-colors whitespace-nowrap cursor-pointer"
-            >
-              Simulator
-            </button>
-            <button
-              onClick={() => onOpenDownloadModal('EB Wealth App Full Suite')}
-              className="px-3.5 py-2 text-xs font-semibold text-neutral-950 bg-gradient-to-r from-emerald-400 to-teal-300 hover:from-emerald-300 hover:to-teal-200 rounded-lg transition-all shadow-sm hover:shadow-emerald-950/40 whitespace-nowrap cursor-pointer flex items-center gap-1.5"
-            >
-              <Download className="w-3.5 h-3.5" />
-              <span>Download App (APK)</span>
-            </button>
-            {/* Upload / Manage APK (Commented out for now)
-            <button
-              onClick={onOpenManageApk}
-              className="px-3 py-2 text-xs font-bold text-emerald-300 bg-emerald-950/80 hover:bg-emerald-900 border border-emerald-500/50 hover:border-emerald-400 rounded-lg transition-all whitespace-nowrap cursor-pointer flex items-center gap-1.5 shadow-sm hover:scale-[1.02]"
-              title="Upload your APK file or configure download link"
-            >
-              <Upload className="w-3.5 h-3.5 text-emerald-400" />
-              <span>Upload / Manage APK</span>
-            </button>
-            */}
           </div>
 
-          {/* Mobile hamburger & quick actions */}
-          <div className="flex md:hidden items-center gap-1.5">
-            {/* Upload APK mobile button (Commented out for now)
+          {/* Desktop Navigation Links: Home | About EB | Academy | Mentorship | 1-to-1 Coaching | AI Business Growth | App */}
+          <nav className="hidden lg:flex items-center gap-6 text-sm font-medium">
+            {navLinks.map((link) => {
+              if (link.id === 'app') {
+                return (
+                  <button
+                    key={link.id}
+                    onClick={() => onOpenDownloadModal('EB Wealth Mobile App')}
+                    className="text-[#52606D] hover:text-[#00A878] transition-colors cursor-pointer py-1 flex items-center gap-1.5"
+                  >
+                    <Smartphone className="w-4 h-4 text-[#00A878]" />
+                    <span>App</span>
+                  </button>
+                );
+              }
+
+              const isActive = currentPage === link.id;
+              return (
+                <button
+                  key={link.id}
+                  onClick={() => handleNavClick(link.id as PageId)}
+                  className={`transition-colors cursor-pointer py-1 relative ${
+                    isActive
+                      ? 'text-[#00A878] font-semibold after:w-full after:h-[2px] after:bg-[#00A878] after:absolute after:bottom-0 after:left-0'
+                      : 'text-[#52606D] hover:text-[#17202A]'
+                  }`}
+                >
+                  {link.label}
+                </button>
+              );
+            })}
+          </nav>
+
+          {/* Header Action Buttons: Secondary CTA "Open EB Wealth App" + Primary CTA "Get Started" */}
+          <div className="hidden sm:flex items-center gap-3">
             <button
-              onClick={onOpenManageApk}
-              className="px-2.5 py-1.5 text-[11px] font-bold text-emerald-300 bg-emerald-950 border border-emerald-500/50 rounded-lg whitespace-nowrap flex items-center gap-1 cursor-pointer"
-              title="Upload or manage APK"
+              onClick={() => onOpenDownloadModal('EB Wealth App')}
+              className="py-2.5 px-4 text-xs font-semibold text-[#17202A] bg-[#F8FAFC] hover:bg-[#EFF6FF] border border-slate-200 hover:border-blue-300 rounded-xl transition-all cursor-pointer flex items-center gap-2"
             >
-              <Upload className="w-3 h-3 text-emerald-400" />
-              <span>Upload APK</span>
+              <Smartphone className="w-3.5 h-3.5 text-[#2563EB]" />
+              <span>Open EB Wealth App</span>
             </button>
-            */}
             <button
-              onClick={() => onOpenDownloadModal('EB Wealth App Mobile')}
-              className="px-2.5 py-1.5 text-[11px] font-bold text-neutral-950 bg-emerald-400 rounded-lg whitespace-nowrap flex items-center gap-1 cursor-pointer"
+              onClick={onOpenGetStarted}
+              className="py-2.5 px-5 text-xs font-semibold text-white bg-[#00A878] hover:bg-[#009267] rounded-xl shadow-sm transition-all cursor-pointer flex items-center gap-1.5"
             >
-              <Download className="w-3 h-3" />
-              <span>APK</span>
+              <span>Get Started</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </button>
+          </div>
+
+          {/* Mobile Menu Hamburger */}
+          <div className="flex items-center gap-2 lg:hidden">
+            <button
+              onClick={onOpenGetStarted}
+              className="sm:hidden py-1.5 px-3 text-xs font-semibold text-white bg-[#00A878] rounded-lg"
+            >
+              Get Started
             </button>
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-1.5 text-neutral-400 hover:text-white focus:outline-none cursor-pointer"
+              className="p-2 text-[#17202A] hover:bg-slate-100 rounded-lg transition-colors cursor-pointer"
               aria-label="Toggle navigation menu"
             >
-              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
           </div>
         </div>
       </div>
 
-      {/* Mobile Drawer */}
+      {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden bg-neutral-950/98 border-b border-neutral-800 px-4 py-4 space-y-2">
-          <div className="p-3 bg-neutral-900 rounded-xl border border-neutral-800 mb-3 space-y-2">
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-bold text-white flex items-center gap-1.5">
-                <Smartphone className="w-3.5 h-3.5 text-emerald-400" />
-                EB Wealth Mobile App
-              </span>
-              <span className="text-[10px] text-emerald-400 font-mono">v2.4.0 APK</span>
-            </div>
-            <p className="text-[11px] text-neutral-400">
-              All masterclasses and mentorship deal rooms are hosted in the app.
-            </p>
-            <div className="pt-1">
-              <button
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  onOpenDownloadModal('EB Wealth Mobile Suite');
-                }}
-                className="w-full py-2 bg-emerald-400 text-neutral-950 font-bold text-xs rounded-lg flex items-center justify-center gap-1.5 cursor-pointer"
-              >
-                <Download className="w-3.5 h-3.5" />
-                <span>Download APK</span>
-              </button>
-              {/* Mobile Drawer Upload APK (Commented out for now)
-              <button
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  onOpenManageApk();
-                }}
-                className="w-full py-2 bg-emerald-950 border border-emerald-500/50 text-emerald-300 font-bold text-xs rounded-lg flex items-center justify-center gap-1.5 cursor-pointer mt-2"
-              >
-                <Upload className="w-3.5 h-3.5 text-emerald-400" />
-                <span>Upload APK</span>
-              </button>
-              */}
-            </div>
+        <div className="lg:hidden bg-white border-b border-slate-200 px-4 pt-3 pb-6 shadow-xl animate-in fade-in slide-in-from-top-2 duration-200">
+          <div className="flex flex-col space-y-1">
+            {navLinks.map((link) => {
+              if (link.id === 'app') {
+                return (
+                  <button
+                    key={link.id}
+                    onClick={() => {
+                      setMobileMenuOpen(false);
+                      onOpenDownloadModal('EB Wealth Mobile App');
+                    }}
+                    className="w-full text-left px-3 py-2.5 rounded-lg text-sm font-medium text-[#17202A] hover:bg-[#EFF6FF] flex items-center justify-between"
+                  >
+                    <span className="flex items-center gap-2">
+                      <Smartphone className="w-4 h-4 text-[#2563EB]" />
+                      <span>App</span>
+                    </span>
+                    <span className="text-xs text-[#2563EB] font-semibold">Open</span>
+                  </button>
+                );
+              }
+
+              const isActive = currentPage === link.id;
+              return (
+                <button
+                  key={link.id}
+                  onClick={() => handleNavClick(link.id as PageId)}
+                  className={`w-full text-left px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
+                    isActive
+                      ? 'bg-[#ECFDF5] text-[#00A878] font-bold'
+                      : 'text-[#52606D] hover:bg-slate-50 hover:text-[#17202A]'
+                  }`}
+                >
+                  {link.label}
+                </button>
+              );
+            })}
           </div>
 
-          <button
-            onClick={() => handleNavClick('home')}
-            className={`block w-full text-left py-2 text-sm font-medium border-b border-neutral-900 ${
-              currentPage === 'home' ? 'text-emerald-400 font-bold' : 'text-neutral-300'
-            }`}
-          >
-            Home Overview
-          </button>
-          <button
-            onClick={() => handleNavClick('about')}
-            className={`block w-full text-left py-2 text-sm font-medium border-b border-neutral-900 ${
-              currentPage === 'about' ? 'text-emerald-400 font-bold' : 'text-neutral-300'
-            }`}
-          >
-            About & Leadership Bio
-          </button>
-          <button
-            onClick={() => handleNavClick('academy')}
-            className={`block w-full text-left py-2 text-sm font-medium border-b border-neutral-900 ${
-              currentPage === 'academy' ? 'text-emerald-400 font-bold' : 'text-neutral-300'
-            }`}
-          >
-            EB Wealth Academy
-          </button>
-          <button
-            onClick={() => handleNavClick('mentorship')}
-            className={`block w-full text-left py-2 text-sm font-medium border-b border-neutral-900 ${
-              currentPage === 'mentorship' ? 'text-amber-400 font-bold' : 'text-neutral-300'
-            }`}
-          >
-            Mentorship Programs
-          </button>
-          <button
-            onClick={() => handleNavClick('coaching')}
-            className={`block w-full text-left py-2 text-sm font-medium border-b border-neutral-900 ${
-              currentPage === 'coaching' ? 'text-blue-400 font-bold' : 'text-neutral-300'
-            }`}
-          >
-            One-to-One Coaching
-          </button>
-          <button
-            onClick={() => handleNavClick('ai-growth')}
-            className={`block w-full text-left py-2 text-sm font-medium border-b border-neutral-900 ${
-              currentPage === 'ai-growth' ? 'text-blue-400 font-bold' : 'text-neutral-300'
-            }`}
-          >
-            AI Business Growth
-          </button>
-          <button
-            onClick={() => handleNavClick('tools')}
-            className={`block w-full text-left py-2 text-sm font-medium border-b border-neutral-900 ${
-              currentPage === 'tools' ? 'text-emerald-400 font-bold' : 'text-neutral-300'
-            }`}
-          >
-            Interactive Tools & Simulator
-          </button>
-          <button
-            onClick={() => handleNavClick('compliance')}
-            className={`block w-full text-left py-2 text-sm font-medium ${
-              currentPage === 'compliance' ? 'text-amber-400 font-bold' : 'text-neutral-400'
-            }`}
-          >
-            Regulatory Disclosures
-          </button>
+          <div className="mt-4 pt-4 border-t border-slate-100 flex flex-col gap-2.5">
+            <button
+              onClick={() => {
+                setMobileMenuOpen(false);
+                onOpenGetStarted();
+              }}
+              className="w-full py-3 px-4 bg-[#00A878] text-white text-sm font-semibold rounded-xl text-center shadow-sm flex items-center justify-center gap-2 cursor-pointer"
+            >
+              <span>Get Started</span>
+              <ArrowRight className="w-4 h-4" />
+            </button>
+            <button
+              onClick={() => {
+                setMobileMenuOpen(false);
+                onOpenDownloadModal('EB Wealth Mobile App');
+              }}
+              className="w-full py-2.5 px-4 bg-[#F8FAFC] text-[#17202A] border border-slate-200 text-xs font-semibold rounded-xl text-center flex items-center justify-center gap-2 cursor-pointer"
+            >
+              <Smartphone className="w-3.5 h-3.5 text-[#2563EB]" />
+              <span>Open EB Wealth App</span>
+            </button>
+          </div>
         </div>
       )}
     </header>

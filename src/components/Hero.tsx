@@ -1,142 +1,128 @@
 import React from 'react';
-import { ArrowRight, Download, Smartphone } from 'lucide-react';
+import { ArrowRight, Smartphone, ShieldCheck, CheckCircle2 } from 'lucide-react';
+import { FOUNDER_IMAGE_URL } from '../data/content';
+import { HeroBackground } from './HeroBackground';
 import heroBgImage from '../assets/images/hero_eb_wealth_1791394753165.jpg';
 
 interface HeroProps {
-  onExplore: () => void;
-  onDownloadApp: () => void;
+  onGetStarted: () => void;
+  onExploreApp: () => void;
+  onExploreAcademy: () => void;
 }
 
-export const Hero: React.FC<HeroProps> = ({ onExplore, onDownloadApp }) => {
+export const Hero: React.FC<HeroProps> = ({ onGetStarted, onExploreApp, onExploreAcademy }) => {
   return (
-    <section className="relative min-h-[92vh] flex items-center pt-24 pb-16 overflow-hidden">
-      {/* Background Graphic & Media Carrier */}
-      <div className="absolute inset-0 z-0">
-        <img
-          src={heroBgImage}
-          alt="EB Wealth Executive Headquarters and Private Family Office"
-          className="w-full h-full object-cover object-center scale-105"
-          referrerPolicy="no-referrer"
-        />
-        {/* Measured Scrim for contrast: ensures >= 4.5:1 contrast across all media frames */}
-        <div className="absolute inset-0 bg-gradient-to-r from-neutral-950 via-neutral-950/90 to-neutral-950/60" />
-        <div className="absolute inset-0 bg-gradient-to-t from-neutral-950 via-transparent to-neutral-950/40" />
-        {/* Subtle accent glows */}
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute bottom-1/3 right-1/4 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl pointer-events-none" />
-      </div>
+    <section className="relative pt-28 pb-16 lg:pt-36 lg:pb-24 overflow-hidden border-b border-slate-200/70 bg-[#F8FAFC]">
+      {/* High-definition background image with bright editorial light overlays */}
+      <HeroBackground
+        imageSrc={heroBgImage}
+        fallbackSrc="/images/hero_eb_wealth_1791394753165.jpg"
+        accent="emerald"
+        overlayOpacity="medium"
+      />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          {/* Main Hero Copy */}
-          <div className="lg:col-span-8 space-y-6">
-            {/* Mission Kicker with App Notice (Clean unboxed typography) */}
-            <div className="flex flex-wrap items-center gap-2 text-xs md:text-sm tracking-wide text-neutral-300">
-              <span className="text-emerald-400 font-semibold uppercase tracking-wider">Empowerment Body</span>
-              <span aria-hidden="true" className="text-neutral-600">·</span>
-              <span className="text-neutral-300 font-medium">All Curricula & Deal Rooms Hosted In-App</span>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+          {/* Left Column: Core Positioning & CTAs */}
+          <div className="lg:col-span-7 space-y-6">
+            {/* Quiet editorial kicker */}
+            <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[#00A878]">
+              <span className="w-2 h-2 rounded-full bg-[#00A878]"></span>
+              <span>Empowerment Body Ecosystem · UK Financial & Business Education</span>
             </div>
 
-            {/* Tagline */}
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white font-display text-balance leading-[1.1]">
-              Master Capital.{' '}
-              <span className="bg-gradient-to-r from-emerald-400 via-teal-300 to-blue-400 bg-clip-text text-transparent">
-                Scale With Intelligence.
-              </span>{' '}
-              Build Lasting Wealth.
+            {/* Master Headline */}
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#17202A] tracking-tight leading-[1.12]">
+              Learn. Invest. <br className="hidden sm:inline" />
+              <span className="text-[#00A878]">Build Wealth.</span>
             </h1>
 
-            {/* Concise Mission */}
-            <p className="text-base sm:text-lg text-neutral-300 max-w-2xl font-normal leading-relaxed">
-              EB Wealth bridges institutional investment education, tailored high-touch mentorship, and proprietary AI business automation. Access all masterclasses, private deal reviews, and tactical tools directly on the <strong>EB Wealth Mobile App</strong>.
+            {/* Exact supporting copy specified in brief */}
+            <p className="text-lg sm:text-xl text-[#52606D] font-normal leading-relaxed max-w-2xl">
+              EB Wealth helps you build the knowledge, confidence and systems to make smarter long-term decisions across investing, wealth building, personal development and business.
             </p>
 
-            {/* Primary & Secondary CTAs (Linking directly to app download) */}
-            <div className="pt-2 flex flex-wrap items-center gap-4">
+            {/* Action buttons */}
+            <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5">
               <button
-                onClick={onDownloadApp}
-                className="py-3 px-6 bg-gradient-to-r from-emerald-500 via-teal-400 to-emerald-400 hover:from-emerald-400 hover:to-teal-300 text-neutral-950 font-bold text-sm rounded-xl transition-all shadow-lg shadow-emerald-950/50 flex items-center gap-2 cursor-pointer group"
+                onClick={onGetStarted}
+                className="py-3.5 px-7 bg-[#00A878] hover:bg-[#009267] text-white font-semibold text-sm rounded-xl shadow-md hover:shadow-lg transition-all duration-150 flex items-center justify-center gap-2 cursor-pointer group"
               >
-                <Download className="w-4 h-4 group-hover:-translate-y-0.5 transition-transform" />
-                <span>Download EB Wealth App (APK)</span>
+                <span>Get Started</span>
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
               </button>
 
               <button
-                onClick={onExplore}
-                className="py-3 px-6 bg-neutral-900/90 hover:bg-neutral-800 text-neutral-200 hover:text-white font-semibold text-sm rounded-xl border border-neutral-700/80 transition-all flex items-center gap-2 cursor-pointer"
+                onClick={onExploreApp}
+                className="py-3.5 px-6 bg-white hover:bg-[#EFF6FF] text-[#17202A] border border-slate-200 hover:border-[#2563EB]/40 font-semibold text-sm rounded-xl transition-all duration-150 flex items-center justify-center gap-2.5 cursor-pointer shadow-sm"
               >
-                <span>Explore Platform Showcase</span>
-                <ArrowRight className="w-4 h-4" />
+                <Smartphone className="w-4 h-4 text-[#2563EB]" />
+                <span>Explore EB Wealth App</span>
               </button>
             </div>
 
-            {/* Editorial Institutional Proof Adjacency */}
-            <div className="pt-8 border-t border-white/10 grid grid-cols-2 sm:grid-cols-3 gap-6 max-w-xl text-neutral-300">
-              <div>
-                <div className="text-2xl lg:text-3xl font-bold text-white tabular-nums font-display">
-                  £50M+
-                </div>
-                <div className="text-xs text-neutral-400 mt-0.5">
-                  Client Capital Advised
-                </div>
+            {/* Trust and who it serves indicators */}
+            <div className="pt-6 border-t border-slate-200/80 grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs text-[#52606D]">
+              <div className="flex items-start gap-2">
+                <CheckCircle2 className="w-4 h-4 text-[#00A878] shrink-0 mt-0.5" />
+                <span>For complete beginners & intermediate investors</span>
               </div>
-              <div>
-                <div className="text-2xl lg:text-3xl font-bold text-emerald-400 tabular-nums font-display">
-                  UK HQ
-                </div>
-                <div className="text-xs text-neutral-400 mt-0.5">
-                  United Kingdom Based
-                </div>
+              <div className="flex items-start gap-2">
+                <CheckCircle2 className="w-4 h-4 text-[#2563EB] shrink-0 mt-0.5" />
+                <span>UK tax-sheltered investing (ISAs & SIPPs)</span>
               </div>
-              <div>
-                <div className="text-2xl lg:text-3xl font-bold text-amber-400 tabular-nums font-display">
-                  v2.4.0
-                </div>
-                <div className="text-xs text-neutral-400 mt-0.5">
-                  Mobile App (Direct APK)
-                </div>
+              <div className="flex items-start gap-2">
+                <CheckCircle2 className="w-4 h-4 text-[#F4B942] shrink-0 mt-0.5" />
+                <span>Practical AI leverage for entrepreneurs</span>
               </div>
             </div>
           </div>
 
-          {/* Side Focus Card (Visual rest & mobile app portal preview) */}
-          <div className="lg:col-span-4 hidden lg:block">
-            <div className="p-6 bg-neutral-900/80 backdrop-blur-md border border-neutral-800 rounded-2xl shadow-xl space-y-4">
-              <div className="flex items-center justify-between pb-3 border-b border-neutral-800 text-xs">
-                <span className="text-neutral-400">Mobile Ecosystem Hub</span>
-                <span className="text-emerald-400 font-mono text-[11px]">APK AVAILABLE</span>
+          {/* Right Column: Founder & CEO Authentic Portrait */}
+          <div className="lg:col-span-5 flex justify-center">
+            <div className="relative w-full max-w-md">
+              {/* Outer clean frame */}
+              <div className="relative rounded-3xl overflow-hidden bg-white border border-slate-200 shadow-xl p-3">
+                <div className="relative rounded-2xl overflow-hidden aspect-[4/5] bg-slate-100">
+                  <img
+                    src={FOUNDER_IMAGE_URL}
+                    alt="Founder and CEO of EB Wealth & Empowerment Body"
+                    className="w-full h-full object-cover object-top"
+                    loading="eager"
+                    referrerPolicy="no-referrer"
+                    onError={(e) => {
+                      // Fallback gracefully if network glitch occurs
+                      const target = e.target as HTMLImageElement;
+                      if (!target.src.includes('ceo_suit_portrait')) {
+                        target.src = '/images/ceo_suit_portrait_1791395753240.jpg';
+                      }
+                    }}
+                  />
+                  <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#17202A]/90 via-[#17202A]/40 to-transparent p-5 text-white">
+                    <div className="text-xs font-semibold tracking-wider uppercase text-[#ECFDF5]">
+                      Empowerment Body Leadership
+                    </div>
+                    <div className="text-base font-bold">
+                      Founder & Chief Executive Officer
+                    </div>
+                    <p className="text-xs text-slate-200 mt-1 line-clamp-2">
+                      Guiding individuals from financial uncertainty to structured, long-term sovereign wealth.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Founder badge info bar */}
+                <div className="mt-3 px-3 py-2 bg-[#F8FAFC] rounded-xl border border-slate-200/70 flex items-center justify-between text-xs text-[#52606D]">
+                  <div className="flex items-center gap-1.5 font-medium text-[#17202A]">
+                    <ShieldCheck className="w-4 h-4 text-[#00A878]" />
+                    <span>Real Mentorship</span>
+                  </div>
+                  <span className="text-slate-300">·</span>
+                  <span>Human Guidance</span>
+                  <span className="text-slate-300">·</span>
+                  <span>Long-Term Discipline</span>
+                </div>
               </div>
-
-              <div className="space-y-3">
-                <div className="p-3 bg-neutral-950/60 rounded-xl border border-neutral-800/60">
-                  <span className="text-xs font-semibold text-white block">01. In-App Video Masterclasses</span>
-                  <p className="text-[11px] text-neutral-400 mt-0.5">
-                    Stream all 4 Academy courses offline with downloadable spreadsheets & templates.
-                  </p>
-                </div>
-
-                <div className="p-3 bg-neutral-950/60 rounded-xl border border-neutral-800/60">
-                  <span className="text-xs font-semibold text-white block">02. Private Deal Room Feeds</span>
-                  <p className="text-[11px] text-neutral-400 mt-0.5">
-                    Receive real-time syndication deal breakdowns, pro forma audits, and risk notices.
-                  </p>
-                </div>
-
-                <div className="p-3 bg-neutral-950/60 rounded-xl border border-neutral-800/60">
-                  <span className="text-xs font-semibold text-white block">03. AI Command Studio</span>
-                  <p className="text-[11px] text-neutral-400 mt-0.5">
-                    Deploy prompt engineering pipelines and autonomous workflows directly on mobile.
-                  </p>
-                </div>
-              </div>
-
-              <button
-                onClick={onDownloadApp}
-                className="w-full py-2.5 px-3 bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 text-xs font-bold rounded-xl flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
-              >
-                <Smartphone className="w-3.5 h-3.5" />
-                <span>Get EB Wealth on Android (APK)</span>
-              </button>
             </div>
           </div>
         </div>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { MENTORSHIP_TIERS } from '../data/content';
 import { MentorshipTier } from '../types';
-import { Compass, Check, ArrowRight, ShieldCheck, Lock, Star, Download, Smartphone } from 'lucide-react';
+import { Compass, Check, ArrowRight, ShieldCheck, Users, Calendar, Target, Smartphone } from 'lucide-react';
 import mentorshipImage from '../assets/images/mentorship_coaching_1791394783951.jpg';
 
 interface MentorshipProps {
@@ -16,162 +16,209 @@ export const Mentorship: React.FC<MentorshipProps> = ({
   onOpenDisclosures
 }) => {
   return (
-    <section id="mentorship" className="py-24 bg-neutral-900 text-neutral-100 border-t border-neutral-800 relative">
+    <section id="mentorship" className="py-20 lg:py-28 bg-white border-b border-slate-200/80">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="flex items-center justify-center gap-2 text-xs tracking-wider uppercase text-amber-400 font-semibold mb-2">
+        <div className="max-w-3xl mb-12">
+          <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[#00A878] mb-2">
             <Compass className="w-4 h-4" />
-            <span>Tailored Executive Mentorship</span>
-            <span aria-hidden="true" className="text-neutral-600">·</span>
-            <span className="text-neutral-400">Hosted in the EB Wealth App</span>
+            <span>Mentorship & Accountability</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white font-display">
-            High-Stakes Capital Strategy, Tailored to You
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#17202A] tracking-tight">
+            Consistency Builds Wealth. Mentorship Keeps You Accountable.
           </h2>
-          <p className="text-sm sm:text-base text-neutral-300 mt-4 leading-relaxed">
-            The private deal room, pro forma audits, and direct confidential advisory channel with the Founder & CEO are managed exclusively through our secure mobile application.
+          <p className="mt-4 text-base sm:text-lg text-[#52606D] leading-relaxed">
+            Investing knowledge is never enough without discipline, execution, and long-term consistency. EB Wealth provides structured mentorship to keep you focused on your goals and eliminate costly emotional mistakes.
           </p>
         </div>
 
-        {/* Feature Spotlight: Mentorship Suite Photo & Pillars */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center mb-16 bg-neutral-950/80 border border-neutral-800 rounded-3xl p-6 md:p-10 shadow-2xl">
-          <div className="lg:col-span-6 space-y-6">
-            <span className="text-xs font-semibold uppercase tracking-widest text-emerald-400 block">
-              The Mobile Advisory Experience
+        {/* 4 Core Pillars of Mentorship Banner */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-16">
+          <div className="p-5 rounded-2xl bg-[#F8FAFC] border border-slate-200">
+            <div className="w-10 h-10 rounded-xl bg-white border border-slate-200 flex items-center justify-center text-[#00A878] mb-3 shadow-2xs">
+              <Users className="w-5 h-5" />
+            </div>
+            <h4 className="text-sm font-bold text-[#17202A] mb-1">Regular Group Coaching</h4>
+            <p className="text-xs text-[#52606D] leading-relaxed">
+              Bi-weekly interactive strategy sessions covering market updates, allocation logic, and live Q&A.
+            </p>
+          </div>
+
+          <div className="p-5 rounded-2xl bg-[#F8FAFC] border border-slate-200">
+            <div className="w-10 h-10 rounded-xl bg-white border border-slate-200 flex items-center justify-center text-[#2563EB] mb-3 shadow-2xs">
+              <Target className="w-5 h-5" />
+            </div>
+            <h4 className="text-sm font-bold text-[#17202A] mb-1">Portfolio Logic Reviews</h4>
+            <p className="text-xs text-[#52606D] leading-relaxed">
+              Objective educational audits of your diversification, asset allocation, and fee drag.
+            </p>
+          </div>
+
+          <div className="p-5 rounded-2xl bg-[#F8FAFC] border border-slate-200">
+            <div className="w-10 h-10 rounded-xl bg-white border border-slate-200 flex items-center justify-center text-[#F4B942] mb-3 shadow-2xs">
+              <Calendar className="w-5 h-5" />
+            </div>
+            <h4 className="text-sm font-bold text-[#17202A] mb-1">Accountability Check-Ins</h4>
+            <p className="text-xs text-[#52606D] leading-relaxed">
+              Regular milestone reviews to ensure you stick to your savings targets and long-term roadmap.
+            </p>
+          </div>
+
+          <div className="p-5 rounded-2xl bg-[#F8FAFC] border border-slate-200">
+            <div className="w-10 h-10 rounded-xl bg-white border border-slate-200 flex items-center justify-center text-[#14B8A6] mb-3 shadow-2xs">
+              <ShieldCheck className="w-5 h-5" />
+            </div>
+            <h4 className="text-sm font-bold text-[#17202A] mb-1">Direct Founder Access</h4>
+            <p className="text-xs text-[#52606D] leading-relaxed">
+              Higher tiers gain confidential direct access to the Founder & CEO for high-level business strategy.
+            </p>
+          </div>
+        </div>
+
+        {/* Visual Feature Spotlight with Real Coaching Environment */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center mb-16 bg-[#ECFDF5]/50 border border-[#00A878]/20 rounded-3xl p-6 md:p-10">
+          <div className="lg:col-span-6 space-y-5">
+            <span className="text-xs font-bold uppercase tracking-widest text-[#00A878] block">
+              The Mentorship Advantage
             </span>
-            <h3 className="text-2xl sm:text-3xl font-bold text-white font-display">
-              Uncompromising Due Diligence & Encrypted In-App Communications
+            <h3 className="text-2xl sm:text-3xl font-bold text-[#17202A]">
+              Never Navigate Complex Decisions in Isolation
             </h3>
-            <p className="text-sm text-neutral-300 leading-relaxed">
-              Every prospective syndication, private placement, and business acquisition is shared and audited inside our encrypted in-app Deal Room. Download the app to review submissions and connect directly with leadership.
+            <p className="text-sm text-[#52606D] leading-relaxed">
+              Most individual investors make their worst decisions during market extremes—buying at peak euphoria or panic selling during normal corrections. Having seasoned mentors and an accountability circle keeps you grounded in data and mathematical discipline.
             </p>
 
             <div className="space-y-3 pt-2">
-              <div className="flex items-start gap-3 text-xs sm:text-sm text-neutral-200">
-                <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                <span><strong>Private In-App Deal Room:</strong> Real-time feeds of syndicated real estate & private credit teardowns.</span>
+              <div className="flex items-start gap-3 text-xs sm:text-sm text-[#17202A]">
+                <Check className="w-4 h-4 text-[#00A878] shrink-0 mt-0.5" />
+                <span><strong>No Sales Agendas:</strong> We do not sell financial products or earn commissions on your trades.</span>
               </div>
-              <div className="flex items-start gap-3 text-xs sm:text-sm text-neutral-200">
-                <Lock className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                <span><strong>Encrypted In-App Messaging:</strong> Direct VIP channel with the Founder & CEO protected by end-to-end security.</span>
+              <div className="flex items-start gap-3 text-xs sm:text-sm text-[#17202A]">
+                <Check className="w-4 h-4 text-[#00A878] shrink-0 mt-0.5" />
+                <span><strong>Holistic Integration:</strong> Connect personal investing with business cash flow and AI systems.</span>
               </div>
-              <div className="flex items-start gap-3 text-xs sm:text-sm text-neutral-200">
-                <Star className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
-                <span><strong>Live Deal Strategy Rooms:</strong> Push notifications for time-sensitive investment allocation windows.</span>
+              <div className="flex items-start gap-3 text-xs sm:text-sm text-[#17202A]">
+                <Check className="w-4 h-4 text-[#00A878] shrink-0 mt-0.5" />
+                <span><strong>Private Mastermind:</strong> Network with verified professionals, founders, and serious investors.</span>
               </div>
             </div>
 
-            <div className="pt-2">
+            <div className="pt-3">
               <button
-                onClick={() => onOpenAppDownload('EB Wealth Private Deal Room')}
-                className="py-3 px-6 bg-gradient-to-r from-amber-500 to-yellow-400 hover:from-amber-400 hover:to-yellow-300 text-neutral-950 font-bold text-xs rounded-xl transition-all shadow-md flex items-center gap-2 cursor-pointer"
+                onClick={() => onApply()}
+                className="py-3 px-6 bg-[#00A878] hover:bg-[#009267] text-white text-xs font-semibold rounded-xl transition-all cursor-pointer shadow-xs flex items-center gap-2"
               >
-                <Download className="w-4 h-4" />
-                <span>Download App to Access Deal Room</span>
+                <span>Apply for Mentorship</span>
+                <ArrowRight className="w-4 h-4" />
               </button>
             </div>
           </div>
 
           <div className="lg:col-span-6">
-            <div className="relative rounded-2xl overflow-hidden border border-neutral-800 shadow-2xl group">
+            <div className="relative rounded-2xl overflow-hidden border border-slate-200 shadow-md group bg-white">
               <img
                 src={mentorshipImage}
-                alt="EB Wealth Executive Mentorship and Private Consultation"
-                className="w-full h-auto object-cover aspect-[4/3] group-hover:scale-105 transition duration-500"
-                referrerPolicy="no-referrer"
+                alt="EB Wealth Executive Mentorship & Strategy Sessions"
+                className="w-full h-auto object-cover group-hover:scale-101 transition-transform duration-300"
+                loading="lazy"
+                onError={(e) => {
+                  const target = e.target as HTMLImageElement;
+                  if (!target.src.includes('/images/')) {
+                    target.src = '/images/mentorship_coaching_1791394783951.jpg';
+                  }
+                }}
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-neutral-950 via-neutral-950/40 to-transparent p-6 flex flex-col justify-end">
-                <span className="text-xs uppercase tracking-widest text-amber-400 font-semibold">
-                  Executive Retainer
-                </span>
-                <span className="text-sm font-semibold text-white mt-0.5">
-                  Private 1-on-1 Deep Dives with the Founder & CEO
-                </span>
+              <div className="p-4 bg-white border-t border-slate-200">
+                <div className="text-xs font-bold text-[#17202A]">
+                  Structured Mentorship Framework
+                </div>
+                <div className="text-[11px] text-[#52606D] mt-0.5">
+                  Direct guidance, cohort accountability, and private strategy sessions.
+                </div>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Mentorship Tiers Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-          {MENTORSHIP_TIERS.map((tier) => (
-            <div
-              key={tier.id}
-              className={`p-7 sm:p-8 rounded-3xl border transition-all duration-300 flex flex-col justify-between ${
-                tier.featured
-                  ? 'bg-gradient-to-b from-neutral-950 via-neutral-900 to-neutral-950 border-amber-500/50 shadow-2xl shadow-amber-950/20 relative'
-                  : 'bg-neutral-950/60 border-neutral-800 hover:border-neutral-700'
-              }`}
-            >
-              <div>
-                <div className="flex items-center justify-between gap-2 mb-3">
-                  <span className={`text-xs font-semibold uppercase tracking-wider ${
-                    tier.featured ? 'text-amber-400' : 'text-emerald-400'
-                  }`}>
-                    {tier.badge}
-                  </span>
-                  <span className="text-xs text-neutral-400 font-mono">
-                    {tier.commitment}
-                  </span>
-                </div>
+        {/* 3 Mentorship Tiers Grid */}
+        <div className="mb-12">
+          <div className="text-center max-w-2xl mx-auto mb-10">
+            <h3 className="text-2xl font-bold text-[#17202A]">
+              Choose Your Mentorship Pathway
+            </h3>
+            <p className="text-xs sm:text-sm text-[#52606D] mt-1.5">
+              Selective intakes designed to ensure close attention, high engagement, and genuine accountability.
+            </p>
+          </div>
 
-                <h3 className="text-2xl font-bold text-white tracking-tight font-display mb-2">
-                  {tier.title}
-                </h3>
-                <p className="text-xs sm:text-sm text-neutral-300 mb-6">
-                  {tier.tagline}
-                </p>
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            {MENTORSHIP_TIERS.map((tier) => (
+              <div
+                key={tier.id}
+                className={`p-7 rounded-3xl border flex flex-col justify-between transition-all ${
+                  tier.featured
+                    ? 'bg-white border-[#00A878] shadow-lg ring-2 ring-[#00A878]/10'
+                    : 'bg-[#F8FAFC] border-slate-200 hover:border-slate-300 hover:bg-white shadow-xs'
+                }`}
+              >
+                <div>
+                  <div className="flex items-center justify-between mb-4">
+                    <span className="text-xs font-mono font-bold text-[#00A878] uppercase">
+                      {tier.badge}
+                    </span>
+                    <span className="text-[11px] text-[#52606D] font-medium">
+                      {tier.commitment}
+                    </span>
+                  </div>
 
-                <div className="space-y-3 mb-8">
-                  {tier.deliverables.map((item, idx) => (
-                    <div key={idx} className="flex items-start gap-2.5 text-xs text-neutral-300">
-                      <Check className={`w-4 h-4 shrink-0 mt-0.5 ${
-                        tier.featured ? 'text-amber-400' : 'text-emerald-400'
-                      }`} />
-                      <span>{item}</span>
+                  <h4 className="text-xl font-bold text-[#17202A] mb-2">
+                    {tier.title}
+                  </h4>
+                  <p className="text-xs text-[#52606D] leading-relaxed mb-6">
+                    {tier.tagline}
+                  </p>
+
+                  <div className="pt-4 border-t border-slate-200/80 mb-6">
+                    <div className="text-xs font-bold text-[#17202A] uppercase tracking-wider mb-3">
+                      Key Inclusions:
                     </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Bottom Card Footer linking to the app */}
-              <div className="pt-6 border-t border-neutral-800">
-                <div className="text-xs text-neutral-400 mb-4">
-                  <strong className="text-neutral-200">Ideal For:</strong> {tier.idealFor}
-                </div>
-                <div className="text-[11px] text-neutral-500 mb-4 font-mono">
-                  {tier.priceNote}
+                    <ul className="space-y-2.5">
+                      {tier.deliverables.map((item, i) => (
+                        <li key={i} className="flex items-start gap-2.5 text-xs text-[#17202A]">
+                          <Check className="w-3.5 h-3.5 text-[#00A878] shrink-0 mt-0.5" />
+                          <span className="leading-snug">{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 </div>
 
-                <button
-                  onClick={() => onOpenAppDownload(`Mentorship: ${tier.title}`)}
-                  className={`w-full py-3 px-5 font-semibold text-xs rounded-xl transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer ${
-                    tier.featured
-                      ? 'bg-gradient-to-r from-amber-500 to-yellow-400 hover:from-amber-400 hover:to-yellow-300 text-neutral-950'
-                      : 'bg-gradient-to-r from-emerald-600 to-teal-500 hover:from-emerald-500 hover:to-teal-400 text-white'
-                  }`}
-                >
-                  <Download className="w-4 h-4" />
-                  <span>Download App to Apply</span>
-                  <ArrowRight className="w-4 h-4" />
-                </button>
+                <div className="pt-6 border-t border-slate-200/80 mt-auto">
+                  <div className="text-[11px] text-[#52606D] mb-4">
+                    <strong>Ideal for:</strong> {tier.idealFor}
+                  </div>
+                  <button
+                    onClick={() => onApply(tier)}
+                    className={`w-full py-3 px-4 rounded-xl text-xs font-semibold transition-all flex items-center justify-center gap-2 cursor-pointer ${
+                      tier.featured
+                        ? 'bg-[#00A878] hover:bg-[#009267] text-white shadow-xs'
+                        : 'bg-white hover:bg-slate-50 text-[#17202A] border border-slate-200'
+                    }`}
+                  >
+                    <span>Apply for {tier.title}</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </button>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
 
-        {/* Regulatory Disclosure */}
-        <div className="p-4 bg-neutral-950 border border-neutral-800 rounded-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs text-neutral-400">
-          <span>
-            <strong>Compliance Disclaimer:</strong> EB Wealth Mentorship does not provide discretionary asset management or broker-dealer transactions. All decisions remain strictly client-directed.
-          </span>
-          <button
-            onClick={onOpenDisclosures}
-            className="text-amber-400 hover:text-amber-300 underline font-medium whitespace-nowrap cursor-pointer text-xs"
-          >
-            Review Legal Terms
-          </button>
+        {/* Regulatory note reminder */}
+        <div className="text-center max-w-2xl mx-auto">
+          <p className="text-[11px] text-slate-400">
+            Mentorship programs are strictly educational and strategic consulting. We do not provide regulated personal investment advice or asset management.
+          </p>
         </div>
       </div>
     </section>

@@ -4,7 +4,6 @@
  */
 
 import React, { useState, useEffect } from 'react';
-import { Upload } from 'lucide-react';
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 
@@ -25,6 +24,7 @@ import { BookingModal } from './components/BookingModal';
 import { CourseDetailModal } from './components/CourseDetailModal';
 import { AIAuditModal } from './components/AIAuditModal';
 import { LegalModal } from './components/LegalModal';
+import { GetStartedModal } from './components/GetStartedModal';
 
 import { Course, CoachingPackage, MentorshipTier } from './types';
 import { PageId } from './types/navigation';
@@ -80,26 +80,15 @@ export default function App() {
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
 
-  // App Download Modal state
+  // Modal states
   const [appDownloadModalOpen, setAppDownloadModalOpen] = useState(false);
   const [downloadModalTab, setDownloadModalTab] = useState<'download' | 'uploader'>('download');
   const [downloadContextFeature, setDownloadContextFeature] = useState<string>('');
 
-  const handleOpenAppDownload = (featureName?: string) => {
-    setDownloadContextFeature(featureName || 'EB Wealth Mobile Application');
-    setDownloadModalTab('download');
-    setAppDownloadModalOpen(true);
-  };
+  const [getStartedModalOpen, setGetStartedModalOpen] = useState(false);
 
-  const handleOpenManageApk = () => {
-    setDownloadContextFeature('APK Release Management');
-    setDownloadModalTab('uploader');
-    setAppDownloadModalOpen(true);
-  };
-
-  // Other Modal states
   const [applicationModalOpen, setApplicationModalOpen] = useState(false);
-  const [applicationTierTitle, setApplicationTierTitle] = useState('Private Executive Mentorship');
+  const [applicationTierTitle, setApplicationTierTitle] = useState('Growth Mentorship');
 
   const [bookingModalOpen, setBookingModalOpen] = useState(false);
   const [selectedCoachingPackage, setSelectedCoachingPackage] = useState<CoachingPackage | null>(null);
@@ -112,14 +101,20 @@ export default function App() {
   const [legalModalOpen, setLegalModalOpen] = useState(false);
   const [legalModalType, setLegalModalType] = useState<'disclaimer' | 'privacy' | 'terms'>('disclaimer');
 
-  // Modal Action Handlers
+  // Modal Handlers
+  const handleOpenAppDownload = (featureName?: string) => {
+    setDownloadContextFeature(featureName || 'EB Wealth Mobile Application');
+    setDownloadModalTab('download');
+    setAppDownloadModalOpen(true);
+  };
+
   const handleOpenCourseDetail = (course: Course) => {
     setSelectedCourse(course);
     setCourseDetailModalOpen(true);
   };
 
   const handleApplyMentorship = (tier?: MentorshipTier) => {
-    setApplicationTierTitle(tier ? tier.title : 'Private Executive Mentorship');
+    setApplicationTierTitle(tier ? tier.title : 'Growth Mentorship');
     setApplicationModalOpen(true);
   };
 
@@ -134,13 +129,13 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-neutral-950 text-neutral-100 flex flex-col font-sans selection:bg-emerald-500/30 selection:text-emerald-200">
-      {/* Universal Top Bar with direct App download & APK manager */}
+    <div className="min-h-screen bg-[#F8FAFC] text-[#17202A] flex flex-col font-sans selection:bg-[#00A878]/20 selection:text-[#00A878]">
+      {/* Universal Top Navigation Header */}
       <Navbar
         currentPage={currentPage}
         onNavigate={navigateTo}
         onOpenDownloadModal={handleOpenAppDownload}
-        onOpenManageApk={handleOpenManageApk}
+        onOpenGetStarted={() => setGetStartedModalOpen(true)}
       />
 
       {/* Dynamic Multi-Page Router View */}
@@ -150,13 +145,18 @@ export default function App() {
             onNavigate={navigateTo}
             onOpenDownloadModal={handleOpenAppDownload}
             onOpenDisclosures={() => handleOpenLegal('disclaimer')}
+            onSelectCourse={handleOpenCourseDetail}
+            onApplyMentorship={handleApplyMentorship}
+            onBookCoaching={handleBookSession}
+            onScheduleAIAudit={() => setAiAuditModalOpen(true)}
+            onOpenGetStartedModal={() => setGetStartedModalOpen(true)}
           />
         )}
 
         {currentPage === 'about' && (
           <AboutPage
             onNavigate={navigateTo}
-            onOpenMentorship={() => handleOpenAppDownload('Executive Mentorship with the Founder & CEO')}
+            onOpenMentorship={() => handleApplyMentorship()}
             onOpenDisclosures={() => handleOpenLegal('disclaimer')}
           />
         )}
@@ -198,7 +198,7 @@ export default function App() {
         {currentPage === 'tools' && (
           <ToolsPage
             onNavigate={navigateTo}
-            onOpenMentorship={() => handleOpenAppDownload('Executive Mentorship Suite')}
+            onOpenMentorship={() => handleApplyMentorship()}
             onOpenDisclosures={() => handleOpenLegal('disclaimer')}
           />
         )}
@@ -210,35 +210,21 @@ export default function App() {
         )}
       </main>
 
-      {/* Universal Footer with direct APK download & manager */}
+      {/* Universal Footer with prominent regulatory disclaimers */}
       <Footer
         onNavigate={navigateTo}
         onOpenDownloadModal={handleOpenAppDownload}
-        onOpenManageApk={handleOpenManageApk}
         onOpenLegal={handleOpenLegal}
+        onOpenGetStarted={() => setGetStartedModalOpen(true)}
       />
 
-      {/* Floating Admin APK Manager Button (Commented out for now)
-      <aside aria-label="APK Administration" className="fixed bottom-5 right-5 z-40">
-        <button
-          onClick={handleOpenManageApk}
-          className="group flex items-center gap-2.5 px-4 py-2.5 bg-neutral-900/95 hover:bg-neutral-800 text-white border border-emerald-500/50 hover:border-emerald-400 rounded-full shadow-2xl backdrop-blur-md transition-all duration-200 cursor-pointer hover:scale-105 active:scale-95 ring-1 ring-emerald-500/20"
-          title="Owner Tool: Upload or manage your APK file"
-        >
-          <span className="relative flex h-2.5 w-2.5">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
-          </span>
-          <Upload className="w-4 h-4 text-emerald-400 group-hover:-translate-y-0.5 transition-transform" />
-          <span className="text-xs font-bold text-white tracking-wide">
-            Upload / Manage APK
-          </span>
-          <span className="px-1.5 py-0.5 bg-emerald-500/20 text-emerald-300 text-[10px] font-mono rounded font-semibold uppercase">
-            Admin
-          </span>
-        </button>
-      </aside>
-      */}
+      {/* Pathfinder Onboarding Modal */}
+      <GetStartedModal
+        isOpen={getStartedModalOpen}
+        onClose={() => setGetStartedModalOpen(false)}
+        onNavigate={navigateTo}
+        onOpenAppDownload={handleOpenAppDownload}
+      />
 
       {/* Primary Mobile App Download Modal */}
       <AppDownloadModal
@@ -259,7 +245,7 @@ export default function App() {
         isOpen={bookingModalOpen}
         onClose={() => setBookingModalOpen(false)}
         initialPackage={selectedCoachingPackage}
-        onProceedToStripe={() => handleOpenAppDownload('1-on-1 Coaching Private Room')}
+        onProceedToStripe={() => handleOpenAppDownload('1-on-1 Coaching Session')}
       />
 
       <CourseDetailModal

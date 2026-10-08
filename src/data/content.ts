@@ -1,212 +1,280 @@
 import { Course, MentorshipTier, CoachingPackage, AIService, Testimonial } from '../types';
 
-export const COURSES: Course[] = [
+export const FOUNDER_IMAGE_URL = 'https://res.cloudinary.com/frl7thhq/image/upload/v1791447447/9a493f0e-a0ed-4fd1-ae45-37d9f285a283.png';
+
+export const CORE_PHILOSOPHY = [
+  { step: '01', name: 'EDUCATE', desc: 'Clear, foundational financial literacy stripped of confusing industry jargon.' },
+  { step: '02', name: 'UNDERSTAND', desc: 'Deep comprehension of assets, UK tax wrappers, business models, and market mechanics.' },
+  { step: '03', name: 'ANALYSE', desc: 'Critical evaluation of balance sheets, risk-reward ratios, and valuation metrics.' },
+  { step: '04', name: 'BUILD', desc: 'Constructing robust, diversified portfolios and automated business systems.' },
+  { step: '05', name: 'TRACK', desc: 'Disciplined performance monitoring, rebalancing, and fee minimization.' },
+  { step: '06', name: 'GROW', desc: 'Compounding long-term wealth, personal sovereignty, and enterprise leverage.' },
+];
+
+export const FIVE_PILLARS = [
   {
-    id: 'course-foundations',
-    title: 'Foundations of Sovereign Capital',
-    subtitle: 'Modern Portfolio Architecture & Dynamic Asset Allocation',
-    level: 'Beginner',
-    duration: '6 Weeks (Self-Paced + Live Q&A)',
-    modulesCount: 8,
-    accessTier: 'Executive Member Pass',
-    description:
-      'A structured, institutional-grade masterclass designed to take you from foundational financial literacy to confident, self-directed capital allocation without relying on high-fee intermediaries.',
-    keyOutcomes: [
-      'Master modern portfolio theory (MPT) and asymmetrical risk-reward ratios',
-      'Construct a bulletproof diversified core portfolio across equities, debt, and cash reserves',
-      'Eliminate predatory advisor fees and automate dollar-cost averaging pipelines',
-      'Develop psychological emotional resilience during high-volatility market cycles'
-    ],
-    modules: [
-      {
-        title: 'Module 1: The Macroeconomic Landscape & Capital Preservation',
-        topics: ['Fiat currency debasement', 'Inflation hedged assets', 'Central bank interest rate cycles']
-      },
-      {
-        title: 'Module 2: Balance Sheet Restructuring & Liquidity Architecture',
-        topics: ['Liquid reserves staging', 'Debt optimization', 'Emergency capital vs opportunistic dry powder']
-      },
-      {
-        title: 'Module 3: Global Equity Index Alpha & ETF Selection',
-        topics: ['Broad-market indexes', 'Factor tilts (Value, Quality, Momentum)', 'Expense ratio minimization']
-      },
-      {
-        title: 'Module 4: Fixed Income & Yield Instruments',
-        topics: ['Treasury ladders', 'Corporate credit risk evaluation', 'Money market liquidity mechanics']
-      }
-    ],
-    featured: true
+    key: 'learn',
+    title: 'Learn',
+    subtitle: 'Financial Education',
+    description: 'Investment and financial education designed to make complex concepts simple, actionable, and jargon-free.',
+    topics: ['Investing Foundations', 'UK Tax Wrappers (ISA, SIPP)', 'Compounding & Inflation', 'Psychology of Wealth'],
+    icon: 'BookOpen'
   },
   {
-    id: 'course-alternatives',
-    title: 'Alternative Assets & Private Market Alpha',
-    subtitle: 'Real Estate Syndication, Private Credit & Strategic Equity',
-    level: 'Intermediate',
-    duration: '8 Weeks (Interactive Labs)',
-    modulesCount: 10,
-    accessTier: 'Accredited Investor Pass',
-    description:
-      'Go beyond traditional 60/40 index models. Learn how ultra-wealthy family offices allocate into cash-flowing private debt, commercial real estate syndications, and unlisted business acquisitions.',
-    keyOutcomes: [
-      'Evaluate private credit deals, cap rates, and preferred equity waterfalls',
-      'Conduct rigorous due diligence on real estate syndications and private funds',
-      'Structure passive cashflow vehicles generating consistent annual distributions',
-      'Stress-test private asset liquidity horizons against economic downturns'
-    ],
-    modules: [
-      {
-        title: 'Module 1: Private Debt & Asset-Backed Lending Mechanics',
-        topics: ['First-lien security', 'LTV covenants', 'Underwriting private borrower risks']
-      },
-      {
-        title: 'Module 2: Real Estate Syndication Underwriting',
-        topics: ['Pro forma financial models', 'Cap rate compression analysis', 'Sponsor track record audits']
-      },
-      {
-        title: 'Module 3: Small Business Acquisitions (Micro-PE)',
-        topics: ['SBA-leveraged buyouts', 'EBITDA multiples', 'Post-acquisition operational levers']
-      },
-      {
-        title: 'Module 4: Gold, Commodities & Digital Store-of-Value',
-        topics: ['Physical bullion custody', 'Commodity cycles', 'Digital asset allocation boundaries']
-      }
-    ]
+    key: 'invest',
+    title: 'Invest',
+    subtitle: 'Asset Mastery',
+    description: 'Learn how stocks, ETFs, index funds, REITs, ISAs, and balanced multi-asset portfolios work in practice.',
+    topics: ['Index Funds & ETFs', 'Stocks & Dividend Growth', 'Asset Allocation Models', 'Execution & Order Types'],
+    icon: 'TrendingUp'
   },
   {
-    id: 'course-generational',
-    title: 'Generational Wealth & Entity Blueprint',
-    subtitle: 'Trust Structures, Tax Optimization & Legacy Governance',
-    level: 'Advanced',
-    duration: '6 Weeks (Executive Cohort)',
-    modulesCount: 6,
-    accessTier: 'Family Office & Trust Pass',
-    description:
-      'Wealth creation is only half the battle; retention and multi-generational compounding require institutional legal, tax, and trust architecture that insulates assets from liability and erosion.',
-    keyOutcomes: [
-      'Design corporate entity holding structures that shield personal liability',
-      'Understand revocable vs irrevocable trust frameworks for intergenerational transfer',
-      'Implement lawful tax reduction strategies utilizing depreciation and asset protection',
-      'Draft a binding Family Wealth Constitution and governance doctrine'
-    ],
-    modules: [
-      {
-        title: 'Module 1: Holding Companies & Asset Protection Firewalls',
-        topics: ['Dual-tier LLC structures', 'Foreign vs domestic jurisdictions', 'Piercing the veil protection']
-      },
-      {
-        title: 'Module 2: Trust Architectures & Estate Governance',
-        topics: ['Spendthrift provisions', 'Dynasty trusts', 'Successor trustee management protocols']
-      },
-      {
-        title: 'Module 3: Tax-Advantaged Compounding & Capital Gains Optimization',
-        topics: ['Asset restructuring', 'Cost segregation', 'Charitable trust frameworks']
-      }
-    ]
+    key: 'analyse',
+    title: 'Analyse',
+    subtitle: 'Research & Valuation',
+    description: 'Understand businesses, investments, risk profiles, valuation multiples, and structural diversification.',
+    topics: ['Company Fundamentals (P/E, Cash Flow)', 'Moats & Competitive Advantage', 'Risk vs Reward Evaluation', 'Debt & Solvency Audits'],
+    icon: 'PieChart'
   },
   {
-    id: 'course-ai-investing',
-    title: 'AI Intelligence for Market Research',
-    subtitle: 'Algorithmic Screening, SEC Filing Parsing & Prompt Engineering',
-    level: 'All Levels',
-    duration: '4 Weeks (Practical Hands-On)',
-    modulesCount: 6,
-    accessTier: 'Applied AI Masterclass Pass',
-    description:
-      'Harness customized AI prompt engineering workflows to read 10-K filings in seconds, extract competitor moat indicators, and automate macro data scraping for faster, smarter investment decisions.',
-    keyOutcomes: [
-      'Deploy custom LLM prompts tailored for forensic financial statement analysis',
-      'Automate earnings call sentiment extraction and management guidance tracking',
-      'Build your own private market intelligence vector database without coding',
-      'Synthesize complex multi-source analyst notes into high-clarity 1-page investment briefs'
-    ],
-    modules: [
-      {
-        title: 'Module 1: Financial Prompt Engineering Architecture',
-        topics: ['Context window management', 'Zero-shot vs few-shot financial reasoning', 'Hallucination defense']
-      },
-      {
-        title: 'Module 2: Automated SEC 10-K & 10-Q Deep Auditing',
-        topics: ['Footnote parsing', 'Executive compensation triggers', 'Related-party transaction flags']
-      },
-      {
-        title: 'Module 3: Macro & Industry Competitive Landscape Intelligence',
-        topics: ['Supply chain bottleneck screening', 'Consumer trend scraping', 'Synthesized risk matrices']
-      }
-    ]
+    key: 'grow',
+    title: 'Grow',
+    subtitle: 'Habits & Mentorship',
+    description: 'Develop better financial habits, disciplined accountability, and resilient long-term wealth strategies.',
+    topics: ['Peer Mastermind Circles', 'Executive 1-on-1 Coaching', 'Accountability Check-ins', 'Long-Horizon Compounding'],
+    icon: 'Compass'
+  },
+  {
+    key: 'build',
+    title: 'Build',
+    subtitle: 'AI & Business Systems',
+    description: 'Use practical AI, technology, and automated business workflows to create commercial leverage.',
+    topics: ['High-Impact Prompt Architecture', 'Automated Lead Qualification', 'Internal Operations Scaling', 'AI Readiness Audits'],
+    icon: 'Cpu'
   }
 ];
 
+export const ACADEMY_LEVELS = [
+  {
+    levelNumber: 1,
+    title: 'Level 1 — Investing Foundations',
+    headline: 'Foundations of Long-Term Wealth',
+    description: 'Designed for complete beginners and those wanting to master the bedrock principles of capital before investing.',
+    badge: 'Foundations',
+    topics: [
+      'What investing actually is and why saving cash alone guarantees loss through inflation',
+      'Stocks: What owning a share of a real enterprise truly means',
+      'ETFs & Index Funds: Low-cost, passive, broad-market diversification',
+      'The mathematics of compounding returns over 5, 10, and 30-year horizons',
+      'Understanding risk, volatility, and emotional investor psychology',
+      'Inflation mechanics and purchasing power preservation'
+    ],
+    duration: '6 Weeks · Self-Paced + Live Q&A',
+    targetAudience: 'Beginners & savers seeking clarity'
+  },
+  {
+    levelNumber: 2,
+    title: 'Level 2 — Understanding Investments',
+    headline: 'Asset Classes & Cash-Flow Vehicles',
+    description: 'A comprehensive deep dive into the different investment instruments available and how they generate returns.',
+    badge: 'Asset Classes',
+    topics: [
+      'Individual Stocks vs Exchange-Traded Funds (ETFs)',
+      'Real Estate Investment Trusts (REITs) and property exposure without physical landlording',
+      'Bonds & Fixed Income: Sovereign gilts, treasury yields, and credit risk',
+      'Mutual Funds vs Active Management: The truth about high fund manager fees',
+      'Dividends: Cash distributions, yield vs growth, and dividend reinvestment plans (DRIP)'
+    ],
+    duration: '5 Weeks · Video Modules + Checklists',
+    targetAudience: 'Beginner to Intermediate Investors'
+  },
+  {
+    levelNumber: 3,
+    title: 'Level 3 — UK Investing',
+    headline: 'UK Tax Wrappers & HMRC Rules',
+    description: 'How to legally shield your investments from capital gains and dividend taxes using UK government schemes.',
+    badge: 'UK Tax Shelters',
+    topics: [
+      'Stocks & Shares ISA: Maximizing your £20,000 annual tax-free allowance',
+      'Junior ISA (JISA): Building tax-free generational wealth for your children',
+      'Lifetime ISA (LISA): The 25% government bonus for first-time buyers or retirement',
+      'Self-Invested Personal Pension (SIPP): 20% to 45% tax relief and pension compounding',
+      'General Investment Account (GIA): When and how to use it once ISA limits are maximized',
+      'UK Tax basics: Capital Gains Tax allowance, dividend allowances, and reporting'
+    ],
+    duration: '4 Weeks · Practical UK Guide',
+    targetAudience: 'UK Residents, Expats & Earners'
+  },
+  {
+    levelNumber: 4,
+    title: 'Level 4 — Portfolio Building',
+    headline: 'Architecture, Diversification & Risk',
+    description: 'Learn how to construct a personalized, resilient portfolio suited to your personal timeframe and risk appetite.',
+    badge: 'Portfolio Design',
+    topics: [
+      'Asset Allocation: Equities, bonds, real assets, and liquidity staging',
+      'True Diversification vs Diworsification: Avoiding redundant overlapping funds',
+      'Geographic Exposure: UK bias vs US equity dominance vs Emerging Markets',
+      'Sector Exposure: Technology, healthcare, financials, and consumer cyclicals',
+      'Risk Management: Drawdown defense, rebalancing schedules, and volatility buffers'
+    ],
+    duration: '6 Weeks · Frameworks & Templates',
+    targetAudience: 'Intermediate Investors'
+  },
+  {
+    levelNumber: 5,
+    title: 'Level 5 — Understanding Companies',
+    headline: 'Fundamental Analysis & Business Valuation',
+    description: 'Learn to read real company reports, understand balance sheets, and evaluate competitive advantages.',
+    badge: 'Company Analysis',
+    topics: [
+      'Revenue, Profit Margins, and Operating Earnings explained simply',
+      'Cash Flow: Why Free Cash Flow matters far more than reported accounting profit',
+      'Debt & Solvency: Interest coverage, debt-to-equity, and bankruptcy avoidance',
+      'Valuation Multiples: P/E (Price-to-Earnings), P/S, EV/EBITDA, and what they tell you',
+      'Economic Moats: Brand pricing power, network effects, high switching costs, and cost leadership',
+      'Management Track Record, capital allocation discipline, and shareholder alignment'
+    ],
+    duration: '8 Weeks · Case Studies & Live Analysis',
+    targetAudience: 'Serious Stock & Business Evaluators'
+  },
+  {
+    levelNumber: 6,
+    title: 'Level 6 — Advanced Investing',
+    headline: 'Macroeconomics & Capital Sovereignty',
+    description: 'For experienced investors seeking advanced capital allocation, interest rate cycle mastery, and wealth preservation.',
+    badge: 'Advanced Strategy',
+    topics: [
+      'Macroeconomic indicators: Yield curves, interest rate shifts, and central bank liquidity',
+      'Valuation multiples across different market cycles and regime changes',
+      'Asymmetric risk-reward setups and defensive portfolio tilt strategies',
+      'Disciplined quarterly rebalancing and tax-loss harvesting logic',
+      'Intergenerational wealth preservation and capital sovereignty philosophy'
+    ],
+    duration: '8 Weeks · Advanced Masterclass',
+    targetAudience: 'Experienced Investors & Operators'
+  }
+];
+
+export const COURSES: Course[] = ACADEMY_LEVELS.map((lvl) => ({
+  id: `course-level-${lvl.levelNumber}`,
+  title: lvl.title,
+  subtitle: lvl.headline,
+  level: lvl.levelNumber <= 2 ? 'Beginner' : lvl.levelNumber <= 4 ? 'Intermediate' : 'Advanced',
+  duration: lvl.duration,
+  modulesCount: lvl.topics.length,
+  accessTier: 'EB Wealth Academy',
+  description: lvl.description,
+  keyOutcomes: lvl.topics.slice(0, 4),
+  modules: lvl.topics.map((top, idx) => ({
+    title: `Lesson ${idx + 1}`,
+    topics: [top]
+  })),
+  featured: lvl.levelNumber === 1 || lvl.levelNumber === 3
+}));
+
 export const MENTORSHIP_TIERS: MentorshipTier[] = [
   {
-    id: 'mentorship-accelerator',
-    title: 'Advisory Circle',
-    badge: 'Cohort Mentorship',
-    tagline: 'Direct monthly strategy labs, curated group accountability, and vetted deal discussions.',
-    commitment: '3-Month Immersion',
-    format: 'Bi-Weekly Live Masterminds + Private Forum',
-    priceNote: 'Application required · Limited to 15 seats per cohort',
+    id: 'mentorship-foundation',
+    title: 'Foundation Mentorship',
+    badge: 'Core Accountability',
+    tagline: 'Build foundational financial clarity, eliminate costly mistakes, and establish your core long-term investment plan.',
+    commitment: '3-Month Structured Cohort',
+    format: 'Bi-Weekly Group Strategy Sessions + Community Forum',
+    priceNote: 'Accessible cohort entry · Limited spots per intake',
     deliverables: [
-      'Bi-weekly group portfolio review & macro strategy sessions',
-      'Full, unrestricted access to EB Wealth Academy curricula & tools',
-      'Private peer mastermind network of verified investors & operators',
-      'Vetted deal breakdown tear-downs (real estate & private equity)',
-      'Direct monthly Q&A with Founder & CEO and guest institutional managers'
+      'Bi-weekly group financial strategy and Q&A sessions',
+      'Full unrestricted access to all 6 EB Wealth Academy levels',
+      'Personal portfolio structure audit and goal setting template',
+      'Active peer accountability community for consistent habits',
+      'Monthly macroeconomic and UK market educational brief'
     ],
-    idealFor: 'High-earning professionals & emerging founders scaling liquid capital allocation.'
+    idealFor: 'Beginners, professionals, and savers seeking structured guidance and accountability.'
+  },
+  {
+    id: 'mentorship-growth',
+    title: 'Growth Mentorship',
+    badge: 'Active Investor Circle',
+    tagline: 'Deepen your analysis, review company fundamentals, and master portfolio asset allocation with consistent mentorship.',
+    commitment: '6-Month Partnership',
+    format: 'Bi-Weekly Interactive Strategy Labs + Direct Group Feedback',
+    priceNote: 'Application required · Capped at 20 participants',
+    featured: true,
+    deliverables: [
+      'Everything in Foundation Mentorship',
+      'Bi-weekly deep-dive company analysis and valuation labs',
+      'Quarterly 1-on-1 portfolio logic review with senior mentors',
+      'Direct WhatsApp accountability group for prompt answers',
+      'Custom investment tracking and dividend projection spreadsheets',
+      'Exclusive guest sessions with experienced entrepreneurs and investors'
+    ],
+    idealFor: 'Intermediate investors, business owners, and professionals scaling their capital allocation.'
   },
   {
     id: 'mentorship-executive',
-    title: 'Private Executive Mentorship',
-    badge: 'Premier 1-on-1 Advisory',
-    tagline: 'Private, tailored partnership with the Founder & CEO. Bespoke portfolio design, capital strategy, and enterprise expansion.',
-    commitment: '6-Month Private Retainer',
-    format: '1-on-1 Private Sessions + Direct VIP Communications',
-    priceNote: 'Selective admission · Confidential interview required',
-    featured: true,
+    title: 'Executive Mastermind',
+    badge: 'Private 1-on-1 & Advisory',
+    tagline: 'Direct, tailored partnership with the Founder & CEO. Bespoke wealth strategy, AI business leverage, and long-term capital architecture.',
+    commitment: '6 to 12-Month Private Retainer',
+    format: '1-on-1 Private Sessions + Direct Founder Access',
+    priceNote: 'Confidential application & interview required',
     deliverables: [
-      'Private bi-weekly 60-minute strategic sessions directly with the Founder & CEO',
-      'Dedicated bespoke portfolio blueprint customized to your tax & family profile',
-      'Direct priority WhatsApp & Signal private advisory channel for time-sensitive decisions',
-      'Complete private equity and syndication deal analysis prior to capital commitment',
-      'Custom AI business architecture blueprint tailored to your primary revenue engine',
-      'Invitations to annual private EB Wealth closed-door investor retreats'
+      'Private bi-weekly 1-on-1 strategy sessions directly with the Founder & CEO',
+      'Bespoke wealth roadmap integrating corporate cashflow, UK tax wrappers, and private assets',
+      'Direct priority VIP messaging channel for critical strategic decisions',
+      'Complete business operations & AI leverage audit for your company',
+      'Confidential deal analysis and risk review before making major moves',
+      'Invitations to annual private EB Wealth closed-door roundtable dinners'
     ],
-    idealFor: 'Accredited investors, executives, and high-net-worth business owners scaling sovereign capital.'
+    idealFor: 'Established entrepreneurs, executives, and high-earning business owners seeking total sovereign growth.'
   }
 ];
 
 export const COACHING_PACKAGES: CoachingPackage[] = [
   {
-    id: 'coaching-clarity',
-    title: '90-Minute Strategic Wealth Blueprint',
-    duration: '90 Minutes (Intensive 1:1)',
-    accessTier: 'Private Consultation',
-    description:
-      'A forensic 1-on-1 deep dive into your existing asset allocation, cash flow bottlenecks, and risk vulnerabilities. Walk away with an actionable 3-phase execution roadmap.',
+    id: 'coaching-clarity-60',
+    title: '60-Minute Strategy & Roadmap Intensive',
+    duration: '60 Minutes (1:1 Video Call)',
+    accessTier: 'Private 1-on-1 Coaching',
+    description: 'A focused, objective deep dive into your current financial situation, investment questions, and long-term targets.',
     features: [
-      'Comprehensive pre-call financial audit questionnaire analysis',
-      '90 minutes of dedicated one-on-one video consultation',
-      'Identification of fee leakages, redundant funds, and tax inefficiencies',
-      'Customized asset allocation target model (conservative, balanced, or alpha-focused)',
-      'Full session recording + annotated PDF action plan delivered within 24 hours'
+      'Comprehensive pre-call questionnaire to understand your goals and current knowledge',
+      '60 minutes of uninterrupted one-on-one video guidance',
+      'Objective educational review of your asset allocation and fee leakages',
+      'Clarity on UK tax wrappers (Stocks & Shares ISA vs SIPP vs GIA)',
+      'Actionable written summary and recording delivered within 24 hours'
     ],
-    recommendedFor: 'Those seeking immediate clarity before making major portfolio moves or reallocating capital.'
+    recommendedFor: 'Those wanting immediate clarity and an educational sounding board for their financial plan.'
   },
   {
-    id: 'coaching-retainer',
-    title: 'Executive Accountability & Business Sprint',
-    duration: '90-Day Sprint (Weekly Check-ins)',
-    accessTier: 'Executive Retainer',
-    description:
-      'Consistent execution produces compounding wealth. Weekly high-level check-ins to hold you accountable to your capital targets, enterprise margins, and investment allocations.',
+    id: 'coaching-portfolio-90',
+    title: '90-Minute Wealth & Business Deep Dive',
+    duration: '90 Minutes (Comprehensive 1:1)',
+    accessTier: 'Premier 1-on-1 Coaching',
+    description: 'An expansive session covering both personal investing systems and business cash flow / AI leverage opportunities.',
     features: [
-      'Initial 75-minute onboarding & goals calibration session',
-      'Weekly 30-minute high-focus accountability check-ins (12 total sessions)',
-      'KPI and cash reserve tracking dashboards',
-      'Continuous review of prospective deals and business operational bottlenecks',
-      'Mid-sprint strategy recalibration and ongoing asynchronous advisory support'
+      'Detailed pre-session audit of your investment portfolio and business workflow',
+      '90 minutes of dedicated, bespoke strategy with senior leadership',
+      'Clear evaluation of company diversification, risk exposures, and fee drag',
+      'Tailored AI leverage recommendations for business owners and freelancers',
+      'Custom 30-day and 90-day execution checklist'
     ],
-    recommendedFor: 'Entrepreneurs and business leaders balancing company scaling with disciplined personal investing.'
+    recommendedFor: 'Entrepreneurs, self-employed professionals, and active investors needing a holistic strategy.'
+  },
+  {
+    id: 'coaching-quarterly-sprint',
+    title: '90-Day Transformation & Accountability Sprint',
+    duration: '3 Months (Weekly / Bi-Weekly Support)',
+    accessTier: 'Private Retainer',
+    description: 'Consistent execution builds lasting wealth. A 90-day coaching journey to implement sustainable investing and business habits.',
+    features: [
+      'Initial 75-minute onboarding and financial goal calibration session',
+      'Six bi-weekly 45-minute coaching check-ins over 12 weeks',
+      'Continuous review of financial milestones, savings rates, and portfolio discipline',
+      'Ongoing asynchronous messaging support between calls',
+      'Final milestone evaluation and multi-year trajectory blueprint'
+    ],
+    recommendedFor: 'Individuals committed to transforming their financial habits and business leverage over 90 focused days.'
   }
 ];
 
@@ -214,43 +282,40 @@ export const AI_GROWTH_SERVICES: AIService[] = [
   {
     id: 'ai-prompt-engineering',
     title: 'High-Impact Prompt Architecture',
-    tagline: 'Bespoke prompt systems that turn generic AI outputs into high-precision commercial work.',
-    description:
-      'We engineer domain-specific system prompts, contextual memory structures, and verification loops that empower your team to produce executive-grade research, marketing copy, and customer correspondence effortlessly.',
-    metricsImpact: 'Save 15+ hours/week per operator while boosting communication consistency',
+    tagline: 'Bespoke prompt engineering systems that transform generic AI tools into precision business assets.',
+    description: 'We design custom prompt libraries, contextual instructions, and structured frameworks so you and your team produce executive-grade research, copy, and operational outputs in minutes.',
+    metricsImpact: 'Saves 10–15 hours per week per team member while maintaining consistent tone and accuracy.',
     deliverables: [
-      'Proprietary executive prompt library tailored to your specific industry',
-      'Contextual system instruction templates designed to prevent hallucination',
-      'Structured few-shot prompt workflows for complex sales proposals and reports',
-      'Live hands-on team enablement training session with recorded playbooks'
+      'Proprietary prompt library tailored specifically to your business niche and workflows',
+      'Context-dense system prompts that eliminate generic hallucinations',
+      'Multi-step reasoning frameworks for market research, proposals, and customer communications',
+      'Live team training session with recorded playbooks and SOP documents'
     ]
   },
   {
     id: 'ai-autonomous-workflows',
-    title: 'Autonomous Client Acquisition & Qualification',
-    tagline: 'Transform inbound leads into booked high-ticket discovery calls on autopilot.',
-    description:
-      'Deploy intelligent AI conversational agents that nurture, pre-qualify, and schedule prospective high-value clients across email, web forms, and messaging channels with personalized human-level nuance.',
-    metricsImpact: 'Increase lead-to-call conversion rates by up to 34% with sub-2-minute response times',
+    title: 'Workflow & Lead Automation',
+    tagline: 'Streamline client acquisition, lead qualification, and repetitive operational tasks.',
+    description: 'Connect your CRM, email, calendar, and AI agents into a seamless pipeline that nurtures leads, qualifies prospects, and frees up your time for high-value strategic work.',
+    metricsImpact: 'Reduces lead response times from hours to under 3 minutes, significantly boosting conversion.',
     deliverables: [
-      'Multi-channel inbound lead screening pipeline integrated with your CRM',
-      'Dynamic qualification rubric scoring client budget, readiness, and fit',
-      'Automated calendar scheduling integration with reminder sequences',
-      'Analytics dashboard tracking lead velocity, qualification rate, and revenue pipeline'
+      'Automated lead intake and intelligent pre-qualification system',
+      'Smart appointment booking flows integrated directly with your calendar',
+      'Email follow-up and nurture sequences powered by contextual AI',
+      'Real-time pipeline alerts and performance tracking dashboard'
     ]
   },
   {
     id: 'ai-operations-scaling',
-    title: 'Operations Optimization & Custom Agent Tooling',
-    tagline: 'Scale revenue without proportional headcount increases through AI agent workflows.',
-    description:
-      'From automated invoice auditing and contract data extraction to internal team knowledge synthesis, we build end-to-end operational intelligence that frees founders from repetitive friction.',
-    metricsImpact: 'Reduce administrative overhead costs by up to 45% in the first 90 days',
+    title: 'Operational Efficiency Audits',
+    tagline: 'Identify time drains, automate administrative friction, and scale without bloating overhead.',
+    description: 'A comprehensive operational audit of your business processes. We pinpoint where manual repetitive tasks are costing you money and install proven AI-driven solutions.',
+    metricsImpact: 'Typically frees up 30% to 50% of founder and managerial time spent on low-leverage admin.',
     deliverables: [
-      'Full operational friction audit and AI automation opportunity matrix',
-      'Custom retrieval-augmented generation (RAG) agent for your internal SOPs',
-      'Document parsing pipelines for financial statements, receipts, and client filings',
-      'Ongoing workflow maintenance, security audits, and latency optimization'
+      'End-to-end operational bottleneck and friction audit',
+      'Prioritized AI automation opportunity roadmap with estimated ROI',
+      'Implementation of internal knowledge-base search and SOP assistant',
+      'Security, privacy, and data-protection compliance checklist'
     ]
   }
 ];
@@ -258,55 +323,60 @@ export const AI_GROWTH_SERVICES: AIService[] = [
 export const TESTIMONIALS: Testimonial[] = [
   {
     id: 'test-1',
-    name: 'Marcus Vance',
-    title: 'Founder & CEO',
-    organization: 'Vance Logistics Group',
-    verifiedResult: 'Significant Allocation Shift & 42% Tax Drag Reduction',
-    quote:
-      'Working directly with the Founder & CEO of EB Wealth completely reshaped how I think about liquidity. For years my wealth was trapped solely inside my company. Today, I have a diversified private portfolio and an entity structure that protects my family.',
-    program: 'Private Executive Mentorship'
+    name: 'Marcus V.',
+    title: 'Managing Director & Business Owner',
+    organization: 'Logistics & Distribution',
+    verifiedResult: 'Full ISA & SIPP Optimization + Automated Cash Flow',
+    quote: 'Before EB Wealth, all my money was sitting in business cash earning near zero, losing purchasing power every year. The mentorship gave me the exact framework to separate business capital from personal wealth and build a balanced, tax-efficient portfolio.',
+    program: 'Growth Mentorship'
   },
   {
     id: 'test-2',
-    name: 'Elena Rostova',
-    title: 'Principal Architect & Investor',
-    organization: 'Rostova Design Lab',
-    verifiedResult: '3 Syndication Deals Closed with Consistent Net Yield',
-    quote:
-      'The EB Wealth Academy demystified private market deals in a way no financial blog ever could. The due diligence models and underwriting criteria alone saved me from a catastrophic real estate sponsor blunder.',
+    name: 'Sophie T.',
+    title: 'NHS Consultant & Private Practitioner',
+    organization: 'Healthcare',
+    verifiedResult: 'Mastered Index Investing from Ground Zero',
+    quote: 'I used to find financial discussions intimidating and full of jargon. The EB Wealth Academy broke down stocks, ETFs, and UK tax wrappers into clear, logical steps. I now manage my own Stocks & Shares ISA with complete confidence.',
     program: 'EB Wealth Academy'
   },
   {
     id: 'test-3',
-    name: 'David Adeleke',
-    title: 'Managing Director',
-    organization: 'Apex Media & Software',
-    verifiedResult: '18 Hours/Week Saved & Substantial Revenue Lift via AI',
-    quote:
-      'The AI business growth systems implemented by EB Wealth transformed our client acquisition. Their prompt engineering frameworks and workflow automation allowed us to double deal volume without hiring new managers.',
-    program: 'AI Business Growth Advisory'
+    name: 'David A.',
+    title: 'Founder & Agency Operator',
+    organization: 'Creative & Tech Agency',
+    verifiedResult: '15+ Hours Saved Weekly via AI Workflows',
+    quote: 'The AI business growth advisory was worth every penny. EB Wealth showed us how to build custom prompt systems and automate our client onboarding. We increased our output without hiring additional staff.',
+    program: 'AI Business Growth'
+  },
+  {
+    id: 'test-4',
+    name: 'Amir K.',
+    title: 'Senior Software Engineer',
+    organization: 'FinTech',
+    verifiedResult: 'Disciplined Investment Strategy & Accountability',
+    quote: 'Having the accountability and objective feedback in 1-on-1 coaching kept me on track. I stopped chasing speculative trends and built a solid, long-term portfolio backed by real research.',
+    program: '1-to-1 Coaching'
   }
 ];
 
 export const REGULATORY_DISCLAIMER_SHORT =
-  'EB Wealth is a UK-based educational and business consultancy platform operating under United Kingdom law. All content, mentorship, and coaching are provided solely for informational and educational purposes and do not constitute regulated investment, legal, tax, or financial advice under the UK Financial Services and Markets Act 2000 (FSMA) or any other regulatory framework. Investing involves risk of capital loss.';
+  'EB Wealth provides financial education, personal development, mentorship and business growth consulting. We do not provide regulated financial advice, personal investment recommendations or asset management services. Investments can rise and fall in value, and you may get back less than you invest. You should consider your own circumstances, objectives and risk tolerance and seek regulated financial advice where appropriate.';
 
 export const REGULATORY_DISCLAIMER_FULL = `
-REGULATORY DISCLOSURES & RISK DISCLAIMERS
-Last Updated: October 2026 · United Kingdom Jurisdiction
+EB WEALTH REGULATORY DISCLAIMER & IMPORTANT DISCLOSURES
 
-1. UK-Based Educational & Consultancy Nature
-EB Wealth ("Empowerment Body", "EB Wealth", "we", "us", or "our") is a private enterprise based in the United Kingdom providing educational curricula, executive mentorship frameworks, strategic business coaching, and AI automation consulting. EB Wealth is NOT authorised or regulated by the UK Financial Conduct Authority (FCA), nor is it a registered investment adviser (RIA), broker-dealer, commodity trading advisor, legal firm, or chartered accounting practice under the UK Financial Services and Markets Act 2000 (FSMA), the U.S. Securities and Exchange Commission (SEC), or any other global regulatory authority.
+1. Educational & Informational Nature
+EB Wealth (operating under the Empowerment Body brand) is a financial education, personal development, mentorship and business consultancy organization. EB Wealth is NOT authorised or regulated by the UK Financial Conduct Authority (FCA), nor is it a licensed financial advisory firm, broker, bank, investment manager, or tax advisory practice. 
 
-2. No Regulated Financial or Investment Advice
-Nothing on this website, in the EB Wealth mobile application, in our Academy courses, mentorship sessions, or coaching materials constitutes regulated financial advice, investment advisory services, or an invitation to engage in investment activity. Any strategies, hypothetical portfolio weights, or case studies presented are for illustrative, instructional, and conceptual purposes only. Clients and users must consult an FCA-authorised independent financial adviser (IFA), qualified tax specialist, and legal solicitor prior to making any financial commitments.
+2. No Regulated Financial Advice
+Nothing on this website, in our Academy courses, mobile application, mentorship programs, coaching sessions, or supplementary tools constitutes regulated financial advice, investment advice, tax advice, or a personal recommendation to buy, hold, or sell any financial instrument. All information is provided strictly for general educational, conceptual, and informational purposes.
 
-3. Inherent Risks of Investing
-All investments—including equities, index funds, private debt, commercial real estate syndications, and alternative assets—carry substantial risk of capital loss, including the potential loss of principal invested. Past performance is never a reliable indicator of future results. Market conditions fluctuate unpredictably, and diversification cannot guarantee profit or insulate against market downturns.
+3. Investment Risk Warning
+Investments can rise and fall in value. You may get back less than you invest. Past performance is never a reliable guide to future returns. Different financial instruments carry varying degrees of risk, volatility, and liquidity. You should carefully consider your own financial circumstances, objectives, time horizon, and risk tolerance before making any investment decision.
 
-4. Testimonials & Performance Statements
-Testimonials, endorsements, and case studies featured on this website reflect the individual real-world experiences of specific clients. These outcomes are not typical, cannot be guaranteed, and do not represent a promise that any current or future client will achieve similar investment returns, tax savings, or business revenues.
+4. Seek Independent Advice
+Where personal financial, investment, pension, legal, or tax advice is required, you should always consult an FCA-authorised Independent Financial Adviser (IFA), qualified tax specialist, or legal solicitor.
 
-5. Technology & AI Capabilities
-Our AI business growth guidance and prompt engineering frameworks are provided to enhance productivity and organizational workflow efficiency. EB Wealth does not guarantee specific software uptime, third-party AI provider behavior, or algorithmic investment efficacy. Users remain solely responsible for validating all AI-generated outputs and maintaining compliance with applicable consumer protection and privacy standards.
+5. AI & Business Consulting
+AI business growth frameworks, prompt engineering templates, and automation workflows are provided to assist productivity and business efficiency. Results may vary depending on business model, execution, and external market factors. EB Wealth makes no guarantees of specific revenue or financial returns.
 `;

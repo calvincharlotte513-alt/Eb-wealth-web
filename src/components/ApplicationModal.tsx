@@ -17,11 +17,10 @@ export const ApplicationModal: React.FC<ApplicationModalProps> = ({
     name: '',
     email: '',
     phone: '',
-    company: '',
-    netWorth: '£500,000 – £2,000,000',
-    primaryGoal: 'Portfolio Diversification & Private Equity Alpha',
+    experienceLevel: 'Complete Beginner (Building first portfolio)',
+    primaryGoal: 'Learn UK ISAs, index funds and disciplined compounding',
     biggestBottleneck: '',
-    timeCommitment: 'Yes, 4-6 hours per month committed'
+    timeCommitment: 'Yes, committed to 2-4 hours per month'
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -37,7 +36,7 @@ export const ApplicationModal: React.FC<ApplicationModalProps> = ({
       setTimeout(() => {
         setIsSubmitting(false);
         setIsSubmitted(true);
-      }, 1000);
+      }, 800);
     }
   };
 
@@ -53,143 +52,108 @@ export const ApplicationModal: React.FC<ApplicationModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md overflow-y-auto">
-      <div className="relative w-full max-w-xl bg-neutral-900 border border-neutral-800 rounded-2xl shadow-2xl p-6 md:p-8 text-neutral-100 my-8">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-sm overflow-y-auto">
+      <div className="relative w-full max-w-xl bg-white border border-slate-200 rounded-3xl shadow-2xl p-6 md:p-8 text-[#17202A] my-8 animate-in fade-in zoom-in-95 duration-200">
         <button
           onClick={resetAndClose}
-          className="absolute top-5 right-5 text-neutral-400 hover:text-white transition-colors p-1 rounded-lg hover:bg-neutral-800"
-          aria-label="Close modal"
+          className="absolute top-5 right-5 text-slate-400 hover:text-[#17202A] transition-colors p-1.5 rounded-xl hover:bg-slate-100 cursor-pointer"
         >
           <X className="w-5 h-5" />
         </button>
 
         {!isSubmitted ? (
           <div>
-            {/* Header */}
             <div className="mb-6">
-              <div className="flex items-center gap-2 text-xs font-semibold tracking-wider text-amber-400 uppercase">
-                <Shield className="w-3.5 h-3.5" />
-                <span>Executive Admissions · Vetted Admissions Only</span>
-              </div>
-              <h3 className="text-2xl font-bold tracking-tight text-white mt-1">
+              <span className="text-xs font-mono font-bold text-[#00A878] uppercase">
+                Admissions Application
+              </span>
+              <h3 className="text-2xl font-bold text-[#17202A] mt-0.5">
                 Apply for {tierTitle}
               </h3>
-              <p className="text-sm text-neutral-400 mt-1">
-                We maintain an intimate roster to ensure direct advisory depth and institutional confidentiality.
+              <p className="text-xs text-[#52606D] mt-1">
+                Step {step} of 3 — Tell us about your current background and financial goals.
               </p>
-
-              {/* Progress dots */}
-              <div className="flex items-center gap-2 mt-4">
-                {[1, 2, 3].map((s) => (
-                  <div
-                    key={s}
-                    className={`h-1.5 rounded-full transition-all duration-300 ${
-                      step >= s ? 'w-10 bg-gradient-to-r from-emerald-500 to-amber-500' : 'w-6 bg-neutral-800'
-                    }`}
-                  />
-                ))}
-                <span className="text-xs text-neutral-400 ml-2">Step {step} of 3</span>
-              </div>
             </div>
 
             <form onSubmit={handleNext} className="space-y-4">
               {step === 1 && (
-                <div className="space-y-4">
+                <div className="space-y-3.5">
                   <div>
-                    <label className="block text-xs font-semibold text-neutral-300 uppercase tracking-wider mb-2">
-                      Liquid Investable Capital / Net Worth Bracket
+                    <label className="block text-xs font-semibold text-[#17202A] mb-1">
+                      Full Name *
                     </label>
-                    <div className="grid grid-cols-1 gap-2">
-                      {[
-                        '£100,000 – £500,000 (Emerging Capital Allocator)',
-                        '£500,000 – £2,000,000 (Accredited High Earner)',
-                        '£2,000,000 – £5,000,000 (High-Net-Worth Founder)',
-                        '£5,000,000+ (Family Office / Enterprise Operator)'
-                      ].map((bracket) => (
-                        <button
-                          key={bracket}
-                          type="button"
-                          onClick={() => setFormData({ ...formData, netWorth: bracket })}
-                          className={`text-left p-3 rounded-xl border text-xs font-medium transition-all ${
-                            formData.netWorth === bracket
-                              ? 'border-emerald-500 bg-emerald-500/10 text-white shadow-sm'
-                              : 'border-neutral-800 bg-neutral-950 text-neutral-400 hover:border-neutral-700 hover:text-neutral-200'
-                          }`}
-                        >
-                          {bracket}
-                        </button>
-                      ))}
-                    </div>
+                    <input
+                      required
+                      type="text"
+                      placeholder="e.g. Alexander Clark"
+                      value={formData.name}
+                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                      className="w-full px-3.5 py-2.5 bg-[#F8FAFC] border border-slate-200 rounded-xl text-xs text-[#17202A] focus:outline-none focus:border-[#00A878]"
+                    />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold text-neutral-300 uppercase tracking-wider mb-2">
-                      Time & Execution Commitment
+                    <label className="block text-xs font-semibold text-[#17202A] mb-1">
+                      Email Address *
                     </label>
-                    <div className="grid grid-cols-1 gap-2">
-                      {[
-                        'Yes, 4-6 hours per month committed',
-                        'I have 8+ hours/month and desire accelerated transformation',
-                        'Representing family office / business leadership team'
-                      ].map((tc) => (
-                        <button
-                          key={tc}
-                          type="button"
-                          onClick={() => setFormData({ ...formData, timeCommitment: tc })}
-                          className={`text-left p-3 rounded-xl border text-xs font-medium transition-all ${
-                            formData.timeCommitment === tc
-                              ? 'border-emerald-500 bg-emerald-500/10 text-white shadow-sm'
-                              : 'border-neutral-800 bg-neutral-950 text-neutral-400 hover:border-neutral-700 hover:text-neutral-200'
-                          }`}
-                        >
-                          {tc}
-                        </button>
-                      ))}
-                    </div>
+                    <input
+                      required
+                      type="email"
+                      placeholder="alexander@domain.com"
+                      value={formData.email}
+                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                      className="w-full px-3.5 py-2.5 bg-[#F8FAFC] border border-slate-200 rounded-xl text-xs text-[#17202A] focus:outline-none focus:border-[#00A878]"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-semibold text-[#17202A] mb-1">
+                      Phone Number (for WhatsApp / SMS confirmations) *
+                    </label>
+                    <input
+                      required
+                      type="tel"
+                      placeholder="+44 7123 456789"
+                      value={formData.phone}
+                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                      className="w-full px-3.5 py-2.5 bg-[#F8FAFC] border border-slate-200 rounded-xl text-xs text-[#17202A] focus:outline-none focus:border-[#00A878]"
+                    />
                   </div>
                 </div>
               )}
 
               {step === 2 && (
-                <div className="space-y-4">
+                <div className="space-y-3.5">
                   <div>
-                    <label className="block text-xs font-semibold text-neutral-300 uppercase tracking-wider mb-2">
-                      Primary Strategic Objective
+                    <label className="block text-xs font-semibold text-[#17202A] mb-1">
+                      Current Investing Stage *
                     </label>
-                    <div className="grid grid-cols-1 gap-2">
-                      {[
-                        'Portfolio Diversification & Private Equity Alpha',
-                        'Corporate Restructuring, Holding Entities & Tax Protection',
-                        'AI Enterprise Systems & Revenue Automation for My Company',
-                        'Pre-Exit Wealth Blueprint & Capital Preservation'
-                      ].map((goal) => (
-                        <button
-                          key={goal}
-                          type="button"
-                          onClick={() => setFormData({ ...formData, primaryGoal: goal })}
-                          className={`text-left p-3 rounded-xl border text-xs font-medium transition-all ${
-                            formData.primaryGoal === goal
-                              ? 'border-amber-500 bg-amber-500/10 text-white shadow-sm'
-                              : 'border-neutral-800 bg-neutral-950 text-neutral-400 hover:border-neutral-700 hover:text-neutral-200'
-                          }`}
-                        >
-                          {goal}
-                        </button>
-                      ))}
-                    </div>
+                    <select
+                      value={formData.experienceLevel}
+                      onChange={(e) => setFormData({ ...formData, experienceLevel: e.target.value })}
+                      className="w-full px-3.5 py-2.5 bg-[#F8FAFC] border border-slate-200 rounded-xl text-xs text-[#17202A] focus:outline-none focus:border-[#00A878]"
+                    >
+                      <option>Complete Beginner (Building first portfolio)</option>
+                      <option>Intermediate (Managing Stocks & Shares ISA / SIPP)</option>
+                      <option>Active Investor (Seeking advanced valuation & accountability)</option>
+                      <option>Entrepreneur / Business Owner (Scaling capital & AI leverage)</option>
+                    </select>
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold text-neutral-300 uppercase tracking-wider mb-1.5">
-                      What is your single biggest bottleneck or risk concern today?
+                    <label className="block text-xs font-semibold text-[#17202A] mb-1">
+                      Primary Goal in EB Wealth *
                     </label>
-                    <textarea
-                      rows={3}
-                      value={formData.biggestBottleneck}
-                      onChange={(e) => setFormData({ ...formData, biggestBottleneck: e.target.value })}
-                      placeholder="e.g., Too much cash in low-yield accounts, high tax drag, need AI automation to scale business without burning out..."
-                      className="w-full bg-neutral-950 border border-neutral-800 rounded-xl p-3 text-xs text-white placeholder-neutral-600 focus:outline-none focus:border-emerald-500 transition-colors"
-                    />
+                    <select
+                      value={formData.primaryGoal}
+                      onChange={(e) => setFormData({ ...formData, primaryGoal: e.target.value })}
+                      className="w-full px-3.5 py-2.5 bg-[#F8FAFC] border border-slate-200 rounded-xl text-xs text-[#17202A] focus:outline-none focus:border-[#00A878]"
+                    >
+                      <option>Learn UK ISAs, index funds and disciplined compounding</option>
+                      <option>Overcome emotional decision-making and stay accountable</option>
+                      <option>Company fundamental analysis & valuation models</option>
+                      <option>Integrate AI systems to free up 15+ hours weekly in business</option>
+                    </select>
                   </div>
                 </div>
               )}
@@ -197,127 +161,66 @@ export const ApplicationModal: React.FC<ApplicationModalProps> = ({
               {step === 3 && (
                 <div className="space-y-3.5">
                   <div>
-                    <label className="block text-xs font-medium text-neutral-300 mb-1">Full Legal Name</label>
-                    <input
-                      type="text"
-                      required
-                      value={formData.name}
-                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      placeholder="Full Name (e.g. Executive Candidate)"
-                      className="w-full bg-neutral-950 border border-neutral-800 rounded-xl px-3.5 py-2.5 text-sm text-white placeholder-neutral-600 focus:outline-none focus:border-emerald-500 transition-colors"
+                    <label className="block text-xs font-semibold text-[#17202A] mb-1">
+                      What has held you back the most financially or in business?
+                    </label>
+                    <textarea
+                      rows={3}
+                      placeholder="e.g. Lack of structured knowledge, fear of making a mistake, or too much time spent on manual admin..."
+                      value={formData.biggestBottleneck}
+                      onChange={(e) => setFormData({ ...formData, biggestBottleneck: e.target.value })}
+                      className="w-full px-3.5 py-2.5 bg-[#F8FAFC] border border-slate-200 rounded-xl text-xs text-[#17202A] focus:outline-none focus:border-[#00A878]"
                     />
                   </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <div>
-                      <label className="block text-xs font-medium text-neutral-300 mb-1">Corporate or Personal Email</label>
-                      <input
-                        type="email"
-                        required
-                        value={formData.email}
-                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                        placeholder="executive@company.com"
-                        className="w-full bg-neutral-950 border border-neutral-800 rounded-xl px-3.5 py-2.5 text-sm text-white placeholder-neutral-600 focus:outline-none focus:border-emerald-500 transition-colors"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-xs font-medium text-neutral-300 mb-1">Direct Phone / WhatsApp</label>
-                      <input
-                        type="tel"
-                        required
-                        value={formData.phone}
-                        onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                        placeholder="+1 (555) 019-2834"
-                        className="w-full bg-neutral-950 border border-neutral-800 rounded-xl px-3.5 py-2.5 text-sm text-white placeholder-neutral-600 focus:outline-none focus:border-emerald-500 transition-colors"
-                      />
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-medium text-neutral-300 mb-1">Current Company, Firm, or Role</label>
-                    <input
-                      type="text"
-                      value={formData.company}
-                      onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-                      placeholder="Founder / Senior Executive / Real Estate Investor"
-                      className="w-full bg-neutral-950 border border-neutral-800 rounded-xl px-3.5 py-2.5 text-sm text-white placeholder-neutral-600 focus:outline-none focus:border-emerald-500 transition-colors"
-                    />
-                  </div>
-
-                  <div className="p-3 bg-neutral-950 border border-neutral-800 rounded-xl text-neutral-400 text-xs">
-                    <p>
-                      <strong>Strict Non-Disclosure Guarantee:</strong> All financial and personal disclosures provided during mentorship evaluation are protected under institutional NDA standards.
-                    </p>
+                  <div className="p-3 bg-[#ECFDF5] border border-[#00A878]/30 rounded-xl text-[11px] text-[#17202A]">
+                    <Shield className="w-4 h-4 text-[#00A878] inline mr-1 -mt-0.5" />
+                    <strong>Confidentiality Guarantee:</strong> All submissions are reviewed confidentially by EB Wealth senior leadership. No information is ever shared with third parties.
                   </div>
                 </div>
               )}
 
-              {/* Navigation buttons */}
-              <div className="flex items-center justify-between pt-4 border-t border-neutral-800">
+              <div className="pt-4 flex items-center justify-between border-t border-slate-100">
                 {step > 1 ? (
                   <button
                     type="button"
                     onClick={handlePrev}
-                    className="flex items-center gap-1.5 text-xs text-neutral-400 hover:text-white px-3 py-2 rounded-lg transition-colors"
+                    className="py-2.5 px-4 bg-slate-100 hover:bg-slate-200 text-[#17202A] text-xs font-semibold rounded-xl flex items-center gap-1.5 cursor-pointer"
                   >
                     <ArrowLeft className="w-3.5 h-3.5" />
-                    <span>Previous</span>
+                    <span>Back</span>
                   </button>
                 ) : <div />}
 
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="py-2.5 px-5 bg-gradient-to-r from-emerald-600 to-teal-500 hover:from-emerald-500 hover:to-teal-400 text-white font-semibold text-xs rounded-xl transition-all shadow-md flex items-center gap-2 cursor-pointer disabled:opacity-50"
+                  className="py-2.5 px-6 bg-[#00A878] hover:bg-[#009267] text-white text-xs font-semibold rounded-xl shadow-xs transition-all flex items-center gap-2 cursor-pointer disabled:opacity-50"
                 >
-                  {isSubmitting ? (
-                    <span>Submitting Application...</span>
-                  ) : step < 3 ? (
-                    <>
-                      <span>Continue</span>
-                      <ArrowRight className="w-3.5 h-3.5" />
-                    </>
-                  ) : (
-                    <>
-                      <span>Submit Confidential Application</span>
-                      <ArrowRight className="w-3.5 h-3.5" />
-                    </>
-                  )}
+                  <span>{step === 3 ? (isSubmitting ? 'Submitting...' : 'Complete Application') : 'Continue'}</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
                 </button>
               </div>
             </form>
           </div>
         ) : (
-          /* Submission Confirmed */
-          <div className="text-center py-6">
-            <div className="w-16 h-16 bg-emerald-500/10 border border-emerald-500/30 rounded-full flex items-center justify-center mx-auto mb-4 text-emerald-400">
-              <CheckCircle2 className="w-9 h-9" />
+          <div className="text-center py-6 space-y-4">
+            <div className="w-14 h-14 rounded-2xl bg-[#ECFDF5] text-[#00A878] flex items-center justify-center mx-auto shadow-xs">
+              <CheckCircle2 className="w-7 h-7" />
             </div>
-            <h3 className="text-2xl font-bold text-white mb-2">Application Received</h3>
-            <p className="text-sm text-neutral-300 max-w-md mx-auto mb-6">
-              Thank you, <strong className="text-white">{formData.name || 'Candidate'}</strong>. Your application for <strong className="text-emerald-400">{tierTitle}</strong> has entered our admissions queue.
-            </p>
 
-            <div className="p-4 bg-neutral-950 border border-neutral-800 rounded-xl text-left text-xs space-y-2 mb-6 text-neutral-400">
-              <div className="flex justify-between">
-                <span>Application Reference:</span>
-                <span className="font-mono text-neutral-200">EB-MNT-{Math.floor(10000 + Math.random() * 90000)}</span>
-              </div>
-              <div className="flex justify-between">
-                <span>Target Review Window:</span>
-                <span className="text-white font-medium">Within 24–48 Business Hours</span>
-              </div>
-              <div className="flex justify-between">
-                <span>Admissions Next Step:</span>
-                <span className="text-emerald-400 font-medium">Private 20-Minute Fit Calibration Call</span>
-              </div>
-            </div>
+            <h3 className="text-2xl font-bold text-[#17202A]">
+              Application Submitted Successfully
+            </h3>
+            <p className="text-xs text-[#52606D] max-w-sm mx-auto leading-relaxed">
+              Thank you, <strong>{formData.name}</strong>. Our admissions team reviews all applications to ensure high cohort synergy. You will receive an email and WhatsApp message within 24 business hours.
+            </p>
 
             <button
               onClick={resetAndClose}
-              className="py-2.5 px-6 bg-white text-black font-semibold text-xs rounded-xl hover:bg-neutral-200 transition-colors shadow-sm"
+              className="mt-4 py-2.5 px-6 bg-[#00A878] hover:bg-[#009267] text-white text-xs font-semibold rounded-xl cursor-pointer"
             >
-              Return to EB Wealth
+              Return to Website
             </button>
           </div>
         )}
