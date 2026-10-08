@@ -198,12 +198,12 @@ export const AIBusinessGrowthPage: React.FC<AIBusinessGrowthPageProps> = ({
                 <div>
                   <div className="flex justify-between text-xs font-semibold text-neutral-300 mb-1.5">
                     <span>Blended Hourly Cost</span>
-                    <span className="text-amber-400 tabular-nums">${blendedHourlyRate} / Hour</span>
+                    <span className="text-amber-400 tabular-nums">£{blendedHourlyRate} / Hour</span>
                   </div>
                   <input
                     type="range"
-                    min="25"
-                    max="250"
+                    min="20"
+                    max="200"
                     step="5"
                     value={blendedHourlyRate}
                     onChange={(e) => setBlendedHourlyRate(Number(e.target.value))}
@@ -219,7 +219,7 @@ export const AIBusinessGrowthPage: React.FC<AIBusinessGrowthPageProps> = ({
                     <span>Estimated Annual Capital Reclaimed</span>
                   </div>
                   <div className="text-3xl sm:text-5xl font-extrabold text-white tabular-nums tracking-tight font-display mb-2">
-                    ${annualDollarsSaved.toLocaleString()} <span className="text-xs font-normal text-neutral-400">/ Year</span>
+                    £{annualDollarsSaved.toLocaleString()} <span className="text-xs font-normal text-neutral-400">/ Year</span>
                   </div>
                   <p className="text-xs text-neutral-400 mb-6">
                     Achieved through automated data ingestion, prompt verification loops, and CRM appointment bots.

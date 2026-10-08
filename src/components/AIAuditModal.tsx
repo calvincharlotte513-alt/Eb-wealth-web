@@ -11,7 +11,7 @@ export const AIAuditModal: React.FC<AIAuditModalProps> = ({ isOpen, onClose }) =
     name: '',
     email: '',
     company: '',
-    monthlyRevenue: '$50k – $150k / mo',
+    monthlyRevenue: '£50k – £150k / mo',
     primaryFriction: 'Inbound lead qualification & slow response times',
     teamSize: '5–15 employees'
   });
@@ -107,10 +107,10 @@ export const AIAuditModal: React.FC<AIAuditModalProps> = ({ isOpen, onClose }) =
                     onChange={(e) => setFormData({ ...formData, monthlyRevenue: e.target.value })}
                     className="w-full bg-neutral-950 border border-neutral-800 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-blue-500"
                   >
-                    <option value="Under $30k / mo">Under $30k / mo</option>
-                    <option value="$30k – $100k / mo">$30k – $100k / mo</option>
-                    <option value="$100k – $300k / mo">$100k – $300k / mo</option>
-                    <option value="$300k+ / mo">$300k+ / mo (Enterprise)</option>
+                    <option value="Under £30k / mo">Under £30k / mo</option>
+                    <option value="£30k – £100k / mo">£30k – £100k / mo</option>
+                    <option value="£100k – £300k / mo">£100k – £300k / mo</option>
+                    <option value="£300k+ / mo">£300k+ / mo (Enterprise)</option>
                   </select>
                 </div>
                 <div>

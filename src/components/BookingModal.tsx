@@ -16,7 +16,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
   onProceedToStripe
 }) => {
   const [selectedDate, setSelectedDate] = useState('2026-10-14');
-  const [selectedTime, setSelectedTime] = useState('10:00 AM EDT');
+  const [selectedTime, setSelectedTime] = useState('10:00 AM BST (London)');
   const [clientName, setClientName] = useState('');
   const [clientEmail, setClientEmail] = useState('');
   const [clientPhone, setClientPhone] = useState('');
@@ -37,11 +37,11 @@ export const BookingModal: React.FC<BookingModalProps> = ({
   };
 
   const timeSlots = [
-    '09:00 AM EDT',
-    '10:30 AM EDT',
-    '01:00 PM EDT',
-    '03:30 PM EDT',
-    '05:00 PM EDT'
+    '09:00 AM BST (London)',
+    '11:00 AM BST (London)',
+    '01:30 PM BST (London)',
+    '03:30 PM BST (London)',
+    '05:00 PM BST (London)'
   ];
 
   const handleBooking = (e: React.FormEvent) => {

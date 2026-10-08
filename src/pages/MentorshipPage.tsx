@@ -182,7 +182,7 @@ export const MentorshipPage: React.FC<MentorshipPageProps> = ({
                   01. Investable Capital
                 </span>
                 <p className="text-neutral-400">
-                  Candidates should possess a minimum of $250,000 in liquid capital or an active operating business generating substantial monthly net profit.
+                  Candidates should possess significant liquid capital reserves (typically £200,000+) or an active operating enterprise generating robust monthly commercial profit.
                 </p>
               </div>
               <div className="space-y-2">

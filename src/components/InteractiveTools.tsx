@@ -44,10 +44,10 @@ export const InteractiveTools: React.FC<InteractiveToolsProps> = ({ onExplorePro
     {
       question: 'What is your current total liquid or investable capital?',
       options: [
-        { label: 'Under $100,000 (Focusing on savings rate & foundational indexation)', value: 'academy' },
-        { label: '$100,000 to $500,000 (Ready to diversify into private debt & alternatives)', value: 'academy_pro' },
-        { label: '$500,000 to $2,000,000+ (Seeking bespoke tax shelter & deal room access)', value: 'mentorship' },
-        { label: 'Operating an active enterprise with $50k+ monthly revenue', value: 'ai_growth' }
+        { label: 'Under £100,000 (Focusing on savings rate & foundational indexation)', value: 'academy' },
+        { label: '£100,000 to £500,000 (Ready to diversify into private debt & alternatives)', value: 'academy_pro' },
+        { label: '£500,000 to £2,000,000+ (Seeking bespoke tax shelter & deal room access)', value: 'mentorship' },
+        { label: 'Operating an active enterprise with £50k+ monthly commercial turnover', value: 'ai_growth' }
       ]
     },
     {
@@ -137,7 +137,7 @@ export const InteractiveTools: React.FC<InteractiveToolsProps> = ({ onExplorePro
               <div>
                 <div className="flex justify-between text-xs font-semibold text-neutral-300 mb-2">
                   <span>Initial Investable Capital</span>
-                  <span className="text-emerald-400 tabular-nums">${initialCapital.toLocaleString()}</span>
+                  <span className="text-emerald-400 tabular-nums">£{initialCapital.toLocaleString()}</span>
                 </div>
                 <input
                   type="range"
@@ -149,16 +149,16 @@ export const InteractiveTools: React.FC<InteractiveToolsProps> = ({ onExplorePro
                   className="w-full accent-emerald-500 cursor-pointer"
                 />
                 <div className="flex justify-between text-[11px] text-neutral-500 mt-1">
-                  <span>$5,000</span>
-                  <span>$250,000</span>
-                  <span>$500,000+</span>
+                  <span>£5,000</span>
+                  <span>£250,000</span>
+                  <span>£500,000+</span>
                 </div>
               </div>
 
               <div>
                 <div className="flex justify-between text-xs font-semibold text-neutral-300 mb-2">
                   <span>Monthly Contribution / Capital Inflow</span>
-                  <span className="text-emerald-400 tabular-nums">${monthlyContribution.toLocaleString()} / mo</span>
+                  <span className="text-emerald-400 tabular-nums">£{monthlyContribution.toLocaleString()} / mo</span>
                 </div>
                 <input
                   type="range"
@@ -170,9 +170,9 @@ export const InteractiveTools: React.FC<InteractiveToolsProps> = ({ onExplorePro
                   className="w-full accent-emerald-500 cursor-pointer"
                 />
                 <div className="flex justify-between text-[11px] text-neutral-500 mt-1">
-                  <span>$200/mo</span>
-                  <span>$10,000/mo</span>
-                  <span>$20,000/mo</span>
+                  <span>£200/mo</span>
+                  <span>£10,000/mo</span>
+                  <span>£20,000/mo</span>
                 </div>
               </div>
 
@@ -225,7 +225,7 @@ export const InteractiveTools: React.FC<InteractiveToolsProps> = ({ onExplorePro
                 Projected Portfolio Valuation
               </span>
               <div className="text-3xl md:text-4xl font-extrabold text-white tabular-nums tracking-tight font-display">
-                ${results.totalFV.toLocaleString()}
+                £{results.totalFV.toLocaleString()}
               </div>
               <p className="text-xs text-neutral-400 mt-1">
                 At an annualized yield of {annualReturn}% over {years} years.
@@ -248,11 +248,11 @@ export const InteractiveTools: React.FC<InteractiveToolsProps> = ({ onExplorePro
                 <div className="flex justify-between text-[11px] text-neutral-400 mt-2">
                   <span className="flex items-center gap-1.5">
                     <span className="w-2.5 h-2.5 rounded-full bg-neutral-600 inline-block" />
-                    Capital Contributed: <strong className="text-neutral-200 tabular-nums">${results.totalContributed.toLocaleString()}</strong>
+                    Capital Contributed: <strong className="text-neutral-200 tabular-nums">£{results.totalContributed.toLocaleString()}</strong>
                   </span>
                   <span className="flex items-center gap-1.5">
                     <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 inline-block" />
-                    Compound Gain: <strong className="text-emerald-400 tabular-nums">${results.compoundInterest.toLocaleString()}</strong>
+                    Compound Gain: <strong className="text-emerald-400 tabular-nums">£{results.compoundInterest.toLocaleString()}</strong>
                   </span>
                 </div>
               </div>

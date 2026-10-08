@@ -4,6 +4,7 @@
  */
 
 import React, { useState, useEffect } from 'react';
+import { Upload } from 'lucide-react';
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 
@@ -81,10 +82,18 @@ export default function App() {
 
   // App Download Modal state
   const [appDownloadModalOpen, setAppDownloadModalOpen] = useState(false);
+  const [downloadModalTab, setDownloadModalTab] = useState<'download' | 'uploader'>('download');
   const [downloadContextFeature, setDownloadContextFeature] = useState<string>('');
 
   const handleOpenAppDownload = (featureName?: string) => {
     setDownloadContextFeature(featureName || 'EB Wealth Mobile Application');
+    setDownloadModalTab('download');
+    setAppDownloadModalOpen(true);
+  };
+
+  const handleOpenManageApk = () => {
+    setDownloadContextFeature('APK Release Management');
+    setDownloadModalTab('uploader');
     setAppDownloadModalOpen(true);
   };
 
@@ -126,11 +135,12 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-neutral-950 text-neutral-100 flex flex-col font-sans selection:bg-emerald-500/30 selection:text-emerald-200">
-      {/* Universal Top Bar with direct App download */}
+      {/* Universal Top Bar with direct App download & APK manager */}
       <Navbar
         currentPage={currentPage}
         onNavigate={navigateTo}
         onOpenDownloadModal={handleOpenAppDownload}
+        onOpenManageApk={handleOpenManageApk}
       />
 
       {/* Dynamic Multi-Page Router View */}
@@ -200,18 +210,42 @@ export default function App() {
         )}
       </main>
 
-      {/* Universal Footer with direct APK download */}
+      {/* Universal Footer with direct APK download & manager */}
       <Footer
         onNavigate={navigateTo}
         onOpenDownloadModal={handleOpenAppDownload}
+        onOpenManageApk={handleOpenManageApk}
         onOpenLegal={handleOpenLegal}
       />
+
+      {/* Floating Admin APK Manager Button (Commented out for now)
+      <aside aria-label="APK Administration" className="fixed bottom-5 right-5 z-40">
+        <button
+          onClick={handleOpenManageApk}
+          className="group flex items-center gap-2.5 px-4 py-2.5 bg-neutral-900/95 hover:bg-neutral-800 text-white border border-emerald-500/50 hover:border-emerald-400 rounded-full shadow-2xl backdrop-blur-md transition-all duration-200 cursor-pointer hover:scale-105 active:scale-95 ring-1 ring-emerald-500/20"
+          title="Owner Tool: Upload or manage your APK file"
+        >
+          <span className="relative flex h-2.5 w-2.5">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+          </span>
+          <Upload className="w-4 h-4 text-emerald-400 group-hover:-translate-y-0.5 transition-transform" />
+          <span className="text-xs font-bold text-white tracking-wide">
+            Upload / Manage APK
+          </span>
+          <span className="px-1.5 py-0.5 bg-emerald-500/20 text-emerald-300 text-[10px] font-mono rounded font-semibold uppercase">
+            Admin
+          </span>
+        </button>
+      </aside>
+      */}
 
       {/* Primary Mobile App Download Modal */}
       <AppDownloadModal
         isOpen={appDownloadModalOpen}
         onClose={() => setAppDownloadModalOpen(false)}
         contextFeature={downloadContextFeature}
+        initialTab={downloadModalTab}
       />
 
       {/* Secondary Information & Intake Modals */}

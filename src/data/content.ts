@@ -289,23 +289,23 @@ export const TESTIMONIALS: Testimonial[] = [
 ];
 
 export const REGULATORY_DISCLAIMER_SHORT =
-  'EB Wealth is an educational and business consultancy platform. All content, mentorship, and coaching are provided solely for informational and educational purposes and do not constitute individualized investment, legal, tax, or regulatory advice. Investing involves risk of capital loss. Past performance does not guarantee future results.';
+  'EB Wealth is a UK-based educational and business consultancy platform operating under United Kingdom law. All content, mentorship, and coaching are provided solely for informational and educational purposes and do not constitute regulated investment, legal, tax, or financial advice under the UK Financial Services and Markets Act 2000 (FSMA) or any other regulatory framework. Investing involves risk of capital loss.';
 
 export const REGULATORY_DISCLAIMER_FULL = `
 REGULATORY DISCLOSURES & RISK DISCLAIMERS
-Last Updated: October 2026
+Last Updated: October 2026 · United Kingdom Jurisdiction
 
-1. Educational & Consultancy Nature
-EB Wealth ("Empowerment Body", "EB Wealth", "we", "us", or "our") provides educational curricula, mentorship frameworks, strategic business coaching, and AI automation consulting. EB Wealth is NOT a registered investment adviser (RIA), broker-dealer, commodity trading advisor, legal firm, or certified public accounting practice with the U.S. Securities and Exchange Commission (SEC), Financial Industry Regulatory Authority (FINRA), UK Financial Conduct Authority (FCA), or any other regulatory body.
+1. UK-Based Educational & Consultancy Nature
+EB Wealth ("Empowerment Body", "EB Wealth", "we", "us", or "our") is a private enterprise based in the United Kingdom providing educational curricula, executive mentorship frameworks, strategic business coaching, and AI automation consulting. EB Wealth is NOT authorised or regulated by the UK Financial Conduct Authority (FCA), nor is it a registered investment adviser (RIA), broker-dealer, commodity trading advisor, legal firm, or chartered accounting practice under the UK Financial Services and Markets Act 2000 (FSMA), the U.S. Securities and Exchange Commission (SEC), or any other global regulatory authority.
 
-2. No Personalized Investment or Financial Advice
-Nothing on this website, in our Academy courses, mentorship sessions, or coaching materials should be construed as personalized investment, financial, legal, or tax advice. Any strategies, hypothetical portfolio weights, or case studies presented are for illustrative, instructional, and conceptual purposes only. You must consult a licensed independent financial advisor, certified tax specialist, and legal counsel prior to making any financial commitments.
+2. No Regulated Financial or Investment Advice
+Nothing on this website, in the EB Wealth mobile application, in our Academy courses, mentorship sessions, or coaching materials constitutes regulated financial advice, investment advisory services, or an invitation to engage in investment activity. Any strategies, hypothetical portfolio weights, or case studies presented are for illustrative, instructional, and conceptual purposes only. Clients and users must consult an FCA-authorised independent financial adviser (IFA), qualified tax specialist, and legal solicitor prior to making any financial commitments.
 
 3. Inherent Risks of Investing
-All investments—including public equities, index funds, private credit, commercial real estate syndications, and alternative assets—carry substantial risk of loss, including the potential loss of principal invested. Market conditions fluctuate unpredictably, and diversification cannot guarantee profits or insulate against market downturns.
+All investments—including equities, index funds, private debt, commercial real estate syndications, and alternative assets—carry substantial risk of capital loss, including the potential loss of principal invested. Past performance is never a reliable indicator of future results. Market conditions fluctuate unpredictably, and diversification cannot guarantee profit or insulate against market downturns.
 
 4. Testimonials & Performance Statements
-Testimonials, endorsements, and case studies featured on this website reflect the real-world experiences of specific individuals and organizations. These outcomes are not typical, cannot be guaranteed, and do not represent a promise that any current or future client will achieve similar investment returns, tax savings, or business revenues.
+Testimonials, endorsements, and case studies featured on this website reflect the individual real-world experiences of specific clients. These outcomes are not typical, cannot be guaranteed, and do not represent a promise that any current or future client will achieve similar investment returns, tax savings, or business revenues.
 
 5. Technology & AI Capabilities
 Our AI business growth guidance and prompt engineering frameworks are provided to enhance productivity and organizational workflow efficiency. EB Wealth does not guarantee specific software uptime, third-party AI provider behavior, or algorithmic investment efficacy. Users remain solely responsible for validating all AI-generated outputs and maintaining compliance with applicable consumer protection and privacy standards.

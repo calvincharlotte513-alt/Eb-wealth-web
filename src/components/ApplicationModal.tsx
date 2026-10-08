@@ -18,7 +18,7 @@ export const ApplicationModal: React.FC<ApplicationModalProps> = ({
     email: '',
     phone: '',
     company: '',
-    netWorth: '$500,000 – $2,000,000',
+    netWorth: '£500,000 – £2,000,000',
     primaryGoal: 'Portfolio Diversification & Private Equity Alpha',
     biggestBottleneck: '',
     timeCommitment: 'Yes, 4-6 hours per month committed'
@@ -101,10 +101,10 @@ export const ApplicationModal: React.FC<ApplicationModalProps> = ({
                     </label>
                     <div className="grid grid-cols-1 gap-2">
                       {[
-                        '$100,000 – $500,000 (Emerging Capital Allocator)',
-                        '$500,000 – $2,000,000 (Accredited High Earner)',
-                        '$2,000,000 – $5,000,000 (High-Net-Worth Founder)',
-                        '$5,000,000+ (Family Office / Enterprise Operator)'
+                        '£100,000 – £500,000 (Emerging Capital Allocator)',
+                        '£500,000 – £2,000,000 (Accredited High Earner)',
+                        '£2,000,000 – £5,000,000 (High-Net-Worth Founder)',
+                        '£5,000,000+ (Family Office / Enterprise Operator)'
                       ].map((bracket) => (
                         <button
                           key={bracket}

@@ -44,8 +44,8 @@ export const AboutPage: React.FC<AboutPageProps> = ({
 
                 <div className="relative rounded-2xl overflow-hidden bg-neutral-900 border border-neutral-800 shadow-2xl">
                   <img
-                    src="/src/assets/images/ceo_suit_portrait_1791395753240.jpg"
-                    alt="Founder and Chief Executive Officer of EB Wealth in bespoke tailored suit"
+                    src="https://res.cloudinary.com/frl7thhq/image/upload/v1791447447/9a493f0e-a0ed-4fd1-ae45-37d9f285a283.png"
+                    alt="Founder and Chief Executive Officer of EB Wealth"
                     className="w-full h-auto object-cover object-center aspect-[3/4] transition duration-500 group-hover:scale-[1.02]"
                     referrerPolicy="no-referrer"
                   />
@@ -222,12 +222,12 @@ export const AboutPage: React.FC<AboutPageProps> = ({
               </p>
               <div className="grid grid-cols-2 gap-4 pt-2">
                 <div className="p-4 bg-neutral-900 border border-neutral-800 rounded-xl">
-                  <div className="text-2xl font-bold text-white font-display">$48M+</div>
-                  <div className="text-xs text-neutral-400 mt-1">Advised Portfolio Volume</div>
+                  <div className="text-2xl font-bold text-white font-display">£50M+</div>
+                  <div className="text-xs text-neutral-400 mt-1">Advised Capital Volume</div>
                 </div>
                 <div className="p-4 bg-neutral-900 border border-neutral-800 rounded-xl">
-                  <div className="text-2xl font-bold text-emerald-400 font-display">98.4%</div>
-                  <div className="text-xs text-neutral-400 mt-1">Cohort Retention Rate</div>
+                  <div className="text-2xl font-bold text-emerald-400 font-display">UK-Based</div>
+                  <div className="text-xs text-neutral-400 mt-1">Global Private Clients</div>
                 </div>
               </div>
             </div>

@@ -73,7 +73,7 @@ export const Hero: React.FC<HeroProps> = ({ onExplore, onDownloadApp }) => {
             <div className="pt-8 border-t border-white/10 grid grid-cols-2 sm:grid-cols-3 gap-6 max-w-xl text-neutral-300">
               <div>
                 <div className="text-2xl lg:text-3xl font-bold text-white tabular-nums font-display">
-                  $48M+
+                  £50M+
                 </div>
                 <div className="text-xs text-neutral-400 mt-0.5">
                   Client Capital Advised
@@ -81,10 +81,10 @@ export const Hero: React.FC<HeroProps> = ({ onExplore, onDownloadApp }) => {
               </div>
               <div>
                 <div className="text-2xl lg:text-3xl font-bold text-emerald-400 tabular-nums font-display">
-                  24+
+                  UK HQ
                 </div>
                 <div className="text-xs text-neutral-400 mt-0.5">
-                  Global Investor Hubs
+                  United Kingdom Based
                 </div>
               </div>
               <div>
@@ -92,7 +92,7 @@ export const Hero: React.FC<HeroProps> = ({ onExplore, onDownloadApp }) => {
                   v2.4.0
                 </div>
                 <div className="text-xs text-neutral-400 mt-0.5">
-                  Mobile App Release
+                  Mobile App (Direct APK)
                 </div>
               </div>
             </div>

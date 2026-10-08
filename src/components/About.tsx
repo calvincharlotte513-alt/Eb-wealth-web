@@ -34,8 +34,8 @@ export const About: React.FC<AboutProps> = ({ onOpenMentorship }) => {
               
               <div className="relative rounded-2xl overflow-hidden bg-neutral-950 border border-neutral-800 shadow-2xl">
                 <img
-                  src="/src/assets/images/ceo_founder_portrait_1791394762171.jpg"
-                  alt="Founder & CEO of EB Wealth and Empowerment Body"
+                  src="https://res.cloudinary.com/frl7thhq/image/upload/v1791447447/9a493f0e-a0ed-4fd1-ae45-37d9f285a283.png"
+                  alt="Founder & CEO of EB Wealth"
                   className="w-full h-auto object-cover object-center aspect-[3/4] transition duration-500 group-hover:scale-[1.02]"
                   referrerPolicy="no-referrer"
                 />

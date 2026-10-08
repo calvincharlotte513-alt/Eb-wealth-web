@@ -1,14 +1,15 @@
 import React from 'react';
-import { Mail, Phone, ShieldCheck, Download, Smartphone } from 'lucide-react';
+import { Mail, Phone, ShieldCheck, Download, Smartphone, Upload } from 'lucide-react';
 import { PageId } from '../types/navigation';
 
 interface FooterProps {
   onNavigate: (page: PageId) => void;
   onOpenDownloadModal: (feature?: string) => void;
+  onOpenManageApk: () => void;
   onOpenLegal: (type: 'disclaimer' | 'privacy' | 'terms') => void;
 }
 
-export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenDownloadModal, onOpenLegal }) => {
+export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenDownloadModal, onOpenManageApk, onOpenLegal }) => {
   const handleNav = (page: PageId) => {
     onNavigate(page);
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -30,14 +31,24 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenDownloadModal,
               Empowerment Body investment education, tailored executive mentorship, and proprietary AI business growth architectures. All masterclasses, deal rooms, and tools are hosted directly in the EB Wealth Mobile App.
             </p>
             
-            <div className="pt-2">
+            <div className="pt-2 flex flex-wrap items-center gap-2">
               <button
                 onClick={() => onOpenDownloadModal('Footer Link')}
                 className="inline-flex items-center gap-2 px-3 py-1.5 bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 rounded-lg text-xs font-semibold transition-colors cursor-pointer"
               >
                 <Download className="w-3.5 h-3.5" />
-                <span>Download Android APK (v2.4.0)</span>
+                <span>Download Android APK</span>
               </button>
+              {/* Upload / Manage APK (Commented out for now)
+              <button
+                onClick={onOpenManageApk}
+                className="inline-flex items-center gap-2 px-3 py-1.5 bg-emerald-950/80 hover:bg-emerald-900 border border-emerald-500/40 text-emerald-300 rounded-lg text-xs font-semibold transition-colors cursor-pointer"
+                title="Upload or manage official APK release"
+              >
+                <Upload className="w-3.5 h-3.5 text-emerald-400" />
+                <span>Upload / Manage APK</span>
+              </button>
+              */}
             </div>
           </div>
 
@@ -178,7 +189,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenDownloadModal,
         {/* Regulatory Disclosure Bottom Banner */}
         <div className="pt-6 border-t border-neutral-900 pb-6 text-[11px] leading-relaxed text-neutral-400">
           <p>
-            <strong>Statutory Risk Disclaimer:</strong> EB Wealth ("Empowerment Body") is strictly an educational publishing and business consultancy firm. EB Wealth is not an investment adviser registered with the U.S. SEC or FINRA, and does not provide individualized tax, legal, or securities advisory services. Hypothetical examples and historical performance analyses are not indicative of future market returns.
+            <strong>Statutory Risk Disclaimer:</strong> EB Wealth ("Empowerment Body") is a United Kingdom-based educational publishing and business consultancy firm operating under UK law. EB Wealth is not authorised or regulated by the UK Financial Conduct Authority (FCA) and does not provide regulated financial, investment, legal, or tax advice under the Financial Services and Markets Act 2000 (FSMA). Hypothetical scenarios, models, and historical analyses are provided for illustrative educational purposes only and are not indicative of future investment results. Capital is at risk.
           </p>
         </div>
 
