@@ -1,5 +1,6 @@
 import React from 'react';
 import { ArrowRight, Download, Smartphone } from 'lucide-react';
+import heroBgImage from '../assets/images/hero_eb_wealth_1791394753165.jpg';
 
 interface HeroProps {
   onExplore: () => void;
@@ -12,7 +13,7 @@ export const Hero: React.FC<HeroProps> = ({ onExplore, onDownloadApp }) => {
       {/* Background Graphic & Media Carrier */}
       <div className="absolute inset-0 z-0">
         <img
-          src="/src/assets/images/hero_eb_wealth_1791394753165.jpg"
+          src={heroBgImage}
           alt="EB Wealth Executive Headquarters and Private Family Office"
           className="w-full h-full object-cover object-center scale-105"
           referrerPolicy="no-referrer"

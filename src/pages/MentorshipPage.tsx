@@ -3,6 +3,7 @@ import { MENTORSHIP_TIERS } from '../data/content';
 import { MentorshipTier } from '../types';
 import { Compass, Check, ArrowRight, ShieldCheck, Lock, Star, Download, Smartphone } from 'lucide-react';
 import { PageId } from '../types/navigation';
+import mentorshipImage from '../assets/images/mentorship_coaching_1791394783951.jpg';
 
 interface MentorshipPageProps {
   onNavigate: (page: PageId) => void;
@@ -87,7 +88,7 @@ export const MentorshipPage: React.FC<MentorshipPageProps> = ({
             <div className="lg:col-span-6">
               <div className="relative rounded-3xl overflow-hidden border border-neutral-800 shadow-2xl group">
                 <img
-                  src="/src/assets/images/mentorship_coaching_1791394783951.jpg"
+                  src={mentorshipImage}
                   alt="EB Wealth Executive Mentorship Boardroom Consultation"
                   className="w-full h-auto object-cover aspect-[4/3] group-hover:scale-105 transition duration-500"
                   referrerPolicy="no-referrer"

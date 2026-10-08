@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { AI_GROWTH_SERVICES } from '../data/content';
 import { Cpu, ArrowRight, CheckCircle2, TrendingUp, Zap, Clock, Sparkles } from 'lucide-react';
 import { PageId } from '../types/navigation';
+import aiBusinessGrowthImage from '../assets/images/ai_business_growth_1791394794528.jpg';
 
 interface AIBusinessGrowthPageProps {
   onNavigate: (page: PageId) => void;
@@ -79,7 +80,7 @@ export const AIBusinessGrowthPage: React.FC<AIBusinessGrowthPageProps> = ({
             <div className="lg:col-span-5">
               <div className="relative rounded-3xl overflow-hidden border border-neutral-800 shadow-2xl group">
                 <img
-                  src="/src/assets/images/ai_business_growth_1791394794528.jpg"
+                  src={aiBusinessGrowthImage}
                   alt="EB Wealth AI Systems Command Suite"
                   className="w-full h-auto object-cover aspect-[4/3] group-hover:scale-105 transition duration-500"
                   referrerPolicy="no-referrer"

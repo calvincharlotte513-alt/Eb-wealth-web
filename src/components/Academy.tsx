@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { COURSES } from '../data/content';
 import { Course } from '../types';
 import { BookOpen, Clock, ArrowRight, ShieldAlert, Smartphone, Check, Download } from 'lucide-react';
+import academyCurriculumImage from '../assets/images/academy_curriculum_1791394772347.jpg';
 
 interface AcademyProps {
   onSelectCourse: (course: Course) => void;
@@ -66,7 +67,7 @@ export const Academy: React.FC<AcademyProps> = ({
           <div className="lg:col-span-5">
             <div className="relative rounded-2xl overflow-hidden border border-neutral-800 shadow-2xl group">
               <img
-                src="/src/assets/images/academy_curriculum_1791394772347.jpg"
+                src={academyCurriculumImage}
                 alt="EB Wealth Academy Curriculum Masterclasses & Strategy Modules"
                 className="w-full h-auto object-cover aspect-[4/3] group-hover:scale-105 transition duration-500"
                 referrerPolicy="no-referrer"
