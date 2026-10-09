@@ -11,7 +11,7 @@ interface ApplicationModalProps {
 export const ApplicationModal: React.FC<ApplicationModalProps> = ({
   isOpen,
   onClose,
-  tierTitle = 'Private Executive Mentorship'
+  tierTitle = 'Growth Mentorship'
 }) => {
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
@@ -72,32 +72,33 @@ export const ApplicationModal: React.FC<ApplicationModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-sm overflow-y-auto">
-      <div className="relative w-full max-w-xl bg-white border border-slate-200 rounded-3xl shadow-2xl p-6 md:p-8 text-[#17202A] my-8 animate-in fade-in zoom-in-95 duration-200">
+    <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-950/75 backdrop-blur-xs p-3 sm:p-6 flex items-start justify-center pt-8 sm:pt-14 pb-12">
+      <div className="relative w-full max-w-xl bg-white border border-slate-200 rounded-2xl shadow-2xl p-6 md:p-8 text-[#0F172A] my-auto animate-in fade-in zoom-in-95 duration-150">
         <button
           onClick={resetAndClose}
-          className="absolute top-5 right-5 text-slate-400 hover:text-[#17202A] transition-colors p-1.5 rounded-xl hover:bg-slate-100 cursor-pointer"
+          className="absolute top-4 right-4 sm:top-5 sm:right-5 text-slate-400 hover:text-slate-900 transition-colors p-2 rounded-xl hover:bg-slate-100 cursor-pointer z-10"
+          aria-label="Close modal"
         >
           <X className="w-5 h-5" />
         </button>
 
         {!isSubmitted ? (
           <div>
-            <div className="mb-6">
-              <span className="text-xs font-mono font-bold text-[#00A878] uppercase">
-                Admissions Application
+            <div className="mb-6 pr-8">
+              <span className="text-xs font-mono font-bold text-[#2563EB] uppercase tracking-wider">
+                Investment Mentorship Admissions
               </span>
-              <h3 className="text-2xl font-bold text-[#17202A] mt-0.5">
+              <h3 className="text-xl sm:text-2xl font-bold text-[#17202A] mt-1">
                 Apply for {tierTitle}
               </h3>
-              <p className="text-xs text-[#52606D] mt-1">
-                Step {step} of 3 — Tell us about your current background and financial goals.
+              <p className="text-xs sm:text-sm text-[#52606D] mt-1.5">
+                Step {step} of 3 — Tell us about your investment background and targets. Details are immediately dispatched to our admissions team.
               </p>
             </div>
 
             <form onSubmit={handleNext} className="space-y-4">
               {step === 1 && (
-                <div className="space-y-3.5">
+                <div className="space-y-3.5 animate-in fade-in duration-150">
                   <div>
                     <label className="block text-xs font-semibold text-[#17202A] mb-1">
                       Full Name *
@@ -105,10 +106,10 @@ export const ApplicationModal: React.FC<ApplicationModalProps> = ({
                     <input
                       required
                       type="text"
-                      placeholder="e.g. Alexander Clark"
+                      placeholder="e.g. David Mitchell"
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      className="w-full px-3.5 py-2.5 bg-[#F8FAFC] border border-slate-200 rounded-xl text-xs text-[#17202A] focus:outline-none focus:border-[#00A878]"
+                      className="w-full px-3.5 py-2.5 bg-[#F8FAFC] border border-slate-200 rounded-xl text-xs sm:text-sm text-[#17202A] focus:outline-none focus:border-[#2563EB]"
                     />
                   </div>
 
@@ -119,210 +120,202 @@ export const ApplicationModal: React.FC<ApplicationModalProps> = ({
                     <input
                       required
                       type="email"
-                      placeholder="alexander@domain.com"
+                      placeholder="david@example.com"
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      className="w-full px-3.5 py-2.5 bg-[#F8FAFC] border border-slate-200 rounded-xl text-xs text-[#17202A] focus:outline-none focus:border-[#00A878]"
+                      className="w-full px-3.5 py-2.5 bg-[#F8FAFC] border border-slate-200 rounded-xl text-xs sm:text-sm text-[#17202A] focus:outline-none focus:border-[#2563EB]"
                     />
                   </div>
 
                   <div>
                     <label className="block text-xs font-semibold text-[#17202A] mb-1">
-                      Phone Number (for WhatsApp / SMS confirmations) *
+                      Mobile Phone Number *
                     </label>
                     <input
                       required
                       type="tel"
-                      placeholder="+44 7123 456789"
+                      placeholder="+44 7911 123456"
                       value={formData.phone}
                       onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                      className="w-full px-3.5 py-2.5 bg-[#F8FAFC] border border-slate-200 rounded-xl text-xs text-[#17202A] focus:outline-none focus:border-[#00A878]"
+                      className="w-full px-3.5 py-2.5 bg-[#F8FAFC] border border-slate-200 rounded-xl text-xs sm:text-sm text-[#17202A] focus:outline-none focus:border-[#2563EB]"
                     />
                   </div>
                 </div>
               )}
 
               {step === 2 && (
-                <div className="space-y-3.5">
+                <div className="space-y-3.5 animate-in fade-in duration-150">
                   <div>
                     <label className="block text-xs font-semibold text-[#17202A] mb-1">
-                      Current Investing Stage *
+                      Current Investing Experience *
                     </label>
                     <select
                       value={formData.experienceLevel}
                       onChange={(e) => setFormData({ ...formData, experienceLevel: e.target.value })}
-                      className="w-full px-3.5 py-2.5 bg-[#F8FAFC] border border-slate-200 rounded-xl text-xs text-[#17202A] focus:outline-none focus:border-[#00A878]"
+                      className="w-full px-3.5 py-2.5 bg-[#F8FAFC] border border-slate-200 rounded-xl text-xs sm:text-sm text-[#17202A] focus:outline-none focus:border-[#2563EB]"
                     >
-                      <option>Complete Beginner (Building first portfolio)</option>
-                      <option>Intermediate (Managing Stocks & Shares ISA / SIPP)</option>
-                      <option>Active Investor (Seeking advanced valuation & accountability)</option>
-                      <option>Entrepreneur / Business Owner (Scaling capital & AI leverage)</option>
+                      <option value="Complete Beginner (Building first portfolio)">Complete Beginner (Building first portfolio)</option>
+                      <option value="Early-Stage Investor (Own 1-2 funds/stocks, want structure)">Early-Stage Investor (Own 1-2 funds/stocks, want structure)</option>
+                      <option value="Active Investor (Seeking deep company analysis & asset allocation)">Active Investor (Seeking deep company analysis & asset allocation)</option>
+                      <option value="Business Owner / High-Earner (Optimizing corporate cash & personal wealth)">Business Owner / High-Earner (Optimizing corporate cash & personal wealth)</option>
                     </select>
                   </div>
 
                   <div>
                     <label className="block text-xs font-semibold text-[#17202A] mb-1">
-                      Primary Goal in EB Wealth *
+                      Primary Goal for Mentorship *
                     </label>
                     <select
                       value={formData.primaryGoal}
                       onChange={(e) => setFormData({ ...formData, primaryGoal: e.target.value })}
-                      className="w-full px-3.5 py-2.5 bg-[#F8FAFC] border border-slate-200 rounded-xl text-xs text-[#17202A] focus:outline-none focus:border-[#00A878]"
+                      className="w-full px-3.5 py-2.5 bg-[#F8FAFC] border border-slate-200 rounded-xl text-xs sm:text-sm text-[#17202A] focus:outline-none focus:border-[#2563EB]"
                     >
-                      <option>Learn UK ISAs, index funds and disciplined compounding</option>
-                      <option>Overcome emotional decision-making and stay accountable</option>
-                      <option>Company fundamental analysis & valuation models</option>
-                      <option>Integrate AI systems to free up 15+ hours weekly in business</option>
+                      <option value="Learn UK ISAs, index funds and disciplined compounding">Learn UK ISAs, index funds and disciplined compounding</option>
+                      <option value="Build a resilient, diversified multi-asset portfolio">Build a resilient, diversified multi-asset portfolio</option>
+                      <option value="Learn fundamental analysis (evaluating stocks and balance sheets)">Learn fundamental analysis (evaluating stocks and balance sheets)</option>
+                      <option value="Develop accountability, consistency, and eliminate speculation">Develop accountability, consistency, and eliminate speculation</option>
                     </select>
                   </div>
                 </div>
               )}
 
               {step === 3 && (
-                <div className="space-y-3.5">
+                <div className="space-y-3.5 animate-in fade-in duration-150">
                   <div>
                     <label className="block text-xs font-semibold text-[#17202A] mb-1">
-                      What has held you back the most financially or in business?
+                      What is your biggest current investing challenge?
                     </label>
                     <textarea
                       rows={3}
-                      placeholder="e.g. Lack of structured knowledge, fear of making a mistake, or too much time spent on manual admin..."
+                      placeholder="e.g. Overwhelmed by financial jargon, unsure which platform to choose, afraid of market drops..."
                       value={formData.biggestBottleneck}
                       onChange={(e) => setFormData({ ...formData, biggestBottleneck: e.target.value })}
-                      className="w-full px-3.5 py-2.5 bg-[#F8FAFC] border border-slate-200 rounded-xl text-xs text-[#17202A] focus:outline-none focus:border-[#00A878]"
+                      className="w-full px-3.5 py-2 bg-[#F8FAFC] border border-slate-200 rounded-xl text-xs text-[#17202A] focus:outline-none focus:border-[#2563EB]"
                     />
                   </div>
 
-                  <div className="p-3 bg-[#ECFDF5] border border-[#00A878]/30 rounded-xl text-[11px] text-[#17202A]">
-                    <Shield className="w-4 h-4 text-[#00A878] inline mr-1 -mt-0.5" />
-                    <strong>Confidentiality Guarantee:</strong> All submissions are reviewed confidentially by EB Wealth senior leadership. No information is ever shared with third parties.
+                  <div>
+                    <label className="block text-xs font-semibold text-[#17202A] mb-1">
+                      Can you commit 2–4 hours per month to education and strategy calls? *
+                    </label>
+                    <select
+                      value={formData.timeCommitment}
+                      onChange={(e) => setFormData({ ...formData, timeCommitment: e.target.value })}
+                      className="w-full px-3.5 py-2.5 bg-[#F8FAFC] border border-slate-200 rounded-xl text-xs sm:text-sm text-[#17202A] focus:outline-none focus:border-[#2563EB]"
+                    >
+                      <option value="Yes, committed to 2-4 hours per month">Yes, fully committed</option>
+                      <option value="Yes, flexible schedule">Yes, flexible schedule</option>
+                      <option value="Unsure, need part-time schedule">Unsure, need part-time schedule</option>
+                    </select>
                   </div>
                 </div>
               )}
 
-              <div className="pt-4 flex items-center justify-between border-t border-slate-100">
-                {step > 1 ? (
+              <div className="pt-2 flex items-center justify-between gap-3">
+                {step > 1 && (
                   <button
                     type="button"
                     onClick={handlePrev}
-                    className="py-2.5 px-4 bg-slate-100 hover:bg-slate-200 text-[#17202A] text-xs font-semibold rounded-xl flex items-center gap-1.5 cursor-pointer"
+                    className="py-2.5 px-4 bg-slate-100 hover:bg-slate-200 text-[#17202A] font-semibold text-xs rounded-xl flex items-center gap-1.5 transition-colors cursor-pointer"
                   >
                     <ArrowLeft className="w-3.5 h-3.5" />
                     <span>Back</span>
                   </button>
-                ) : <div />}
+                )}
 
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="py-2.5 px-6 bg-[#00A878] hover:bg-[#009267] text-white text-xs font-semibold rounded-xl shadow-xs transition-all flex items-center gap-2 cursor-pointer disabled:opacity-50"
+                  className="flex-1 py-3 bg-[#2563EB] hover:bg-blue-700 text-white font-semibold text-xs sm:text-sm rounded-xl flex items-center justify-center gap-2 transition-all cursor-pointer shadow-md hover:shadow-lg disabled:opacity-50"
                 >
-                  <span>{step === 3 ? (isSubmitting ? 'Submitting...' : 'Complete Application') : 'Continue'}</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
+                  {isSubmitting ? (
+                    'Dispatching Application...'
+                  ) : step < 3 ? (
+                    <>
+                      <span>Continue to Next Step</span>
+                      <ArrowRight className="w-4 h-4" />
+                    </>
+                  ) : (
+                    'Submit Application & Dispatch Details'
+                  )}
                 </button>
+              </div>
+
+              <div className="flex items-center justify-center gap-1.5 text-[11px] text-[#52606D] pt-1">
+                <Shield className="w-3.5 h-3.5 text-[#00A878]" />
+                <span>Admissions details sent immediately to company email & phone upon submission.</span>
               </div>
             </form>
           </div>
         ) : (
-          <div className="py-4 space-y-5">
-            <div className="text-center space-y-2">
-              <div className="w-14 h-14 rounded-2xl bg-[#ECFDF5] text-[#00A878] flex items-center justify-center mx-auto shadow-xs">
-                <CheckCircle2 className="w-7 h-7" />
-              </div>
+          <div className="py-2 text-center space-y-4">
+            <div className="w-14 h-14 bg-emerald-50 border border-emerald-200 rounded-2xl flex items-center justify-center mx-auto text-emerald-600 shadow-sm">
+              <CheckCircle2 className="w-8 h-8" />
+            </div>
 
-              <h3 className="text-2xl font-bold text-[#17202A]">
-                Application Dispatched Successfully!
+            <div>
+              <span className="text-xs font-mono font-bold text-emerald-600 uppercase tracking-wider">
+                Application Dispatched Immediately
+              </span>
+              <h3 className="text-xl sm:text-2xl font-bold text-[#17202A] mt-1">
+                Application Submitted & Dispatched
               </h3>
-              <p className="text-xs text-[#52606D] max-w-sm mx-auto leading-relaxed">
-                Thank you, <strong>{formData.name}</strong>. Your application for <strong>{tierTitle}</strong> has been transmitted directly to our executive team.
+              <p className="text-xs sm:text-sm text-[#52606D] mt-2 max-w-md mx-auto leading-relaxed">
+                Thank you, <strong className="text-[#17202A]">{formData.name}</strong>. Your intake application for <strong className="text-[#17202A]">{tierTitle}</strong> has been automatically dispatched directly to our admissions office.
               </p>
             </div>
 
-            {/* Direct Dispatch Verification Box */}
-            <div className="bg-[#F8FAFC] border border-slate-200 rounded-2xl p-4 text-xs space-y-2.5">
-              <div className="font-bold text-[#17202A] flex items-center justify-between border-b border-slate-200 pb-2">
-                <span className="flex items-center gap-1.5 text-[#00A878]">
-                  <CheckCircle2 className="w-4 h-4" />
-                  <span>Immediate Company Dispatch Confirmed</span>
-                </span>
-                <span className="text-[10px] text-slate-400 font-mono">
-                  {dispatchResult?.leadId || 'DISPATCHED'}
-                </span>
-              </div>
-
-              <div className="space-y-1.5 text-slate-600">
-                <div className="flex items-center justify-between">
-                  <span className="flex items-center gap-1.5">
-                    <Mail className="w-3.5 h-3.5 text-[#2563EB]" />
-                    <span>Company Email:</span>
-                  </span>
-                  <strong className="text-[#17202A] font-mono">{dispatchResult?.dispatchedToEmail || 'calvincharlotte513@gmail.com'}</strong>
+            {/* Direct Dispatch Proof Card */}
+            {dispatchResult && (
+              <div className="p-4 bg-[#F8FAFC] border border-slate-200 rounded-2xl text-left text-xs space-y-2.5">
+                <div className="flex items-center justify-between text-[11px] text-slate-500 pb-2 border-b border-slate-200">
+                  <span className="font-mono font-semibold text-[#2563EB]">Lead ID: {dispatchResult.leadId}</span>
+                  <span>{dispatchResult.timestamp}</span>
+                </div>
+                <div className="flex items-center gap-2 text-[#17202A]">
+                  <Mail className="w-4 h-4 text-[#2563EB] shrink-0" />
+                  <span className="truncate">Sent to Company Email: <strong>{dispatchResult.dispatchedToEmail}</strong></span>
+                </div>
+                <div className="flex items-center gap-2 text-[#17202A]">
+                  <Phone className="w-4 h-4 text-emerald-600 shrink-0" />
+                  <span>Sent to Company Phone: <strong>{dispatchResult.dispatchedToPhone}</strong></span>
                 </div>
 
-                <div className="flex items-center justify-between">
-                  <span className="flex items-center gap-1.5">
-                    <Phone className="w-3.5 h-3.5 text-[#00A878]" />
-                    <span>Company Phone (SMS/WhatsApp):</span>
-                  </span>
-                  <strong className="text-[#17202A] font-mono">{dispatchResult?.dispatchedToPhone || '+44 (0) 7911 123456'}</strong>
-                </div>
-
-                <div className="flex items-center justify-between pt-1 border-t border-slate-200/60 text-[11px]">
-                  <span>Status:</span>
-                  <span className="inline-flex items-center gap-1 text-[#00A878] font-bold">
-                    <span className="w-2 h-2 rounded-full bg-[#00A878] animate-pulse"></span>
-                    <span>Delivered Directly from Website</span>
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            {/* Quick Direct Action Options */}
-            <div className="space-y-2">
-              <div className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider text-center">
-                Instant Direct Connect Options
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                {dispatchResult?.whatsAppUrl && (
+                <div className="pt-2 flex flex-wrap gap-2">
                   <a
                     href={dispatchResult.whatsAppUrl}
                     target="_blank"
-                    rel="noopener noreferrer"
-                    className="py-2.5 px-3 bg-[#25D366] hover:bg-[#20ba5a] text-white text-xs font-semibold rounded-xl flex items-center justify-center gap-2 shadow-xs transition-colors"
+                    rel="noreferrer"
+                    className="flex-1 min-w-[130px] py-2 px-3 bg-emerald-600 hover:bg-emerald-700 text-white font-medium text-xs rounded-xl flex items-center justify-center gap-1.5 transition-colors"
                   >
-                    <MessageSquare className="w-4 h-4" />
-                    <span>Direct WhatsApp to Company</span>
+                    <MessageSquare className="w-3.5 h-3.5" />
+                    <span>WhatsApp Direct</span>
                   </a>
-                )}
-
-                {dispatchResult?.mailtoUrl && (
                   <a
                     href={dispatchResult.mailtoUrl}
-                    className="py-2.5 px-3 bg-[#00A878] hover:bg-[#009267] text-white text-xs font-semibold rounded-xl flex items-center justify-center gap-2 shadow-xs transition-colors"
+                    className="flex-1 min-w-[130px] py-2 px-3 bg-[#2563EB] hover:bg-blue-700 text-white font-medium text-xs rounded-xl flex items-center justify-center gap-1.5 transition-colors"
                   >
-                    <Mail className="w-4 h-4" />
-                    <span>Direct Email to Company</span>
+                    <Mail className="w-3.5 h-3.5" />
+                    <span>Open Email Client</span>
                   </a>
-                )}
+                  <button
+                    onClick={handleCopySummary}
+                    className="py-2 px-3 bg-white border border-slate-300 hover:bg-slate-50 text-[#17202A] font-medium text-xs rounded-xl flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+                  >
+                    {copied ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
+                    <span>{copied ? 'Copied' : 'Copy Summary'}</span>
+                  </button>
+                </div>
               </div>
+            )}
 
-              <div className="flex gap-2">
-                <button
-                  type="button"
-                  onClick={handleCopySummary}
-                  className="flex-1 py-2 px-3 bg-white hover:bg-slate-50 border border-slate-200 text-[#17202A] text-xs font-medium rounded-xl flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
-                >
-                  {copied ? <Check className="w-3.5 h-3.5 text-[#00A878]" /> : <Copy className="w-3.5 h-3.5 text-slate-400" />}
-                  <span>{copied ? 'Summary Copied!' : 'Copy Application Summary'}</span>
-                </button>
-                <button
-                  type="button"
-                  onClick={resetAndClose}
-                  className="py-2 px-5 bg-slate-900 hover:bg-black text-white text-xs font-semibold rounded-xl transition-colors cursor-pointer"
-                >
-                  Done
-                </button>
-              </div>
+            <div className="pt-2">
+              <button
+                onClick={resetAndClose}
+                className="w-full py-2.5 bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs rounded-xl transition-colors cursor-pointer"
+              >
+                Close & Return to Website
+              </button>
             </div>
           </div>
         )}

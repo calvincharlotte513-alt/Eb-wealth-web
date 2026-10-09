@@ -4,6 +4,5 @@ export type PageId =
   | 'academy'
   | 'mentorship'
   | 'coaching'
-  | 'ai-growth'
   | 'tools'
   | 'compliance';

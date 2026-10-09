@@ -1,5 +1,5 @@
 import React from 'react';
-import { ShieldCheck, Award, TrendingUp, Sparkles, Quote, ArrowRight, Heart, Brain, Lock } from 'lucide-react';
+import { ShieldCheck, Award, TrendingUp, Sparkles, Quote, ArrowRight, BookOpen, CheckCircle2, Lock } from 'lucide-react';
 import { FOUNDER_IMAGE_URL } from '../data/content';
 
 interface AboutProps {
@@ -13,28 +13,28 @@ export const About: React.FC<AboutProps> = ({ onOpenMentorship, onOpenGetStarted
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="max-w-3xl mb-16">
-          <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[#00A878] mb-2">
-            <span>The Empowerment Body Legacy</span>
+          <div className="inline-flex items-center gap-2 text-xs font-mono font-bold uppercase tracking-wider text-[#2563EB] mb-2">
+            <span>Our Mission & Core Beliefs</span>
             <span aria-hidden="true" className="text-slate-300">·</span>
-            <span>Founded for Long-Term Sovereignty</span>
+            <span>Demystifying Long-Term Wealth</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#17202A] tracking-tight">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#0F172A] tracking-tight">
             The Story Behind EB Wealth
           </h2>
-          <p className="text-base sm:text-lg text-[#52606D] mt-4 leading-relaxed">
-            EB Wealth was born out of <strong>Empowerment Body</strong>—a foundational philosophy that true sovereignty requires the alignment of personal discipline, intelligent capital stewardship, and modern technological leverage.
+          <p className="text-base sm:text-lg text-[#64748B] mt-4 leading-relaxed">
+            EB Wealth was founded on a simple conviction: <strong>ordinary people deserve straightforward, jargon-free investment education.</strong> Building long-term wealth should not require an economics degree, nor should it depend on speculative gambles or high-fee active managers.
           </p>
         </div>
 
         {/* Story Grid: The Philosophy & The Founder Bio */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start mb-16">
-          {/* Left Column: Authentic CEO Photo with Clean Framing */}
+          {/* Left Column: Authentic Founder Photo with Clean Framing */}
           <div className="lg:col-span-5 space-y-4">
             <div className="relative rounded-3xl overflow-hidden bg-white border border-slate-200 shadow-xl p-3">
               <div className="relative rounded-2xl overflow-hidden aspect-[3/4] bg-slate-100">
                 <img
                   src={FOUNDER_IMAGE_URL}
-                  alt="Founder and CEO of EB Wealth & Empowerment Body"
+                  alt="Founder and CEO of EB Wealth"
                   className="w-full h-full object-cover object-top"
                   loading="lazy"
                   referrerPolicy="no-referrer"
@@ -45,12 +45,12 @@ export const About: React.FC<AboutProps> = ({ onOpenMentorship, onOpenGetStarted
                     }
                   }}
                 />
-                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#17202A]/90 via-[#17202A]/40 to-transparent p-5 text-white">
-                  <div className="text-xs font-semibold tracking-wider uppercase text-[#ECFDF5]">
-                    Founder & Chief Executive Officer
+                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#0F172A]/90 via-[#0F172A]/40 to-transparent p-5 text-white">
+                  <div className="text-xs font-semibold tracking-wider uppercase text-blue-200">
+                    Founder & Head of Investment Education
                   </div>
                   <div className="text-base font-bold">
-                    EB Wealth · Empowerment Body
+                    EB Wealth
                   </div>
                 </div>
               </div>
@@ -58,95 +58,105 @@ export const About: React.FC<AboutProps> = ({ onOpenMentorship, onOpenGetStarted
               {/* Quick Trust Badges below photo */}
               <div className="grid grid-cols-3 gap-2 mt-3 p-3 bg-[#F8FAFC] border border-slate-200/70 rounded-xl text-center">
                 <div>
-                  <span className="block text-xs font-bold text-[#17202A]">Discipline</span>
-                  <span className="text-[10px] text-[#52606D] uppercase">First Principle</span>
+                  <div className="text-xs font-bold text-[#0F172A]">6 Levels</div>
+                  <div className="text-[10px] text-slate-500">Structured Path</div>
                 </div>
                 <div className="border-x border-slate-200">
-                  <span className="block text-xs font-bold text-[#00A878]">Human</span>
-                  <span className="text-[10px] text-[#52606D] uppercase">Mentorship</span>
+                  <div className="text-xs font-bold text-[#2563EB]">100% Educational</div>
+                  <div className="text-[10px] text-slate-500">Zero Jargon</div>
                 </div>
                 <div>
-                  <span className="block text-xs font-bold text-[#2563EB]">Leverage</span>
-                  <span className="text-[10px] text-[#52606D] uppercase">AI & Systems</span>
+                  <div className="text-xs font-bold text-emerald-600">UK ISAs</div>
+                  <div className="text-[10px] text-slate-500">Tax Shelters</div>
                 </div>
               </div>
+            </div>
+
+            <div className="p-4 rounded-2xl bg-[#EFF6FF] border border-blue-200 text-xs text-[#1E3A8A] flex items-start gap-3">
+              <ShieldCheck className="w-5 h-5 text-[#2563EB] shrink-0 mt-0.5" />
+              <p className="leading-relaxed">
+                <strong>Statutory Notice:</strong> EB Wealth provides financial education and conceptual masterclasses. We do not offer regulated investment advice or manage third-party capital.
+              </p>
             </div>
           </div>
 
-          {/* Right Column: Narrative, Vision & Bio */}
-          <div className="lg:col-span-7 space-y-6 text-sm sm:text-base text-[#52606D] leading-relaxed">
-            <div className="p-6 rounded-2xl bg-[#ECFDF5]/50 border border-[#00A878]/20 text-[#17202A]">
-              <p className="font-medium text-sm leading-relaxed italic">
-                "We do not promise overnight windfalls or get-rich-quick shortcuts. True wealth creation is the compounding result of deep financial education, emotional composure, healthy habits, and scalable technology systems."
+          {/* Right Column: Mission Narrative, Why We Exist & Core Principles */}
+          <div className="lg:col-span-7 space-y-6">
+            <div className="space-y-4 text-sm sm:text-base text-[#475569] leading-relaxed">
+              <p>
+                For decades, the financial industry has deliberately made investing seem intimidating, overwhelming, and exclusive. Complex acronyms, conflicting financial news, and speculative crypto hype leave ordinary beginners paralyzed by fear of losing money.
               </p>
-              <div className="mt-3 text-xs font-bold text-[#00A878]">
-                — Founder & CEO, EB Wealth & Empowerment Body
-              </div>
+              <p>
+                At the same time, saving cash alone in standard bank accounts guarantees a steady loss of purchasing power year after year to inflation.
+              </p>
+              <p className="font-medium text-[#0F172A] bg-[#F8FAFC] p-4 rounded-2xl border border-slate-200/80">
+                "Our single mission at EB Wealth is to take someone from 'I know nothing about investing and I am afraid of losing money' to 'I understand the mechanics of stocks, ETFs, and UK ISAs, and I know exactly what step to take next.'"
+              </p>
+              <p>
+                Through structured curriculum levels, interactive simulators, live cohort masterclasses, and private 1-on-1 consultations, we equip our members with the bedrock principles of sensible, low-cost, multi-decade capital compounding.
+              </p>
             </div>
 
-            <p>
-              In an era overwhelmed by social media noise, sensationalized trading hype, and complex financial gatekeepers, ordinary investors are too often excluded, while busy professionals leave hard-earned money trapped in cash losing purchasing power every single year to inflation.
-            </p>
-
-            <p>
-              <strong>Empowerment Body</strong> was founded on the belief that true independence is multifaceted: you need physical vitality and mental discipline, but you also need sovereign control over your balance sheet and your time.
-            </p>
-
-            <p>
-              EB Wealth strips away the high-fee advisory jargon. We teach you how to evaluate index funds, construct resilient multi-asset portfolios, use legal UK tax wrappers like the Stocks & Shares ISA and SIPP, and harness AI tools to build scalable leverage in your business.
-            </p>
-
-            {/* 4 Pillars of Empowerment Body */}
-            <div className="pt-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="p-4 rounded-xl bg-[#F8FAFC] border border-slate-200">
-                <div className="flex items-center gap-2 text-xs font-bold text-[#17202A] mb-1">
-                  <Brain className="w-4 h-4 text-[#00A878]" />
-                  <span>Lifelong Financial Literacy</span>
+            {/* Core Values Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
+              <div className="p-4 rounded-2xl bg-[#F8FAFC] border border-slate-200">
+                <div className="w-8 h-8 rounded-lg bg-blue-100 text-[#2563EB] flex items-center justify-center mb-2.5">
+                  <BookOpen className="w-4 h-4" />
                 </div>
-                <p className="text-xs text-[#52606D]">
-                  Understanding companies, balance sheets, and compounding removes fear and irrational decision-making.
+                <h4 className="text-sm font-bold text-[#0F172A] mb-1">Clarity Over Jargon</h4>
+                <p className="text-xs text-[#64748B] leading-relaxed">
+                  We translate balance sheets, P/E ratios, and fund fees into plain English that any beginner can grasp immediately.
                 </p>
               </div>
 
-              <div className="p-4 rounded-xl bg-[#F8FAFC] border border-slate-200">
-                <div className="flex items-center gap-2 text-xs font-bold text-[#17202A] mb-1">
-                  <Lock className="w-4 h-4 text-[#2563EB]" />
-                  <span>Tax-Sheltered Compounding</span>
+              <div className="p-4 rounded-2xl bg-[#F8FAFC] border border-slate-200">
+                <div className="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-600 flex items-center justify-center mb-2.5">
+                  <TrendingUp className="w-4 h-4" />
                 </div>
-                <p className="text-xs text-[#52606D]">
-                  Utilising HMRC ISA and pension allowances keeps your wealth safe from unnecessary tax drag.
+                <h4 className="text-sm font-bold text-[#0F172A] mb-1">Evidence-Based Investing</h4>
+                <p className="text-xs text-[#64748B] leading-relaxed">
+                  We focus on low-cost global indexing, true diversification, and patient compounding rather than speculative get-rich-quick schemes.
                 </p>
               </div>
 
-              <div className="p-4 rounded-xl bg-[#F8FAFC] border border-slate-200">
-                <div className="flex items-center gap-2 text-xs font-bold text-[#17202A] mb-1">
-                  <ShieldCheck className="w-4 h-4 text-[#F4B942]" />
-                  <span>Accountability & Habits</span>
+              <div className="p-4 rounded-2xl bg-[#F8FAFC] border border-slate-200">
+                <div className="w-8 h-8 rounded-lg bg-indigo-100 text-indigo-600 flex items-center justify-center mb-2.5">
+                  <ShieldCheck className="w-4 h-4" />
                 </div>
-                <p className="text-xs text-[#52606D]">
-                  Structured cohorts and check-ins ensure you maintain your savings rate and investment discipline.
+                <h4 className="text-sm font-bold text-[#0F172A] mb-1">UK Tax Efficiency</h4>
+                <p className="text-xs text-[#64748B] leading-relaxed">
+                  We demystify HMRC tax wrappers — Stocks & Shares ISAs, Junior ISAs, and SIPPs — so you protect your returns from unnecessary taxes.
                 </p>
               </div>
 
-              <div className="p-4 rounded-xl bg-[#F8FAFC] border border-slate-200">
-                <div className="flex items-center gap-2 text-xs font-bold text-[#17202A] mb-1">
-                  <TrendingUp className="w-4 h-4 text-[#14B8A6]" />
-                  <span>Practical AI Leverage</span>
+              <div className="p-4 rounded-2xl bg-[#F8FAFC] border border-slate-200">
+                <div className="w-8 h-8 rounded-lg bg-amber-100 text-amber-600 flex items-center justify-center mb-2.5">
+                  <Award className="w-4 h-4" />
                 </div>
-                <p className="text-xs text-[#52606D]">
-                  Automating repetitive business workflows gives you back hours to focus on high-yield strategy.
+                <h4 className="text-sm font-bold text-[#0F172A] mb-1">Personal Accountability</h4>
+                <p className="text-xs text-[#64748B] leading-relaxed">
+                  Knowledge without consistency is useless. Our masterclasses provide the discipline and peer community to stick to your long-term plan.
                 </p>
               </div>
             </div>
 
-            <div className="pt-4 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+            <div className="pt-4 flex flex-wrap items-center gap-3">
               <button
                 onClick={onOpenMentorship}
-                className="py-3 px-6 bg-[#00A878] hover:bg-[#009267] text-white text-xs font-semibold rounded-xl transition-all cursor-pointer shadow-xs flex items-center justify-center gap-2"
+                className="py-3 px-6 bg-[#2563EB] hover:bg-blue-700 text-white font-semibold text-xs sm:text-sm rounded-xl transition-all cursor-pointer shadow-xs hover:shadow-md flex items-center gap-2"
               >
-                <span>Apply for Mentorship with the Founder</span>
+                <span>Apply for Mentorship Cohort</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
+
+              {onOpenGetStarted && (
+                <button
+                  onClick={onOpenGetStarted}
+                  className="py-3 px-6 bg-slate-100 hover:bg-slate-200 text-[#0F172A] font-semibold text-xs sm:text-sm rounded-xl transition-all cursor-pointer"
+                >
+                  Determine Your Starting Level
+                </button>
+              )}
             </div>
           </div>
         </div>

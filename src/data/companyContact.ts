@@ -9,7 +9,7 @@ export interface CompanyContactConfig {
 }
 
 export const DEFAULT_COMPANY_CONTACT: CompanyContactConfig = {
-  companyName: 'EB Wealth (Empowerment Body)',
+  companyName: 'EB Wealth',
   email: 'calvincharlotte513@gmail.com',
   phone: '+447911123456',
   phoneDisplay: '+44 (0) 7911 123456',

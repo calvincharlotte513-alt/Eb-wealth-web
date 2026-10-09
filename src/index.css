@@ -2,46 +2,57 @@
 
 @theme {
   --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-display: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-  --color-eb-emerald: #00A878;
-  --color-eb-blue: #2563EB;
-  --color-eb-gold: #F4B942;
-  --color-eb-turquoise: #14B8A6;
-  --color-eb-mint: #ECFDF5;
-  --color-eb-softblue: #EFF6FF;
-  --color-eb-bg: #F8FAFC;
-  --color-eb-charcoal: #17202A;
-  --color-eb-secondary: #52606D;
-  --color-eb-warning: #FF6B5E;
+  --font-serif: 'Playfair Display', 'Cormorant Garamond', Georgia, Cambria, serif;
+  --font-display: 'Playfair Display', Georgia, serif;
+  
+  /* Goldman Sachs Institutional Palette: Green, White, and Gold */
+  --color-gs-green: #0D3B2E;
+  --color-gs-green-dark: #07251C;
+  --color-gs-green-light: #165342;
+  --color-gs-green-subtle: #EDF4F1;
+  
+  --color-gs-gold: #C5A869;
+  --color-gs-gold-dark: #9E8040;
+  --color-gs-gold-light: #DFCA96;
+  --color-gs-gold-subtle: #FAF5E8;
+  
+  --color-gs-ivory: #FAF9F5;
+  --color-gs-paper: #F4F2EB;
+  --color-gs-charcoal: #111816;
+  --color-gs-slate: #4A5550;
+  --color-gs-muted: #738079;
 }
 
 html {
   font-family: var(--font-sans);
   color-scheme: light;
-  background-color: #F8FAFC;
-  color: #17202A;
+  background-color: #FAF9F5;
+  color: #111816;
 }
 
 body {
-  background-color: #F8FAFC;
-  color: #17202A;
+  background-color: #FAF9F5;
+  color: #111816;
   margin: 0;
   padding: 0;
   overflow-x: hidden;
 }
 
-/* Subtle clean scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
-}
-::-webkit-scrollbar-track {
-  background: #F1F5F9;
-}
-::-webkit-scrollbar-thumb {
-  background: #CBD5E1;
-  border-radius: 4px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #94A3B8;
+.font-serif {
+  font-family: var(--font-serif);
 }
 
+/* Institutional refined scrollbar */
+::-webkit-scrollbar {
+  width: 7px;
+}
+::-webkit-scrollbar-track {
+  background: #F4F2EB;
+}
+::-webkit-scrollbar-thumb {
+  background: #C5A869;
+  border-radius: 2px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #9E8040;
+}

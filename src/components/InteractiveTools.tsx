@@ -49,26 +49,26 @@ export const InteractiveTools: React.FC<InteractiveToolsProps> = ({ onExplorePro
       options: [
         { label: 'Complete beginner (I have never invested in stocks, funds or ISAs)', recommendation: 'academy', title: 'EB Wealth Academy (Level 1 Foundations)' },
         { label: 'Intermediate (I invest occasionally, but lack a clear long-term strategy)', recommendation: 'academy', title: 'EB Wealth Academy (Level 3-4 UK Investing & Portfolio Building)' },
-        { label: 'Active investor / High earner (I want consistent mentorship and accountability)', recommendation: 'mentorship', title: 'EB Wealth Mentorship & Accountability' },
-        { label: 'Business owner / Entrepreneur (I want to integrate AI systems and scale company cash flow)', recommendation: 'ai-growth', title: 'AI Business Growth & Consulting' }
+        { label: 'Active investor / High earner (I want consistent mentorship and accountability)', recommendation: 'mentorship', title: 'EB Wealth Mentorship & Masterclasses' },
+        { label: 'Private capital investor (I want a private 1-on-1 portfolio review)', recommendation: 'coaching', title: '1-to-1 Private Strategy Consultation' }
       ]
     },
     {
-      question: 'What is your primary financial focus over the next 12 months?',
+      question: 'What is your primary investment focus over the next 12 months?',
       options: [
         { label: 'Learning how to invest independently without paying high advisor fees', recommendation: 'academy', title: 'EB Wealth Academy' },
-        { label: 'Maximising my UK ISA and SIPP allowances tax-efficiently', recommendation: 'coaching', title: '1-to-1 Wealth Strategy Coaching' },
-        { label: 'Getting regular feedback, portfolio logic audits, and weekly discipline', recommendation: 'mentorship', title: 'Growth Mentorship Cohort' },
-        { label: 'Freeing up 15+ hours a week in my business using AI automation', recommendation: 'ai-growth', title: 'AI Systems Audit' }
+        { label: 'Maximising my UK Stocks & Shares ISA and SIPP allowances tax-efficiently', recommendation: 'coaching', title: '1-to-1 Investment Strategy Coaching' },
+        { label: 'Getting regular peer feedback, portfolio logic audits, and weekly discipline', recommendation: 'mentorship', title: 'Growth Mentorship Cohort' },
+        { label: 'Calculating compound interest trajectories and comparing platform fees', recommendation: 'tools', title: 'Interactive Investment Calculators' }
       ]
     },
     {
       question: 'How do you prefer to learn and implement?',
       options: [
-        { label: 'Self-paced step-by-step videos and interactive platform simulators', recommendation: 'academy', title: 'EB Wealth Academy' },
+        { label: 'Self-paced step-by-step videos and interactive walkthrough simulators', recommendation: 'academy', title: 'EB Wealth Academy' },
         { label: 'Live cohort strategy sessions with peers and accountability check-ins', recommendation: 'mentorship', title: 'EB Wealth Mentorship' },
-        { label: 'Private, confidential 1-on-1 strategy sessions directly on my numbers', recommendation: 'coaching', title: '1-to-1 Private Consultation' },
-        { label: 'Hands-on done-with-you AI implementation for my commercial operations', recommendation: 'ai-growth', title: 'AI Business Growth Program' }
+        { label: 'Private, confidential 1-on-1 video session directly on my asset allocation', recommendation: 'coaching', title: '1-to-1 Private Consultation' },
+        { label: 'Hands-on interactive simulators, calculators, and comparison frameworks', recommendation: 'tools', title: 'Investment Tools & Simulators' }
       ]
     }
   ];
@@ -92,67 +92,67 @@ export const InteractiveTools: React.FC<InteractiveToolsProps> = ({ onExplorePro
   };
 
   return (
-    <section id="tools" className="py-20 lg:py-28 bg-[#F8FAFC] border-b border-slate-200/80">
+    <section id="tools" className="py-20 lg:py-28 bg-[#FAF9F5] border-b border-[#C5A869]/25">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="max-w-3xl mb-12">
-          <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[#00A878] mb-2">
-            <BarChart3 className="w-4 h-4" />
-            <span>Interactive Planning Suite</span>
+          <div className="inline-flex items-center gap-2 text-xs font-mono font-bold uppercase tracking-widest text-[#9E8040] mb-2">
+            <BarChart3 className="w-4 h-4 text-[#0D3B2E]" />
+            <span>Quantitative Investment Models</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#17202A] tracking-tight">
-            Interactive Calculators & Pathway Profiler
+          <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-[#0D3B2E] tracking-tight">
+            Interactive Compounding Terminal & Profiler
           </h2>
-          <p className="mt-4 text-base sm:text-lg text-[#52606D] leading-relaxed">
-            Test the mathematics of compounding, see the tax advantage of UK ISA shelters, and identify the exact EB Wealth pathway best suited to your stage.
+          <p className="mt-4 text-base sm:text-lg text-[#4A5550] leading-relaxed">
+            Test the empirical mathematics of long-term capital compounding, visualize the tax savings of UK ISA shelters, and identify the exact curriculum level for your journey.
           </p>
         </div>
 
         {/* Tab Controls: Segmented Button Control */}
-        <div className="flex items-center gap-2 p-1.5 bg-white border border-slate-200 rounded-2xl w-fit mb-10 shadow-xs">
+        <div className="flex items-center gap-2 p-1.5 bg-white border border-[#C5A869]/35 rounded-sm w-fit mb-10 shadow-2xs">
           <button
             onClick={() => setActiveTab('simulator')}
-            className={`px-5 py-2.5 rounded-xl text-xs font-semibold transition-all cursor-pointer flex items-center gap-2 ${
+            className={`px-5 py-2.5 rounded-sm text-xs font-semibold uppercase tracking-wider transition-all cursor-pointer flex items-center gap-2 ${
               activeTab === 'simulator'
-                ? 'bg-[#00A878] text-white shadow-xs'
-                : 'text-[#52606D] hover:text-[#17202A]'
+                ? 'bg-[#0D3B2E] text-[#C5A869] shadow-xs'
+                : 'text-stone-600 hover:text-[#0D3B2E]'
             }`}
           >
             <TrendingUp className="w-4 h-4" />
-            <span>UK Compound Growth & ISA Calculator</span>
+            <span>UK Compound Growth & ISA Model</span>
           </button>
           <button
             onClick={() => setActiveTab('diagnostic')}
-            className={`px-5 py-2.5 rounded-xl text-xs font-semibold transition-all cursor-pointer flex items-center gap-2 ${
+            className={`px-5 py-2.5 rounded-sm text-xs font-semibold uppercase tracking-wider transition-all cursor-pointer flex items-center gap-2 ${
               activeTab === 'diagnostic'
-                ? 'bg-[#00A878] text-white shadow-xs'
-                : 'text-[#52606D] hover:text-[#17202A]'
+                ? 'bg-[#0D3B2E] text-[#C5A869] shadow-xs'
+                : 'text-stone-600 hover:text-[#0D3B2E]'
             }`}
           >
             <HelpCircle className="w-4 h-4" />
-            <span>Investor Pathway Finder</span>
+            <span>Investor Pathway Profiler</span>
           </button>
         </div>
 
         {/* Tab 1: UK Compound Growth & ISA Tax Advantage Calculator */}
         {activeTab === 'simulator' && (
-          <div className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 lg:p-10 shadow-sm grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          <div className="bg-white border border-[#C5A869]/35 rounded-sm p-6 sm:p-8 lg:p-10 shadow-sm grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
             {/* Left Inputs */}
             <div className="lg:col-span-6 space-y-6">
               <div>
-                <h3 className="text-xl font-bold text-[#17202A]">
-                  Adjust Your Wealth Assumptions
+                <h3 className="font-serif text-xl sm:text-2xl font-bold text-[#0D3B2E]">
+                  Calibrate Portfolio Assumptions
                 </h3>
-                <p className="text-xs text-[#52606D] mt-1">
-                  Model your monthly savings discipline and long-term compounding horizon.
+                <p className="text-xs text-stone-500 mt-1 font-mono">
+                  Simulate longitudinal contributions, expected nominal equity returns, and holding horizon.
                 </p>
               </div>
 
               {/* Slider 1: Initial Deposit */}
               <div>
-                <div className="flex justify-between text-xs font-bold text-[#17202A] mb-1.5">
+                <div className="flex justify-between text-xs font-semibold text-[#111816] mb-1.5 font-mono">
                   <span>Initial Capital:</span>
-                  <span className="text-[#00A878]">£{initialCapital.toLocaleString()}</span>
+                  <span className="text-[#0D3B2E] font-bold tabular-nums">£{initialCapital.toLocaleString()}</span>
                 </div>
                 <input
                   type="range"
@@ -161,9 +161,9 @@ export const InteractiveTools: React.FC<InteractiveToolsProps> = ({ onExplorePro
                   step="500"
                   value={initialCapital}
                   onChange={(e) => setInitialCapital(Number(e.target.value))}
-                  className="w-full accent-[#00A878] cursor-pointer"
+                  className="w-full accent-[#0D3B2E] cursor-pointer"
                 />
-                <div className="flex justify-between text-[11px] text-slate-400 mt-0.5">
+                <div className="flex justify-between text-[11px] font-mono text-stone-400 mt-0.5">
                   <span>£500</span>
                   <span>£25,000</span>
                   <span>£50,000</span>
@@ -172,9 +172,9 @@ export const InteractiveTools: React.FC<InteractiveToolsProps> = ({ onExplorePro
 
               {/* Slider 2: Monthly Contribution */}
               <div>
-                <div className="flex justify-between text-xs font-bold text-[#17202A] mb-1.5">
+                <div className="flex justify-between text-xs font-semibold text-[#111816] mb-1.5 font-mono">
                   <span>Monthly Contribution:</span>
-                  <span className="text-[#00A878]">£{monthlyContribution.toLocaleString()} / month</span>
+                  <span className="text-[#0D3B2E] font-bold tabular-nums">£{monthlyContribution.toLocaleString()} / mo</span>
                 </div>
                 <input
                   type="range"
@@ -183,9 +183,9 @@ export const InteractiveTools: React.FC<InteractiveToolsProps> = ({ onExplorePro
                   step="25"
                   value={monthlyContribution}
                   onChange={(e) => setMonthlyContribution(Number(e.target.value))}
-                  className="w-full accent-[#00A878] cursor-pointer"
+                  className="w-full accent-[#0D3B2E] cursor-pointer"
                 />
-                <div className="flex justify-between text-[11px] text-slate-400 mt-0.5">
+                <div className="flex justify-between text-[11px] font-mono text-stone-400 mt-0.5">
                   <span>£50/mo</span>
                   <span>£1,000/mo</span>
                   <span>£2,500/mo</span>
@@ -194,9 +194,9 @@ export const InteractiveTools: React.FC<InteractiveToolsProps> = ({ onExplorePro
 
               {/* Slider 3: Expected Annual Return */}
               <div>
-                <div className="flex justify-between text-xs font-bold text-[#17202A] mb-1.5">
+                <div className="flex justify-between text-xs font-semibold text-[#111816] mb-1.5 font-mono">
                   <span>Expected Annualised Return:</span>
-                  <span className="text-[#2563EB]">{annualReturn}% per year</span>
+                  <span className="text-[#9E8040] font-bold tabular-nums">{annualReturn}% / year</span>
                 </div>
                 <input
                   type="range"
@@ -205,20 +205,20 @@ export const InteractiveTools: React.FC<InteractiveToolsProps> = ({ onExplorePro
                   step="0.5"
                   value={annualReturn}
                   onChange={(e) => setAnnualReturn(Number(e.target.value))}
-                  className="w-full accent-[#2563EB] cursor-pointer"
+                  className="w-full accent-[#9E8040] cursor-pointer"
                 />
-                <div className="flex justify-between text-[11px] text-slate-400 mt-0.5">
-                  <span>4% (Conservative)</span>
-                  <span>8% (Historical Global Index)</span>
-                  <span>12% (High Growth)</span>
+                <div className="flex justify-between text-[11px] font-mono text-stone-400 mt-0.5">
+                  <span>4% (Conservative Gilts)</span>
+                  <span>8% (Historical Global Equity)</span>
+                  <span>12% (Aggressive Tilt)</span>
                 </div>
               </div>
 
               {/* Slider 4: Time Horizon */}
               <div>
-                <div className="flex justify-between text-xs font-bold text-[#17202A] mb-1.5">
+                <div className="flex justify-between text-xs font-semibold text-[#111816] mb-1.5 font-mono">
                   <span>Compounding Horizon:</span>
-                  <span className="text-[#17202A]">{years} Years</span>
+                  <span className="text-[#0D3B2E] font-bold tabular-nums">{years} Years</span>
                 </div>
                 <input
                   type="range"
@@ -227,9 +227,9 @@ export const InteractiveTools: React.FC<InteractiveToolsProps> = ({ onExplorePro
                   step="1"
                   value={years}
                   onChange={(e) => setYears(Number(e.target.value))}
-                  className="w-full accent-[#17202A] cursor-pointer"
+                  className="w-full accent-[#0D3B2E] cursor-pointer"
                 />
-                <div className="flex justify-between text-[11px] text-slate-400 mt-0.5">
+                <div className="flex justify-between text-[11px] font-mono text-stone-400 mt-0.5">
                   <span>3 Years</span>
                   <span>15 Years</span>
                   <span>35 Years</span>
@@ -238,62 +238,62 @@ export const InteractiveTools: React.FC<InteractiveToolsProps> = ({ onExplorePro
             </div>
 
             {/* Right Results Box */}
-            <div className="lg:col-span-6 bg-[#F8FAFC] border border-slate-200 rounded-2xl p-6 sm:p-8 space-y-6">
+            <div className="lg:col-span-6 bg-[#FAF9F5] border border-[#C5A869]/30 rounded-sm p-6 sm:p-8 space-y-6">
               <div>
-                <span className="text-xs font-bold uppercase tracking-wider text-slate-400 block mb-1">
-                  Projected Portfolio Value
+                <span className="text-[11px] font-mono font-bold uppercase tracking-widest text-[#9E8040] block mb-1">
+                  Terminal Portfolio Value
                 </span>
-                <div className="text-3xl sm:text-4xl font-extrabold text-[#17202A] tracking-tight">
+                <div className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-[#0D3B2E] tracking-tight tabular-nums">
                   £{results.totalFV.toLocaleString()}
                 </div>
-                <p className="text-xs text-[#52606D] mt-1">
-                  Based on consistent monthly contributions of £{monthlyContribution} compounded at {annualReturn}% over {years} years.
+                <p className="text-xs text-stone-600 mt-1">
+                  Based on disciplined monthly contributions of £{monthlyContribution} compounded at {annualReturn}% over {years} years.
                 </p>
               </div>
 
               {/* Visual Breakdown Bar */}
               <div>
-                <div className="h-4 w-full bg-slate-200 rounded-full overflow-hidden flex">
+                <div className="h-4 w-full bg-stone-200 rounded-xs overflow-hidden flex">
                   <div
                     style={{ width: `${Math.min(100, (results.totalContributed / results.totalFV) * 100)}%` }}
-                    className="bg-slate-400 transition-all duration-300"
+                    className="bg-[#165342] transition-all duration-300"
                     title="Your Contributions"
                   />
                   <div
                     style={{ width: `${Math.max(0, (results.compoundInterest / results.totalFV) * 100)}%` }}
-                    className="bg-[#00A878] transition-all duration-300"
+                    className="bg-[#C5A869] transition-all duration-300"
                     title="Compound Growth"
                   />
                 </div>
-                <div className="flex justify-between text-xs text-[#52606D] mt-2">
+                <div className="flex justify-between text-xs text-[#2B3632] mt-2 font-mono">
                   <span className="flex items-center gap-1.5">
-                    <span className="w-2.5 h-2.5 rounded-full bg-slate-400 inline-block" />
-                    Capital Contributed: <strong>£{results.totalContributed.toLocaleString()}</strong>
+                    <span className="w-2.5 h-2.5 rounded-xs bg-[#165342] inline-block" />
+                    Contributed: <strong>£{results.totalContributed.toLocaleString()}</strong>
                   </span>
                   <span className="flex items-center gap-1.5">
-                    <span className="w-2.5 h-2.5 rounded-full bg-[#00A878] inline-block" />
-                    Compound Gain: <strong className="text-[#00A878]">£{results.compoundInterest.toLocaleString()}</strong>
+                    <span className="w-2.5 h-2.5 rounded-xs bg-[#C5A869] inline-block" />
+                    Gain: <strong className="text-[#9E8040]">£{results.compoundInterest.toLocaleString()}</strong>
                   </span>
                 </div>
               </div>
 
               {/* UK ISA Tax Shield Advantage Callout */}
-              <div className="p-4 rounded-xl bg-[#ECFDF5] border border-[#00A878]/30">
-                <div className="flex items-center gap-2 text-xs font-bold text-[#00A878] mb-1">
-                  <ShieldCheck className="w-4 h-4" />
-                  <span>The UK Stocks & Shares ISA Advantage</span>
+              <div className="p-4 rounded-sm bg-white border border-[#C5A869]/40 shadow-2xs">
+                <div className="flex items-center gap-2 text-xs font-mono font-bold text-[#0D3B2E] mb-1">
+                  <ShieldCheck className="w-4 h-4 text-[#C5A869]" />
+                  <span>The UK Stocks & Shares ISA Tax Shield</span>
                 </div>
-                <p className="text-xs text-[#17202A] leading-relaxed">
-                  Inside a UK Stocks & Shares ISA, your <strong>£{results.compoundInterest.toLocaleString()}</strong> in compound growth is <strong>100% tax-free</strong>. Outside an ISA (in an unsheltered General Investment Account), you could lose up to <strong>~£{results.estimatedTaxInGIA.toLocaleString()}</strong> in UK Capital Gains Tax.
+                <p className="text-xs text-[#2B3632] leading-relaxed">
+                  Inside a UK Stocks & Shares ISA, your <strong>£{results.compoundInterest.toLocaleString()}</strong> in cumulative capital appreciation is <strong>100% tax-exempt for life</strong>. In an unsheltered General Investment Account (GIA), you would surrender up to <strong>~£{results.estimatedTaxInGIA.toLocaleString()}</strong> in UK Capital Gains and Dividend Tax.
                 </p>
               </div>
 
               <button
                 onClick={() => onExploreProgram('academy')}
-                className="w-full py-3 px-4 bg-[#00A878] hover:bg-[#009267] text-white font-semibold text-xs rounded-xl shadow-xs transition-all flex items-center justify-center gap-2 cursor-pointer"
+                className="w-full py-3.5 px-4 bg-[#0D3B2E] hover:bg-[#07251C] text-white font-semibold text-xs uppercase tracking-wider rounded-sm shadow-xs transition-all flex items-center justify-center gap-2 cursor-pointer border border-[#C5A869]/40 group"
               >
-                <span>Learn How to Build This in EB Academy</span>
-                <ArrowRight className="w-3.5 h-3.5" />
+                <span>Master Tax Architecture in Academy</span>
+                <ArrowRight className="w-3.5 h-3.5 text-[#C5A869] group-hover:translate-x-1 transition-transform" />
               </button>
             </div>
           </div>
@@ -301,17 +301,17 @@ export const InteractiveTools: React.FC<InteractiveToolsProps> = ({ onExplorePro
 
         {/* Tab 2: Diagnostic / Pathway Quiz */}
         {activeTab === 'diagnostic' && (
-          <div className="max-w-3xl mx-auto bg-white border border-slate-200 rounded-3xl p-6 sm:p-10 shadow-sm">
+          <div className="max-w-3xl mx-auto bg-white border border-[#C5A869]/35 rounded-sm p-6 sm:p-10 shadow-sm">
             {!quizResult ? (
               <div>
                 <div className="flex items-center justify-between mb-4">
-                  <span className="text-xs font-bold uppercase tracking-wider text-[#00A878]">
+                  <span className="text-[11px] font-mono font-bold uppercase tracking-widest text-[#9E8040]">
                     Question {quizStep + 1} of {quizQuestions.length}
                   </span>
-                  <span className="text-xs text-slate-400">Step {quizStep + 1}</span>
+                  <span className="text-xs font-mono text-stone-400">Step {quizStep + 1}</span>
                 </div>
 
-                <h3 className="text-xl sm:text-2xl font-bold text-[#17202A] mb-6">
+                <h3 className="font-serif text-xl sm:text-2xl font-bold text-[#0D3B2E] mb-6">
                   {quizQuestions[quizStep].question}
                 </h3>
 
@@ -320,49 +320,49 @@ export const InteractiveTools: React.FC<InteractiveToolsProps> = ({ onExplorePro
                     <button
                       key={idx}
                       onClick={() => handleSelectQuizOption(idx)}
-                      className="w-full p-4 text-left rounded-xl border border-slate-200 hover:border-[#00A878] hover:bg-[#ECFDF5]/50 transition-all text-xs sm:text-sm font-medium text-[#17202A] flex items-center justify-between group cursor-pointer"
+                      className="w-full p-4 text-left rounded-sm border border-stone-200 hover:border-[#C5A869] hover:bg-[#FAF5E8]/40 transition-all text-xs sm:text-sm font-medium text-[#111816] flex items-center justify-between group cursor-pointer"
                     >
                       <span>{opt.label}</span>
-                      <ArrowRight className="w-4 h-4 text-slate-300 group-hover:text-[#00A878] group-hover:translate-x-1 transition-all shrink-0 ml-3" />
+                      <ArrowRight className="w-4 h-4 text-stone-300 group-hover:text-[#0D3B2E] group-hover:translate-x-1 transition-all shrink-0 ml-3" />
                     </button>
                   ))}
                 </div>
               </div>
             ) : (
               <div className="text-center py-4 space-y-6">
-                <div className="w-14 h-14 rounded-2xl bg-[#ECFDF5] text-[#00A878] flex items-center justify-center mx-auto shadow-xs">
-                  <Sparkles className="w-7 h-7" />
+                <div className="w-14 h-14 rounded-sm bg-[#FAF5E8] border border-[#C5A869]/40 text-[#0D3B2E] flex items-center justify-center mx-auto shadow-2xs">
+                  <Sparkles className="w-7 h-7 text-[#9E8040]" />
                 </div>
 
                 <div>
-                  <span className="text-xs font-bold uppercase tracking-widest text-[#00A878] block mb-1">
-                    Your Tailored Recommendation
+                  <span className="text-[11px] font-mono font-bold uppercase tracking-widest text-[#9E8040] block mb-1">
+                    Your Calibrated Recommendation
                   </span>
-                  <h3 className="text-2xl sm:text-3xl font-extrabold text-[#17202A]">
-                    {quizResult === 'academy' && 'EB Wealth Academy (Foundations & UK Wrappers)'}
-                    {quizResult === 'mentorship' && 'Growth Mentorship & Accountability Cohort'}
+                  <h3 className="font-serif text-2xl sm:text-3xl font-bold text-[#0D3B2E]">
+                    {quizResult === 'academy' && 'EB Wealth Academy (Foundations & UK Tax Shelters)'}
+                    {quizResult === 'mentorship' && 'Growth Mentorship Cohort & Masterclasses'}
                     {quizResult === 'coaching' && '1-to-1 Private Strategy Consultation'}
-                    {quizResult === 'ai-growth' && 'AI Business Systems & Automation'}
+                    {quizResult === 'tools' && 'Quantitative Investment Models & Platform Directory'}
                   </h3>
-                  <p className="text-xs sm:text-sm text-[#52606D] max-w-lg mx-auto mt-2 leading-relaxed">
-                    Based on your current experience and immediate goals, starting with this pillar provides the highest return on your time and capital.
+                  <p className="text-xs sm:text-sm text-stone-600 max-w-lg mx-auto mt-2 leading-relaxed">
+                    Based on your profile, starting with this curriculum pillar provides the highest return on your study time and personal capital.
                   </p>
                 </div>
 
                 <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3">
                   <button
                     onClick={() => onExploreProgram(quizResult as PageId)}
-                    className="py-3 px-6 bg-[#00A878] hover:bg-[#009267] text-white font-semibold text-xs rounded-xl shadow-xs transition-all flex items-center gap-2 cursor-pointer"
+                    className="py-3.5 px-6 bg-[#0D3B2E] hover:bg-[#07251C] text-white font-semibold text-xs uppercase tracking-wider rounded-sm shadow-xs transition-all flex items-center gap-2 cursor-pointer border border-[#C5A869]/40"
                   >
-                    <span>Explore Your Recommended Pathway</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
+                    <span>Enter Recommended Curriculum</span>
+                    <ArrowRight className="w-3.5 h-3.5 text-[#C5A869]" />
                   </button>
                   <button
                     onClick={resetQuiz}
-                    className="py-3 px-5 text-xs font-semibold text-[#52606D] hover:text-[#17202A] flex items-center gap-1.5 cursor-pointer"
+                    className="py-3 px-5 text-xs font-semibold uppercase tracking-wider text-stone-600 hover:text-[#0D3B2E] flex items-center gap-1.5 cursor-pointer font-mono"
                   >
                     <RefreshCw className="w-3.5 h-3.5" />
-                    <span>Retake Quiz</span>
+                    <span>Reset Assessment</span>
                   </button>
                 </div>
               </div>

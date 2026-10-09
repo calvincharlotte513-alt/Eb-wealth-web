@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, ArrowRight, Smartphone, Sparkles, Mail } from 'lucide-react';
+import { Menu, X, ArrowRight, Smartphone, ShieldCheck } from 'lucide-react';
 import { PageId } from '../types/navigation';
+import { MarketBar } from './MarketBar';
 
 interface NavbarProps {
   currentPage: PageId;
   onNavigate: (page: PageId) => void;
   onOpenDownloadModal: (feature?: string) => void;
-  onOpenManageApk?: () => void;
   onOpenGetStarted: () => void;
   onOpenCompanyDispatch?: () => void;
 }
@@ -36,57 +36,61 @@ export const Navbar: React.FC<NavbarProps> = ({
   };
 
   const navLinks: { id: PageId | 'app'; label: string }[] = [
-    { id: 'home', label: 'Home' },
-    { id: 'about', label: 'About EB' },
+    { id: 'home', label: 'Overview' },
+    { id: 'about', label: 'Philosophy' },
     { id: 'academy', label: 'Academy' },
     { id: 'mentorship', label: 'Mentorship' },
-    { id: 'coaching', label: '1-to-1 Coaching' },
-    { id: 'ai-growth', label: 'AI Business Growth' },
-    { id: 'app', label: 'App' }
+    { id: 'coaching', label: 'Private Coaching' },
+    { id: 'tools', label: 'Tools & Analytics' },
+    { id: 'app', label: 'App Portal' }
   ];
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-40 transition-all duration-200 ${
+      className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
         isScrolled
-          ? 'bg-white/95 backdrop-blur-md border-b border-slate-200/90 shadow-sm'
-          : 'bg-white/80 backdrop-blur-sm border-b border-slate-200/50'
+          ? 'bg-[#0D3B2E]/95 backdrop-blur-md border-b border-[#C5A869]/35 shadow-lg text-white'
+          : 'bg-[#0D3B2E] border-b border-[#C5A869]/25 text-white'
       }`}
     >
+      {/* 1. Goldman Sachs Institutional Market Bar */}
+      <MarketBar />
+
+      {/* 2. Main Institutional Navigation Bar */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20">
-          {/* Logo / Brand */}
+        <div className="flex items-center justify-between h-18">
+          {/* Logo / Brand — Goldman Sachs Prestige Wordmark */}
           <div className="flex items-center gap-3">
             <button
               onClick={() => handleNavClick('home')}
-              className="text-left group cursor-pointer flex items-center gap-2.5"
+              className="text-left group cursor-pointer flex items-center gap-3"
             >
-              <div className="w-10 h-10 rounded-xl bg-[#ECFDF5] border border-[#00A878]/30 flex items-center justify-center font-bold text-[#00A878] group-hover:bg-[#00A878] group-hover:text-white transition-all shadow-sm">
+              <div className="w-9 h-9 rounded-xs bg-gradient-to-br from-[#165342] to-[#07251C] border border-[#C5A869]/60 flex items-center justify-center font-serif font-bold text-white tracking-widest text-sm shadow-xs group-hover:border-[#DFCA96] transition-all">
                 EB
               </div>
               <div className="flex flex-col">
-                <span className="text-xl font-bold tracking-tight text-[#17202A] leading-none group-hover:text-[#00A878] transition-colors">
-                  EB Wealth
+                <span className="font-serif text-lg sm:text-xl font-bold tracking-tight text-white leading-none group-hover:text-[#DFCA96] transition-colors">
+                  EB WEALTH
                 </span>
-                <span className="text-[11px] font-medium text-[#52606D] mt-0.5 tracking-tight">
-                  by Empowerment Body
+                <span className="text-[9px] uppercase font-mono tracking-widest text-[#C5A869] mt-1">
+                  Institutional Investment Education
                 </span>
               </div>
             </button>
           </div>
 
-          {/* Desktop Navigation Links: Home | About EB | Academy | Mentorship | 1-to-1 Coaching | AI Business Growth | App */}
-          <nav className="hidden lg:flex items-center gap-6 text-sm font-medium">
+          {/* Desktop Navigation Links */}
+          <nav className="hidden lg:flex items-center gap-6 xl:gap-8 text-xs font-semibold uppercase tracking-wider">
             {navLinks.map((link) => {
               if (link.id === 'app') {
                 return (
                   <button
                     key={link.id}
-                    onClick={() => onOpenDownloadModal('EB Wealth Mobile App')}
-                    className="text-[#52606D] hover:text-[#00A878] transition-colors cursor-pointer py-1 flex items-center gap-1.5"
+                    onClick={() => onOpenDownloadModal('EB Wealth Mobile Portal')}
+                    className="text-slate-300 hover:text-[#C5A869] transition-colors cursor-pointer py-1 flex items-center gap-1.5"
                   >
-                    <Smartphone className="w-4 h-4 text-[#00A878]" />
-                    <span>App</span>
+                    <Smartphone className="w-3.5 h-3.5 text-[#C5A869]" />
+                    <span>App Portal</span>
                   </button>
                 );
               }
@@ -98,58 +102,47 @@ export const Navbar: React.FC<NavbarProps> = ({
                   onClick={() => handleNavClick(link.id as PageId)}
                   className={`transition-colors cursor-pointer py-1 relative ${
                     isActive
-                      ? 'text-[#00A878] font-semibold after:w-full after:h-[2px] after:bg-[#00A878] after:absolute after:bottom-0 after:left-0'
-                      : 'text-[#52606D] hover:text-[#17202A]'
+                      ? 'text-[#C5A869] font-bold'
+                      : 'text-slate-200 hover:text-white'
                   }`}
                 >
                   {link.label}
+                  {isActive && (
+                    <span className="absolute bottom-[-10px] left-0 right-0 h-[2px] bg-[#C5A869]" />
+                  )}
                 </button>
               );
             })}
           </nav>
 
-          {/* Header Action Buttons: Secondary CTA "Open EB Wealth App" + Primary CTA "Get Started" */}
-          <div className="hidden sm:flex items-center gap-2.5">
+          {/* Right Header Controls */}
+          <div className="hidden sm:flex items-center gap-3">
             {onOpenCompanyDispatch && (
               <button
                 onClick={onOpenCompanyDispatch}
-                className="py-2 px-3 text-xs font-semibold text-[#17202A] bg-white hover:bg-slate-50 border border-slate-200 rounded-xl transition-all cursor-pointer flex items-center gap-1.5 shadow-2xs"
-                title="View Dispatched Applications & Company Notification Routing"
+                className="py-2 px-2.5 text-slate-300 hover:text-[#C5A869] hover:bg-white/5 rounded-xs transition-colors cursor-pointer flex items-center gap-1.5 text-xs font-medium border border-transparent hover:border-[#C5A869]/30"
+                title="Company Inbound Leads & Notification Settings"
               >
-                <span className="w-2 h-2 rounded-full bg-[#00A878] animate-pulse"></span>
-                <Mail className="w-3.5 h-3.5 text-[#2563EB]" />
-                <span className="hidden xl:inline">Company Inbox</span>
+                <ShieldCheck className="w-3.5 h-3.5 text-[#C5A869]" />
+                <span className="hidden xl:inline text-[10px] tracking-wide uppercase font-mono">Inbound Leads</span>
               </button>
             )}
 
             <button
-              onClick={() => onOpenDownloadModal('EB Wealth App')}
-              className="py-2.5 px-4 text-xs font-semibold text-[#17202A] bg-[#F8FAFC] hover:bg-[#EFF6FF] border border-slate-200 hover:border-blue-300 rounded-xl transition-all cursor-pointer flex items-center gap-2"
-            >
-              <Smartphone className="w-3.5 h-3.5 text-[#2563EB]" />
-              <span>Open EB Wealth App</span>
-            </button>
-            <button
               onClick={onOpenGetStarted}
-              className="py-2.5 px-5 text-xs font-semibold text-white bg-[#00A878] hover:bg-[#009267] rounded-xl shadow-sm transition-all cursor-pointer flex items-center gap-1.5"
+              className="py-2.5 px-4.5 bg-gradient-to-r from-[#C5A869] to-[#DFCA96] hover:from-[#B89748] hover:to-[#C5A869] text-[#07251C] font-semibold text-xs rounded-xs transition-all cursor-pointer shadow-sm hover:shadow-md flex items-center gap-2 uppercase tracking-wider border border-[#DFCA96]/40"
             >
-              <span>Get Started</span>
-              <ArrowRight className="w-3.5 h-3.5" />
+              <span>Explore Curriculum</span>
+              <ArrowRight className="w-3.5 h-3.5 text-[#07251C]" />
             </button>
           </div>
 
-          {/* Mobile Menu Hamburger */}
-          <div className="flex items-center gap-2 lg:hidden">
-            <button
-              onClick={onOpenGetStarted}
-              className="sm:hidden py-1.5 px-3 text-xs font-semibold text-white bg-[#00A878] rounded-lg"
-            >
-              Get Started
-            </button>
+          {/* Mobile Menu Toggle Button */}
+          <div className="flex lg:hidden items-center gap-2">
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 text-[#17202A] hover:bg-slate-100 rounded-lg transition-colors cursor-pointer"
-              aria-label="Toggle navigation menu"
+              className="p-2 text-white hover:text-[#C5A869] rounded-xs cursor-pointer"
+              aria-label="Toggle Navigation Menu"
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
@@ -159,7 +152,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
       {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
-        <div className="lg:hidden bg-white border-b border-slate-200 px-4 pt-3 pb-6 shadow-xl animate-in fade-in slide-in-from-top-2 duration-200">
+        <div className="lg:hidden bg-[#07251C] border-b border-[#C5A869]/30 px-4 pt-3 pb-6 space-y-2 shadow-2xl animate-in slide-in-from-top-4 duration-150">
           <div className="flex flex-col space-y-1">
             {navLinks.map((link) => {
               if (link.id === 'app') {
@@ -168,15 +161,12 @@ export const Navbar: React.FC<NavbarProps> = ({
                     key={link.id}
                     onClick={() => {
                       setMobileMenuOpen(false);
-                      onOpenDownloadModal('EB Wealth Mobile App');
+                      onOpenDownloadModal('EB Wealth Mobile Portal');
                     }}
-                    className="w-full text-left px-3 py-2.5 rounded-lg text-sm font-medium text-[#17202A] hover:bg-[#EFF6FF] flex items-center justify-between"
+                    className="w-full text-left py-2.5 px-3 rounded-xs text-xs font-semibold uppercase tracking-wider text-slate-200 hover:bg-white/5 hover:text-[#C5A869] flex items-center gap-2 cursor-pointer"
                   >
-                    <span className="flex items-center gap-2">
-                      <Smartphone className="w-4 h-4 text-[#2563EB]" />
-                      <span>App</span>
-                    </span>
-                    <span className="text-xs text-[#2563EB] font-semibold">Open</span>
+                    <Smartphone className="w-4 h-4 text-[#C5A869]" />
+                    <span>EB Wealth App Portal</span>
                   </button>
                 );
               }
@@ -186,10 +176,10 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <button
                   key={link.id}
                   onClick={() => handleNavClick(link.id as PageId)}
-                  className={`w-full text-left px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
+                  className={`w-full text-left py-2.5 px-3 rounded-xs text-xs font-semibold uppercase tracking-wider transition-colors cursor-pointer ${
                     isActive
-                      ? 'bg-[#ECFDF5] text-[#00A878] font-bold'
-                      : 'text-[#52606D] hover:bg-slate-50 hover:text-[#17202A]'
+                      ? 'bg-white/10 text-[#C5A869] font-bold border-l-2 border-[#C5A869]'
+                      : 'text-slate-200 hover:bg-white/5 hover:text-white'
                   }`}
                 >
                   {link.label}
@@ -198,37 +188,27 @@ export const Navbar: React.FC<NavbarProps> = ({
             })}
           </div>
 
-          <div className="mt-4 pt-4 border-t border-slate-100 flex flex-col gap-2.5">
+          <div className="pt-3 border-t border-white/10 space-y-2">
             <button
               onClick={() => {
                 setMobileMenuOpen(false);
                 onOpenGetStarted();
               }}
-              className="w-full py-3 px-4 bg-[#00A878] text-white text-sm font-semibold rounded-xl text-center shadow-sm flex items-center justify-center gap-2 cursor-pointer"
+              className="w-full py-3 bg-[#C5A869] hover:bg-[#B89748] text-[#07251C] font-semibold text-xs uppercase tracking-wider rounded-xs flex items-center justify-center gap-2 cursor-pointer shadow-sm"
             >
-              <span>Get Started</span>
-              <ArrowRight className="w-4 h-4" />
+              <span>Explore Curriculum</span>
+              <ArrowRight className="w-4 h-4 text-[#07251C]" />
             </button>
-            <button
-              onClick={() => {
-                setMobileMenuOpen(false);
-                onOpenDownloadModal('EB Wealth Mobile App');
-              }}
-              className="w-full py-2.5 px-4 bg-[#F8FAFC] text-[#17202A] border border-slate-200 text-xs font-semibold rounded-xl text-center flex items-center justify-center gap-2 cursor-pointer"
-            >
-              <Smartphone className="w-3.5 h-3.5 text-[#2563EB]" />
-              <span>Open EB Wealth App</span>
-            </button>
+
             {onOpenCompanyDispatch && (
               <button
                 onClick={() => {
                   setMobileMenuOpen(false);
                   onOpenCompanyDispatch();
                 }}
-                className="w-full py-2 px-4 bg-white text-[#17202A] border border-slate-200 text-xs font-medium rounded-xl text-center flex items-center justify-center gap-2 cursor-pointer hover:bg-slate-50"
+                className="w-full py-2.5 text-center text-[11px] uppercase tracking-wider text-[#C5A869] hover:underline font-mono"
               >
-                <Mail className="w-3.5 h-3.5 text-[#2563EB]" />
-                <span>Company Dispatch & Inbound Leads</span>
+                Inbound Lead Center
               </button>
             )}
           </div>

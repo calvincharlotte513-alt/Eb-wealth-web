@@ -2,7 +2,7 @@ import { getCompanyContact, CompanyContactConfig } from '../data/companyContact'
 
 export interface DispatchedLead {
   id: string;
-  type: 'booking' | 'ai_audit' | 'mentorship_application' | 'test';
+  type: 'booking' | 'mentorship_application' | 'inquiry' | 'test';
   title: string;
   applicantName: string;
   applicantEmail: string;
@@ -52,17 +52,6 @@ export interface BookingSubmissionData {
   notes?: string;
 }
 
-export interface AIAuditSubmissionData {
-  name: string;
-  email: string;
-  phone: string;
-  company: string;
-  teamSize: string;
-  monthlyRevenue: string;
-  primaryFriction: string;
-  notes?: string;
-}
-
 export interface MentorshipSubmissionData {
   name: string;
   email: string;
@@ -72,6 +61,14 @@ export interface MentorshipSubmissionData {
   biggestBottleneck: string;
   timeCommitment: string;
   tierTitle: string;
+}
+
+export interface InquirySubmissionData {
+  name: string;
+  email: string;
+  phone: string;
+  topic: string;
+  message: string;
 }
 
 export interface DispatchResult {
@@ -109,14 +106,14 @@ async function sendToServer(payload: {
       console.warn('Server notification dispatch returned status:', response.status);
     }
   } catch (err) {
-    // Non-blocking: network or dev server without route still allows frontend direct dispatch
-    console.info('Client-side dispatch active (API endpoint background status):', err);
+    // Non-blocking: dev server or network anomaly falls back seamlessly
+    console.info('Client-side dispatch active (API endpoint status):', err);
   }
 }
 
 export const notificationService = {
   /**
-   * Dispatch 1-on-1 Coaching Booking immediately to company email and phone
+   * Dispatch 1-on-1 Investment Coaching Booking immediately to company email and phone
    */
   async dispatchBooking(data: BookingSubmissionData): Promise<DispatchResult> {
     const contact = getCompanyContact();
@@ -128,7 +125,7 @@ export const notificationService = {
 
     const leadId = `BOOK-${Date.now()}`;
     const summaryText = [
-      `🚨 NEW 1-ON-1 COACHING BOOKING RESERVATION`,
+      `🚨 NEW 1-ON-1 INVESTMENT COACHING BOOKING`,
       `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`,
       `📌 Package: ${data.packageTitle}`,
       `👤 Client Name: ${data.clientName}`,
@@ -144,7 +141,7 @@ export const notificationService = {
       `• Company Phone: ${contact.phoneDisplay} (${contact.phone})`,
       `⏱️ Dispatched: ${timestamp}`,
       `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`,
-      `Please contact the client promptly to confirm the appointment.`
+      `Action: Please contact the client promptly to confirm the investment session.`
     ].filter(Boolean).join('\n');
 
     const details: Record<string, string> = {
@@ -161,7 +158,7 @@ export const notificationService = {
     const lead: DispatchedLead = {
       id: leadId,
       type: 'booking',
-      title: `Coaching: ${data.packageTitle}`,
+      title: `Investment Coaching: ${data.packageTitle}`,
       applicantName: data.clientName,
       applicantEmail: data.clientEmail,
       applicantPhone: data.clientPhone,
@@ -185,95 +182,7 @@ export const notificationService = {
       summaryText
     });
 
-    const encodedSubject = encodeURIComponent(`[NEW BOOKING] ${data.packageTitle} - ${data.clientName}`);
-    const encodedBody = encodeURIComponent(summaryText);
-    const whatsAppUrl = `https://wa.me/${contact.whatsappNumber}?text=${encodedBody}`;
-    const mailtoUrl = `mailto:${contact.email}?subject=${encodedSubject}&body=${encodedBody}`;
-    const smsUrl = `sms:${contact.phone}?body=${encodedBody}`;
-
-    return {
-      success: true,
-      leadId,
-      dispatchedToEmail: contact.email,
-      dispatchedToPhone: contact.phoneDisplay,
-      timestamp,
-      whatsAppUrl,
-      mailtoUrl,
-      smsUrl,
-      summaryText
-    };
-  },
-
-  /**
-   * Dispatch AI Systems Audit immediately to company email and phone
-   */
-  async dispatchAIAudit(data: AIAuditSubmissionData): Promise<DispatchResult> {
-    const contact = getCompanyContact();
-    const timestamp = new Date().toLocaleString('en-GB', {
-      timeZone: 'Europe/London',
-      dateStyle: 'full',
-      timeStyle: 'medium'
-    });
-
-    const leadId = `AUDIT-${Date.now()}`;
-    const summaryText = [
-      `⚡ NEW AI BUSINESS SYSTEMS AUDIT REQUEST`,
-      `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`,
-      `👤 Contact Name: ${data.name}`,
-      `🏢 Company / Brand: ${data.company}`,
-      `📧 Work Email: ${data.email}`,
-      `📱 Contact Phone: ${data.phone}`,
-      `👥 Approximate Team Size: ${data.teamSize}`,
-      `💷 Monthly Revenue Band: ${data.monthlyRevenue}`,
-      `⚠️ Primary Bottleneck / Friction: ${data.primaryFriction}`,
-      data.notes ? `📝 Context: ${data.notes}` : '',
-      `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`,
-      `🏢 DIRECT DISPATCH RECIPIENTS:`,
-      `• Company Email: ${contact.email}`,
-      `• Company Phone: ${contact.phoneDisplay} (${contact.phone})`,
-      `⏱️ Dispatched: ${timestamp}`,
-      `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`,
-      `Action: Audit review scheduled within 24–48 hours.`
-    ].filter(Boolean).join('\n');
-
-    const details: Record<string, string> = {
-      'Contact Name': data.name,
-      'Company': data.company,
-      'Work Email': data.email,
-      'Phone': data.phone,
-      'Team Size': data.teamSize,
-      'Revenue Band': data.monthlyRevenue,
-      'Primary Friction': data.primaryFriction,
-    };
-    if (data.notes) details['Notes'] = data.notes;
-
-    const lead: DispatchedLead = {
-      id: leadId,
-      type: 'ai_audit',
-      title: `AI Audit: ${data.company}`,
-      applicantName: data.name,
-      applicantEmail: data.email,
-      applicantPhone: data.phone,
-      submittedAt: timestamp,
-      dispatchedToEmail: contact.email,
-      dispatchedToPhone: contact.phone,
-      details,
-      status: 'Dispatched Immediately',
-      summaryText
-    };
-
-    saveDispatchedLead(lead);
-
-    await sendToServer({
-      type: 'ai_audit',
-      title: lead.title,
-      contact,
-      applicant: { name: data.name, email: data.email, phone: data.phone },
-      details,
-      summaryText
-    });
-
-    const encodedSubject = encodeURIComponent(`[AI AUDIT REQUEST] ${data.company} - ${data.name}`);
+    const encodedSubject = encodeURIComponent(`[NEW INVESTMENT BOOKING] ${data.packageTitle} - ${data.clientName}`);
     const encodedBody = encodeURIComponent(summaryText);
     const whatsAppUrl = `https://wa.me/${contact.whatsappNumber}?text=${encodedBody}`;
     const mailtoUrl = `mailto:${contact.email}?subject=${encodedSubject}&body=${encodedBody}`;
@@ -305,7 +214,7 @@ export const notificationService = {
 
     const leadId = `MENTOR-${Date.now()}`;
     const summaryText = [
-      `🎓 NEW EXECUTIVE MENTORSHIP INTAKE APPLICATION`,
+      `🎓 NEW INVESTMENT MENTORSHIP INTAKE APPLICATION`,
       `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`,
       `🏆 Tier Requested: ${data.tierTitle}`,
       `👤 Applicant Name: ${data.name}`,
@@ -313,7 +222,7 @@ export const notificationService = {
       `📱 Phone Number: ${data.phone}`,
       `📊 Experience Level: ${data.experienceLevel}`,
       `🎯 Primary Goal: ${data.primaryGoal}`,
-      `🚧 Biggest Bottleneck: ${data.biggestBottleneck || 'N/A'}`,
+      `🚧 Biggest Challenge: ${data.biggestBottleneck || 'N/A'}`,
       `⏳ Time Commitment: ${data.timeCommitment}`,
       `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`,
       `🏢 DIRECT DISPATCH RECIPIENTS:`,
@@ -331,14 +240,14 @@ export const notificationService = {
       'Phone': data.phone,
       'Experience Level': data.experienceLevel,
       'Primary Goal': data.primaryGoal,
-      'Biggest Bottleneck': data.biggestBottleneck || 'N/A',
+      'Biggest Challenge': data.biggestBottleneck || 'N/A',
       'Time Commitment': data.timeCommitment,
     };
 
     const lead: DispatchedLead = {
       id: leadId,
       type: 'mentorship_application',
-      title: `Mentorship: ${data.tierTitle}`,
+      title: `Investment Mentorship: ${data.tierTitle}`,
       applicantName: data.name,
       applicantEmail: data.email,
       applicantPhone: data.phone,
@@ -362,6 +271,87 @@ export const notificationService = {
     });
 
     const encodedSubject = encodeURIComponent(`[MENTORSHIP APPLICATION] ${data.tierTitle} - ${data.name}`);
+    const encodedBody = encodeURIComponent(summaryText);
+    const whatsAppUrl = `https://wa.me/${contact.whatsappNumber}?text=${encodedBody}`;
+    const mailtoUrl = `mailto:${contact.email}?subject=${encodedSubject}&body=${encodedBody}`;
+    const smsUrl = `sms:${contact.phone}?body=${encodedBody}`;
+
+    return {
+      success: true,
+      leadId,
+      dispatchedToEmail: contact.email,
+      dispatchedToPhone: contact.phoneDisplay,
+      timestamp,
+      whatsAppUrl,
+      mailtoUrl,
+      smsUrl,
+      summaryText
+    };
+  },
+
+  /**
+   * Dispatch General Investment Inquiry immediately to company email and phone
+   */
+  async dispatchInquiry(data: InquirySubmissionData): Promise<DispatchResult> {
+    const contact = getCompanyContact();
+    const timestamp = new Date().toLocaleString('en-GB', {
+      timeZone: 'Europe/London',
+      dateStyle: 'full',
+      timeStyle: 'medium'
+    });
+
+    const leadId = `INQ-${Date.now()}`;
+    const summaryText = [
+      `💬 NEW INVESTMENT EDUCATION INQUIRY`,
+      `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`,
+      `👤 Name: ${data.name}`,
+      `📧 Email: ${data.email}`,
+      `📱 Phone: ${data.phone}`,
+      `📌 Topic: ${data.topic}`,
+      `📝 Message: ${data.message}`,
+      `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`,
+      `🏢 DIRECT DISPATCH RECIPIENTS:`,
+      `• Company Email: ${contact.email}`,
+      `• Company Phone: ${contact.phoneDisplay} (${contact.phone})`,
+      `⏱️ Dispatched: ${timestamp}`,
+      `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`
+    ].join('\n');
+
+    const details: Record<string, string> = {
+      'Name': data.name,
+      'Email': data.email,
+      'Phone': data.phone,
+      'Topic': data.topic,
+      'Message': data.message
+    };
+
+    const lead: DispatchedLead = {
+      id: leadId,
+      type: 'inquiry',
+      title: `Inquiry: ${data.topic}`,
+      applicantName: data.name,
+      applicantEmail: data.email,
+      applicantPhone: data.phone,
+      submittedAt: timestamp,
+      dispatchedToEmail: contact.email,
+      dispatchedToPhone: contact.phone,
+      details,
+      status: 'Dispatched Immediately',
+      summaryText
+    };
+
+    saveDispatchedLead(lead);
+
+    await sendToServer({
+      type: 'inquiry',
+      title: lead.title,
+      contact,
+      applicant: { name: data.name, email: data.email, phone: data.phone },
+      details,
+      summaryText
+    });
+
+    const encodedSubject = encodeURIComponent(`[INVESTMENT INQUIRY] ${data.topic} - ${data.name}`);
     const encodedBody = encodeURIComponent(summaryText);
     const whatsAppUrl = `https://wa.me/${contact.whatsappNumber}?text=${encodedBody}`;
     const mailtoUrl = `mailto:${contact.email}?subject=${encodedSubject}&body=${encodedBody}`;

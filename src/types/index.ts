@@ -16,6 +16,21 @@ export interface Course {
   featured?: boolean;
 }
 
+export interface Masterclass {
+  id: string;
+  title: string;
+  tagline: string;
+  category: 'Beginners' | 'Stocks & Shares' | 'ETFs & Index Investing' | 'ISAs & Tax Shelters' | 'Portfolio Building';
+  level: 'Beginner' | 'Intermediate' | 'Advanced';
+  duration: string;
+  format: string;
+  description: string;
+  whatYouWillLearn: string[];
+  whoItIsFor: string;
+  prerequisites: string;
+  featured?: boolean;
+}
+
 export interface MentorshipTier {
   id: string;
   title: string;
@@ -24,9 +39,9 @@ export interface MentorshipTier {
   commitment: string;
   format: string;
   priceNote: string;
+  featured?: boolean;
   deliverables: string[];
   idealFor: string;
-  featured?: boolean;
 }
 
 export interface CoachingPackage {
@@ -34,19 +49,30 @@ export interface CoachingPackage {
   title: string;
   duration: string;
   accessTier: string;
-  price?: number;
   description: string;
   features: string[];
   recommendedFor: string;
 }
 
-export interface AIService {
+export interface EducationalResource {
   id: string;
   title: string;
-  tagline: string;
+  category: 'Beginner Guide' | 'ETF Education' | 'Stock Education' | 'ISA Education' | 'Portfolio Construction' | 'Glossary' | 'Checklist';
+  readTime: string;
+  summary: string;
+  keyTakeaways: string[];
+  contentSnippet?: string;
+  difficulty: 'Beginner' | 'Intermediate' | 'All Levels';
+}
+
+export interface InvestmentTopic {
+  id: string;
+  name: string;
+  headline: string;
   description: string;
-  metricsImpact: string;
-  deliverables: string[];
+  difficulty: 'Beginner' | 'Intermediate' | 'Advanced';
+  keyPoints: string[];
+  icon: string;
 }
 
 export interface Testimonial {

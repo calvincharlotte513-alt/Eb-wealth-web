@@ -13,7 +13,6 @@ import { AboutPage } from './pages/AboutPage';
 import { AcademyPage } from './pages/AcademyPage';
 import { MentorshipPage } from './pages/MentorshipPage';
 import { CoachingPage } from './pages/CoachingPage';
-import { AIBusinessGrowthPage } from './pages/AIBusinessGrowthPage';
 import { ToolsPage } from './pages/ToolsPage';
 import { CompliancePage } from './pages/CompliancePage';
 
@@ -22,7 +21,6 @@ import { AppDownloadModal } from './components/AppDownloadModal';
 import { ApplicationModal } from './components/ApplicationModal';
 import { BookingModal } from './components/BookingModal';
 import { CourseDetailModal } from './components/CourseDetailModal';
-import { AIAuditModal } from './components/AIAuditModal';
 import { LegalModal } from './components/LegalModal';
 import { GetStartedModal } from './components/GetStartedModal';
 import { CompanyDispatchModal } from './components/CompanyDispatchModal';
@@ -40,7 +38,6 @@ export default function App() {
       'academy',
       'mentorship',
       'coaching',
-      'ai-growth',
       'tools',
       'compliance'
     ];
@@ -66,7 +63,6 @@ export default function App() {
         'academy',
         'mentorship',
         'coaching',
-        'ai-growth',
         'tools',
         'compliance'
       ];
@@ -97,7 +93,6 @@ export default function App() {
   const [courseDetailModalOpen, setCourseDetailModalOpen] = useState(false);
   const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
 
-  const [aiAuditModalOpen, setAiAuditModalOpen] = useState(false);
   const [companyDispatchModalOpen, setCompanyDispatchModalOpen] = useState(false);
 
   const [legalModalOpen, setLegalModalOpen] = useState(false);
@@ -131,7 +126,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC] text-[#17202A] flex flex-col font-sans selection:bg-[#00A878]/20 selection:text-[#00A878]">
+    <div className="min-h-screen bg-[#F8FAFC] text-[#0F172A] flex flex-col font-sans selection:bg-[#2563EB]/20 selection:text-[#1E40AF]">
       {/* Universal Top Navigation Header */}
       <Navbar
         currentPage={currentPage}
@@ -151,7 +146,6 @@ export default function App() {
             onSelectCourse={handleOpenCourseDetail}
             onApplyMentorship={handleApplyMentorship}
             onBookCoaching={handleBookSession}
-            onScheduleAIAudit={() => setAiAuditModalOpen(true)}
             onOpenGetStartedModal={() => setGetStartedModalOpen(true)}
           />
         )}
@@ -188,13 +182,6 @@ export default function App() {
             onBookSession={handleBookSession}
             onOpenAppDownload={handleOpenAppDownload}
             onOpenDisclosures={() => handleOpenLegal('disclaimer')}
-          />
-        )}
-
-        {currentPage === 'ai-growth' && (
-          <AIBusinessGrowthPage
-            onNavigate={navigateTo}
-            onScheduleAudit={() => setAiAuditModalOpen(true)}
           />
         )}
 
@@ -238,7 +225,7 @@ export default function App() {
         initialTab={downloadModalTab}
       />
 
-      {/* Secondary Information & Intake Modals */}
+      {/* Secondary Admissions & Intake Modals */}
       <ApplicationModal
         isOpen={applicationModalOpen}
         onClose={() => setApplicationModalOpen(false)}
@@ -249,7 +236,7 @@ export default function App() {
         isOpen={bookingModalOpen}
         onClose={() => setBookingModalOpen(false)}
         initialPackage={selectedCoachingPackage}
-        onProceedToStripe={() => handleOpenAppDownload('1-on-1 Coaching Session')}
+        onProceedToStripe={() => handleOpenAppDownload('1-on-1 Investment Coaching Session')}
       />
 
       <CourseDetailModal
@@ -257,11 +244,6 @@ export default function App() {
         isOpen={courseDetailModalOpen}
         onClose={() => setCourseDetailModalOpen(false)}
         onEnroll={(course) => handleOpenAppDownload(`EB Wealth Academy: ${course.title}`)}
-      />
-
-      <AIAuditModal
-        isOpen={aiAuditModalOpen}
-        onClose={() => setAiAuditModalOpen(false)}
       />
 
       <LegalModal

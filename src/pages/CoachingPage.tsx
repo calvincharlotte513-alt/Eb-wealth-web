@@ -162,9 +162,9 @@ export const CoachingPage: React.FC<CoachingPageProps> = ({
                       Session Inclusions:
                     </div>
                     <ul className="space-y-2.5">
-                      {pkg.features.map((feature, i) => (
-                        <li key={i} className="flex items-start gap-2.5 text-xs text-[#17202A]">
-                          <Check className="w-3.5 h-3.5 text-[#00A878] shrink-0 mt-0.5" />
+                      {pkg.features.map((feature: string, i: number) => (
+                        <li key={i} className="flex items-start gap-2.5 text-xs text-[#0F172A]">
+                          <Check className="w-3.5 h-3.5 text-[#2563EB] shrink-0 mt-0.5" />
                           <span className="leading-snug">{feature}</span>
                         </li>
                       ))}

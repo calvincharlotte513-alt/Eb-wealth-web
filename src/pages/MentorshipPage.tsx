@@ -185,9 +185,9 @@ export const MentorshipPage: React.FC<MentorshipPageProps> = ({
                       What You Receive:
                     </div>
                     <ul className="space-y-3">
-                      {tier.deliverables.map((item, i) => (
-                        <li key={i} className="flex items-start gap-2.5 text-xs text-[#17202A]">
-                          <Check className="w-3.5 h-3.5 text-[#00A878] shrink-0 mt-0.5" />
+                      {tier.deliverables.map((item: string, i: number) => (
+                        <li key={i} className="flex items-start gap-2.5 text-xs text-[#0F172A]">
+                          <Check className="w-3.5 h-3.5 text-[#2563EB] shrink-0 mt-0.5" />
                           <span className="leading-snug">{item}</span>
                         </li>
                       ))}
@@ -203,7 +203,7 @@ export const MentorshipPage: React.FC<MentorshipPageProps> = ({
                     onClick={() => onApply(tier)}
                     className={`w-full py-3 px-4 rounded-xl text-xs font-semibold transition-all flex items-center justify-center gap-2 cursor-pointer ${
                       tier.featured
-                        ? 'bg-[#00A878] hover:bg-[#009267] text-white shadow-xs'
+                        ? 'bg-[#2563EB] hover:bg-blue-700 text-white shadow-xs'
                         : 'bg-[#F8FAFC] hover:bg-slate-100 text-[#17202A] border border-slate-200'
                     }`}
                   >

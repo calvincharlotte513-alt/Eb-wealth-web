@@ -175,12 +175,12 @@ export const AppDownloadModal: React.FC<AppDownloadModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-sm overflow-y-auto">
-      <div className="relative w-full max-w-2xl bg-white border border-slate-200 rounded-3xl shadow-2xl p-6 sm:p-8 text-[#17202A] my-8 animate-in fade-in zoom-in-95 duration-200">
+    <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-950/75 backdrop-blur-xs p-3 sm:p-6 flex items-start justify-center pt-8 sm:pt-14 pb-12">
+      <div className="relative w-full max-w-2xl bg-white border border-slate-200 rounded-2xl shadow-2xl p-6 sm:p-8 text-[#0F172A] my-auto animate-in fade-in zoom-in-95 duration-150">
         {/* Close Button */}
         <button
           onClick={resetAndClose}
-          className="absolute top-5 right-5 text-slate-400 hover:text-[#17202A] transition-colors p-1.5 rounded-xl hover:bg-slate-100 cursor-pointer"
+          className="absolute top-4 right-4 sm:top-5 sm:right-5 text-slate-400 hover:text-slate-900 transition-colors p-2 rounded-xl hover:bg-slate-100 cursor-pointer z-10"
           aria-label="Close modal"
         >
           <X className="w-5 h-5" />
@@ -302,25 +302,25 @@ export const AppDownloadModal: React.FC<AppDownloadModalProps> = ({
                 <span>Interactive Broker Walkthrough Simulator</span>
               </div>
               <div className="p-2.5 bg-[#F8FAFC] rounded-xl border border-slate-200 flex items-center gap-2">
-                <CheckCircle2 className="w-3.5 h-3.5 text-[#00A878] shrink-0" />
-                <span>1-on-1 Advisory Booking & Video</span>
+                <CheckCircle2 className="w-3.5 h-3.5 text-[#1D4ED8] shrink-0" />
+                <span>1-on-1 Investment Consultation Booking</span>
               </div>
               <div className="p-2.5 bg-[#F8FAFC] rounded-xl border border-slate-200 flex items-center gap-2">
-                <CheckCircle2 className="w-3.5 h-3.5 text-[#00A878] shrink-0" />
-                <span>AI Prompt Engineering Studio</span>
+                <CheckCircle2 className="w-3.5 h-3.5 text-[#1D4ED8] shrink-0" />
+                <span>Compound Interest & ISA Calculators</span>
               </div>
             </div>
           </div>
 
           {/* Footer info & close */}
           <div className="pt-4 border-t border-slate-100 flex items-center justify-between text-xs">
-            <div className="flex items-center gap-2 text-[#52606D]">
+            <div className="flex items-center gap-2 text-[#64748B]">
               <Info className="w-3.5 h-3.5 text-slate-400" />
               <span>Web access is also synced across all your devices.</span>
             </div>
             <button
               onClick={resetAndClose}
-              className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-[#17202A] text-xs font-semibold rounded-xl transition-colors cursor-pointer"
+              className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-[#0F172A] text-xs font-semibold rounded-xl transition-colors cursor-pointer"
             >
               Close
             </button>
