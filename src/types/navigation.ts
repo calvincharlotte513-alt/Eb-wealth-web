@@ -5,4 +5,5 @@ export type PageId =
   | 'mentorship'
   | 'coaching'
   | 'tools'
+  | 'progress'
   | 'compliance';

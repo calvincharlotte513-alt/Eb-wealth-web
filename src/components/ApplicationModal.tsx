@@ -1,19 +1,27 @@
 import React, { useState } from 'react';
-import { X, CheckCircle2, Shield, ArrowRight, ArrowLeft, Mail, Phone, MessageSquare, Copy, Check } from 'lucide-react';
+import { X, ArrowRight, ArrowLeft, Shield, CheckCircle2, Mail, Phone, MessageSquare, Copy, Check } from 'lucide-react';
+import { MentorshipTier } from '../types';
 import { notificationService, DispatchResult } from '../services/notificationService';
 
 interface ApplicationModalProps {
   isOpen: boolean;
   onClose: () => void;
+  tier?: MentorshipTier;
   tierTitle?: string;
 }
 
 export const ApplicationModal: React.FC<ApplicationModalProps> = ({
   isOpen,
   onClose,
-  tierTitle = 'Growth Mentorship'
+  tier,
+  tierTitle: propTierTitle
 }) => {
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState<number>(1);
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
+  const [dispatchResult, setDispatchResult] = useState<DispatchResult | null>(null);
+  const [copied, setCopied] = useState<boolean>(false);
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -23,37 +31,62 @@ export const ApplicationModal: React.FC<ApplicationModalProps> = ({
     biggestBottleneck: '',
     timeCommitment: 'Yes, committed to 2-4 hours per month'
   });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [dispatchResult, setDispatchResult] = useState<DispatchResult | null>(null);
-  const [copied, setCopied] = useState(false);
 
   if (!isOpen) return null;
 
-  const handleNext = async (e: React.FormEvent) => {
+  const tierTitle = propTierTitle || tier?.title || 'EB Wealth Investment Mentorship';
+
+  const handleNext = (e: React.FormEvent) => {
     e.preventDefault();
     if (step < 3) {
       setStep(step + 1);
     } else {
-      setIsSubmitting(true);
-      try {
-        const res = await notificationService.dispatchMentorshipApplication({
-          ...formData,
-          tierTitle
-        });
-        setDispatchResult(res);
-        setIsSubmitted(true);
-      } catch (err) {
-        console.error('Mentorship dispatch error:', err);
-        setIsSubmitted(true);
-      } finally {
-        setIsSubmitting(false);
-      }
+      handleSubmit();
     }
   };
 
   const handlePrev = () => {
     if (step > 1) setStep(step - 1);
+  };
+
+  const handleSubmit = async () => {
+    setIsSubmitting(true);
+    try {
+      const result = await notificationService.dispatchMentorshipApplication({
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        experienceLevel: formData.experienceLevel,
+        primaryGoal: formData.primaryGoal,
+        tierTitle: tierTitle,
+        biggestBottleneck: formData.biggestBottleneck,
+        timeCommitment: formData.timeCommitment
+      });
+
+      setDispatchResult(result);
+      setIsSubmitted(true);
+    } catch (err) {
+      console.error('Failed to dispatch mentorship application', err);
+      alert('An error occurred while submitting your application. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const resetAndClose = () => {
+    setStep(1);
+    setIsSubmitted(false);
+    setDispatchResult(null);
+    setFormData({
+      name: '',
+      email: '',
+      phone: '',
+      experienceLevel: 'Complete Beginner (Building first portfolio)',
+      primaryGoal: 'Learn UK ISAs, index funds and disciplined compounding',
+      biggestBottleneck: '',
+      timeCommitment: 'Yes, committed to 2-4 hours per month'
+    });
+    onClose();
   };
 
   const handleCopySummary = () => {
@@ -63,20 +96,12 @@ export const ApplicationModal: React.FC<ApplicationModalProps> = ({
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const resetAndClose = () => {
-    setStep(1);
-    setIsSubmitted(false);
-    setIsSubmitting(false);
-    setDispatchResult(null);
-    onClose();
-  };
-
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-950/75 backdrop-blur-xs p-3 sm:p-6 flex items-start justify-center pt-8 sm:pt-14 pb-12">
-      <div className="relative w-full max-w-xl bg-white border border-slate-200 rounded-2xl shadow-2xl p-6 md:p-8 text-[#0F172A] my-auto animate-in fade-in zoom-in-95 duration-150">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#08231B]/75 backdrop-blur-xs animate-in fade-in duration-200">
+      <div className="relative w-full max-w-xl bg-white border border-stone-200 rounded-xs shadow-xl p-6 sm:p-8 max-h-[90vh] overflow-y-auto">
         <button
           onClick={resetAndClose}
-          className="absolute top-4 right-4 sm:top-5 sm:right-5 text-slate-400 hover:text-slate-900 transition-colors p-2 rounded-xl hover:bg-slate-100 cursor-pointer z-10"
+          className="absolute top-5 right-5 text-stone-400 hover:text-stone-700 transition-colors p-1 rounded-xs"
           aria-label="Close modal"
         >
           <X className="w-5 h-5" />
@@ -85,14 +110,14 @@ export const ApplicationModal: React.FC<ApplicationModalProps> = ({
         {!isSubmitted ? (
           <div>
             <div className="mb-6 pr-8">
-              <span className="text-xs font-mono font-bold text-[#2563EB] uppercase tracking-wider">
-                Investment Mentorship Admissions
+              <span className="text-[10px] font-mono font-bold text-[#C5A869] uppercase tracking-widest">
+                Admissions Protocol
               </span>
-              <h3 className="text-xl sm:text-2xl font-bold text-[#17202A] mt-1">
+              <h3 className="font-serif text-xl sm:text-2xl font-bold text-[#0D3B2E] mt-1">
                 Apply for {tierTitle}
               </h3>
-              <p className="text-xs sm:text-sm text-[#52606D] mt-1.5">
-                Step {step} of 3 — Tell us about your investment background and targets. Details are immediately dispatched to our admissions team.
+              <p className="text-xs text-stone-600 mt-1.5 font-sans">
+                Stage {step} of 3 — Candidate profile and capital objectives. Dossier is dispatched immediately to admissions leadership.
               </p>
             </div>
 
@@ -100,8 +125,8 @@ export const ApplicationModal: React.FC<ApplicationModalProps> = ({
               {step === 1 && (
                 <div className="space-y-3.5 animate-in fade-in duration-150">
                   <div>
-                    <label className="block text-xs font-semibold text-[#17202A] mb-1">
-                      Full Name *
+                    <label className="block text-xs font-mono font-semibold text-[#0D3B2E] mb-1">
+                      Full Legal Name *
                     </label>
                     <input
                       required
@@ -109,12 +134,12 @@ export const ApplicationModal: React.FC<ApplicationModalProps> = ({
                       placeholder="e.g. David Mitchell"
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      className="w-full px-3.5 py-2.5 bg-[#F8FAFC] border border-slate-200 rounded-xl text-xs sm:text-sm text-[#17202A] focus:outline-none focus:border-[#2563EB]"
+                      className="w-full px-3.5 py-2.5 bg-[#FAF9F5] border border-stone-200 rounded-xs text-xs sm:text-sm text-[#0D3B2E] focus:outline-none focus:border-[#C5A869]"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold text-[#17202A] mb-1">
+                    <label className="block text-xs font-mono font-semibold text-[#0D3B2E] mb-1">
                       Email Address *
                     </label>
                     <input
@@ -123,12 +148,12 @@ export const ApplicationModal: React.FC<ApplicationModalProps> = ({
                       placeholder="david@example.com"
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      className="w-full px-3.5 py-2.5 bg-[#F8FAFC] border border-slate-200 rounded-xl text-xs sm:text-sm text-[#17202A] focus:outline-none focus:border-[#2563EB]"
+                      className="w-full px-3.5 py-2.5 bg-[#FAF9F5] border border-stone-200 rounded-xs text-xs sm:text-sm text-[#0D3B2E] focus:outline-none focus:border-[#C5A869]"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold text-[#17202A] mb-1">
+                    <label className="block text-xs font-mono font-semibold text-[#0D3B2E] mb-1">
                       Mobile Phone Number *
                     </label>
                     <input
@@ -137,7 +162,7 @@ export const ApplicationModal: React.FC<ApplicationModalProps> = ({
                       placeholder="+44 7911 123456"
                       value={formData.phone}
                       onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                      className="w-full px-3.5 py-2.5 bg-[#F8FAFC] border border-slate-200 rounded-xl text-xs sm:text-sm text-[#17202A] focus:outline-none focus:border-[#2563EB]"
+                      className="w-full px-3.5 py-2.5 bg-[#FAF9F5] border border-stone-200 rounded-xs text-xs sm:text-sm text-[#0D3B2E] focus:outline-none focus:border-[#C5A869]"
                     />
                   </div>
                 </div>
@@ -146,13 +171,13 @@ export const ApplicationModal: React.FC<ApplicationModalProps> = ({
               {step === 2 && (
                 <div className="space-y-3.5 animate-in fade-in duration-150">
                   <div>
-                    <label className="block text-xs font-semibold text-[#17202A] mb-1">
+                    <label className="block text-xs font-mono font-semibold text-[#0D3B2E] mb-1">
                       Current Investing Experience *
                     </label>
                     <select
                       value={formData.experienceLevel}
                       onChange={(e) => setFormData({ ...formData, experienceLevel: e.target.value })}
-                      className="w-full px-3.5 py-2.5 bg-[#F8FAFC] border border-slate-200 rounded-xl text-xs sm:text-sm text-[#17202A] focus:outline-none focus:border-[#2563EB]"
+                      className="w-full px-3.5 py-2.5 bg-[#FAF9F5] border border-stone-200 rounded-xs text-xs sm:text-sm text-[#0D3B2E] focus:outline-none focus:border-[#C5A869]"
                     >
                       <option value="Complete Beginner (Building first portfolio)">Complete Beginner (Building first portfolio)</option>
                       <option value="Early-Stage Investor (Own 1-2 funds/stocks, want structure)">Early-Stage Investor (Own 1-2 funds/stocks, want structure)</option>
@@ -162,13 +187,13 @@ export const ApplicationModal: React.FC<ApplicationModalProps> = ({
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold text-[#17202A] mb-1">
-                      Primary Goal for Mentorship *
+                    <label className="block text-xs font-mono font-semibold text-[#0D3B2E] mb-1">
+                      Primary Strategic Objective *
                     </label>
                     <select
                       value={formData.primaryGoal}
                       onChange={(e) => setFormData({ ...formData, primaryGoal: e.target.value })}
-                      className="w-full px-3.5 py-2.5 bg-[#F8FAFC] border border-slate-200 rounded-xl text-xs sm:text-sm text-[#17202A] focus:outline-none focus:border-[#2563EB]"
+                      className="w-full px-3.5 py-2.5 bg-[#FAF9F5] border border-stone-200 rounded-xs text-xs sm:text-sm text-[#0D3B2E] focus:outline-none focus:border-[#C5A869]"
                     >
                       <option value="Learn UK ISAs, index funds and disciplined compounding">Learn UK ISAs, index funds and disciplined compounding</option>
                       <option value="Build a resilient, diversified multi-asset portfolio">Build a resilient, diversified multi-asset portfolio</option>
@@ -182,26 +207,26 @@ export const ApplicationModal: React.FC<ApplicationModalProps> = ({
               {step === 3 && (
                 <div className="space-y-3.5 animate-in fade-in duration-150">
                   <div>
-                    <label className="block text-xs font-semibold text-[#17202A] mb-1">
-                      What is your biggest current investing challenge?
+                    <label className="block text-xs font-mono font-semibold text-[#0D3B2E] mb-1">
+                      What is your foremost investment obstacle?
                     </label>
                     <textarea
                       rows={3}
-                      placeholder="e.g. Overwhelmed by financial jargon, unsure which platform to choose, afraid of market drops..."
+                      placeholder="e.g. Overwhelmed by jargon, fee ambiguity, panic during market drawdowns..."
                       value={formData.biggestBottleneck}
                       onChange={(e) => setFormData({ ...formData, biggestBottleneck: e.target.value })}
-                      className="w-full px-3.5 py-2 bg-[#F8FAFC] border border-slate-200 rounded-xl text-xs text-[#17202A] focus:outline-none focus:border-[#2563EB]"
+                      className="w-full px-3.5 py-2 bg-[#FAF9F5] border border-stone-200 rounded-xs text-xs text-[#0D3B2E] focus:outline-none focus:border-[#C5A869]"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold text-[#17202A] mb-1">
-                      Can you commit 2–4 hours per month to education and strategy calls? *
+                    <label className="block text-xs font-mono font-semibold text-[#0D3B2E] mb-1">
+                      Can you commit 2–4 hours per month to study and cohorts? *
                     </label>
                     <select
                       value={formData.timeCommitment}
                       onChange={(e) => setFormData({ ...formData, timeCommitment: e.target.value })}
-                      className="w-full px-3.5 py-2.5 bg-[#F8FAFC] border border-slate-200 rounded-xl text-xs sm:text-sm text-[#17202A] focus:outline-none focus:border-[#2563EB]"
+                      className="w-full px-3.5 py-2.5 bg-[#FAF9F5] border border-stone-200 rounded-xs text-xs sm:text-sm text-[#0D3B2E] focus:outline-none focus:border-[#C5A869]"
                     >
                       <option value="Yes, committed to 2-4 hours per month">Yes, fully committed</option>
                       <option value="Yes, flexible schedule">Yes, flexible schedule</option>
@@ -216,7 +241,7 @@ export const ApplicationModal: React.FC<ApplicationModalProps> = ({
                   <button
                     type="button"
                     onClick={handlePrev}
-                    className="py-2.5 px-4 bg-slate-100 hover:bg-slate-200 text-[#17202A] font-semibold text-xs rounded-xl flex items-center gap-1.5 transition-colors cursor-pointer"
+                    className="py-2.5 px-4 bg-stone-100 hover:bg-stone-200 text-[#0D3B2E] font-medium text-xs rounded-xs flex items-center gap-1.5 transition-colors cursor-pointer"
                   >
                     <ArrowLeft className="w-3.5 h-3.5" />
                     <span>Back</span>
@@ -226,59 +251,59 @@ export const ApplicationModal: React.FC<ApplicationModalProps> = ({
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="flex-1 py-3 bg-[#2563EB] hover:bg-blue-700 text-white font-semibold text-xs sm:text-sm rounded-xl flex items-center justify-center gap-2 transition-all cursor-pointer shadow-md hover:shadow-lg disabled:opacity-50"
+                  className="flex-1 py-3 bg-[#0D3B2E] hover:bg-[#124E3F] text-[#FAF9F5] font-medium text-xs sm:text-sm rounded-xs border border-[#C5A869]/50 flex items-center justify-center gap-2 transition-all cursor-pointer shadow-xs disabled:opacity-50"
                 >
                   {isSubmitting ? (
                     'Dispatching Application...'
                   ) : step < 3 ? (
                     <>
                       <span>Continue to Next Step</span>
-                      <ArrowRight className="w-4 h-4" />
+                      <ArrowRight className="w-4 h-4 text-[#C5A869]" />
                     </>
                   ) : (
-                    'Submit Application & Dispatch Details'
+                    'Submit Application & Dispatch Dossier'
                   )}
                 </button>
               </div>
 
-              <div className="flex items-center justify-center gap-1.5 text-[11px] text-[#52606D] pt-1">
-                <Shield className="w-3.5 h-3.5 text-[#00A878]" />
-                <span>Admissions details sent immediately to company email & phone upon submission.</span>
+              <div className="flex items-center justify-center gap-1.5 text-[11px] text-stone-500 pt-1 font-mono">
+                <Shield className="w-3.5 h-3.5 text-[#C5A869]" />
+                <span>Admissions dossier dispatched immediately to executive email & phone.</span>
               </div>
             </form>
           </div>
         ) : (
           <div className="py-2 text-center space-y-4">
-            <div className="w-14 h-14 bg-emerald-50 border border-emerald-200 rounded-2xl flex items-center justify-center mx-auto text-emerald-600 shadow-sm">
-              <CheckCircle2 className="w-8 h-8" />
+            <div className="w-14 h-14 bg-[#FAF5E8] border border-[#C5A869]/50 rounded-xs flex items-center justify-center mx-auto text-[#0D3B2E]">
+              <CheckCircle2 className="w-8 h-8 text-[#0D3B2E]" />
             </div>
 
             <div>
-              <span className="text-xs font-mono font-bold text-emerald-600 uppercase tracking-wider">
-                Application Dispatched Immediately
+              <span className="text-[10px] font-mono font-bold text-[#C5A869] uppercase tracking-widest">
+                Application Successfully Dispatched
               </span>
-              <h3 className="text-xl sm:text-2xl font-bold text-[#17202A] mt-1">
-                Application Submitted & Dispatched
+              <h3 className="font-serif text-xl sm:text-2xl font-bold text-[#0D3B2E] mt-1">
+                Dossier Received & Dispatched
               </h3>
-              <p className="text-xs sm:text-sm text-[#52606D] mt-2 max-w-md mx-auto leading-relaxed">
-                Thank you, <strong className="text-[#17202A]">{formData.name}</strong>. Your intake application for <strong className="text-[#17202A]">{tierTitle}</strong> has been automatically dispatched directly to our admissions office.
+              <p className="text-xs sm:text-sm text-stone-600 mt-2 max-w-md mx-auto leading-relaxed font-sans">
+                Thank you, <strong className="text-[#0D3B2E]">{formData.name}</strong>. Your intake application for <strong className="text-[#0D3B2E]">{tierTitle}</strong> has been transmitted to admissions leadership.
               </p>
             </div>
 
             {/* Direct Dispatch Proof Card */}
             {dispatchResult && (
-              <div className="p-4 bg-[#F8FAFC] border border-slate-200 rounded-2xl text-left text-xs space-y-2.5">
-                <div className="flex items-center justify-between text-[11px] text-slate-500 pb-2 border-b border-slate-200">
-                  <span className="font-mono font-semibold text-[#2563EB]">Lead ID: {dispatchResult.leadId}</span>
+              <div className="p-4 bg-[#FAF9F5] border border-stone-200 rounded-xs text-left text-xs space-y-2.5 font-mono">
+                <div className="flex items-center justify-between text-[11px] text-stone-500 pb-2 border-b border-stone-200">
+                  <span className="font-semibold text-[#0D3B2E]">Lead ID: {dispatchResult.leadId}</span>
                   <span>{dispatchResult.timestamp}</span>
                 </div>
-                <div className="flex items-center gap-2 text-[#17202A]">
-                  <Mail className="w-4 h-4 text-[#2563EB] shrink-0" />
-                  <span className="truncate">Sent to Company Email: <strong>{dispatchResult.dispatchedToEmail}</strong></span>
+                <div className="flex items-center gap-2 text-stone-700">
+                  <Mail className="w-4 h-4 text-[#C5A869] shrink-0" />
+                  <span className="truncate">Sent to Company Email: <strong className="text-[#0D3B2E]">{dispatchResult.dispatchedToEmail}</strong></span>
                 </div>
-                <div className="flex items-center gap-2 text-[#17202A]">
-                  <Phone className="w-4 h-4 text-emerald-600 shrink-0" />
-                  <span>Sent to Company Phone: <strong>{dispatchResult.dispatchedToPhone}</strong></span>
+                <div className="flex items-center gap-2 text-stone-700">
+                  <Phone className="w-4 h-4 text-[#0D3B2E] shrink-0" />
+                  <span>Sent to Company Phone: <strong className="text-[#0D3B2E]">{dispatchResult.dispatchedToPhone}</strong></span>
                 </div>
 
                 <div className="pt-2 flex flex-wrap gap-2">
@@ -286,21 +311,21 @@ export const ApplicationModal: React.FC<ApplicationModalProps> = ({
                     href={dispatchResult.whatsAppUrl}
                     target="_blank"
                     rel="noreferrer"
-                    className="flex-1 min-w-[130px] py-2 px-3 bg-emerald-600 hover:bg-emerald-700 text-white font-medium text-xs rounded-xl flex items-center justify-center gap-1.5 transition-colors"
+                    className="flex-1 min-w-[130px] py-2 px-3 bg-[#0D3B2E] hover:bg-[#124E3F] text-white font-medium text-xs rounded-xs flex items-center justify-center gap-1.5 transition-colors border border-[#C5A869]/40"
                   >
-                    <MessageSquare className="w-3.5 h-3.5" />
+                    <MessageSquare className="w-3.5 h-3.5 text-[#C5A869]" />
                     <span>WhatsApp Direct</span>
                   </a>
                   <a
                     href={dispatchResult.mailtoUrl}
-                    className="flex-1 min-w-[130px] py-2 px-3 bg-[#2563EB] hover:bg-blue-700 text-white font-medium text-xs rounded-xl flex items-center justify-center gap-1.5 transition-colors"
+                    className="flex-1 min-w-[130px] py-2 px-3 bg-white border border-stone-300 hover:bg-stone-50 text-[#0D3B2E] font-medium text-xs rounded-xs flex items-center justify-center gap-1.5 transition-colors"
                   >
-                    <Mail className="w-3.5 h-3.5" />
+                    <Mail className="w-3.5 h-3.5 text-[#C5A869]" />
                     <span>Open Email Client</span>
                   </a>
                   <button
                     onClick={handleCopySummary}
-                    className="py-2 px-3 bg-white border border-slate-300 hover:bg-slate-50 text-[#17202A] font-medium text-xs rounded-xl flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+                    className="py-2 px-3 bg-white border border-stone-300 hover:bg-stone-50 text-[#0D3B2E] font-medium text-xs rounded-xs flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
                   >
                     {copied ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
                     <span>{copied ? 'Copied' : 'Copy Summary'}</span>
@@ -312,9 +337,9 @@ export const ApplicationModal: React.FC<ApplicationModalProps> = ({
             <div className="pt-2">
               <button
                 onClick={resetAndClose}
-                className="w-full py-2.5 bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs rounded-xl transition-colors cursor-pointer"
+                className="w-full py-2.5 bg-[#0D3B2E] hover:bg-[#124E3F] text-white font-medium text-xs rounded-xs transition-colors cursor-pointer border border-[#C5A869]/50"
               >
-                Close & Return to Website
+                Close & Return to Overview
               </button>
             </div>
           </div>

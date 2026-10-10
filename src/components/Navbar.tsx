@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, ArrowRight, Smartphone, ShieldCheck } from 'lucide-react';
+import { Menu, X, ArrowRight, Smartphone, CheckCircle } from 'lucide-react';
 import { PageId } from '../types/navigation';
 import { MarketBar } from './MarketBar';
 
@@ -15,8 +15,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   currentPage,
   onNavigate,
   onOpenDownloadModal,
-  onOpenGetStarted,
-  onOpenCompanyDispatch
+  onOpenGetStarted
 }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -37,11 +36,12 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   const navLinks: { id: PageId | 'app'; label: string }[] = [
     { id: 'home', label: 'Overview' },
-    { id: 'about', label: 'Philosophy' },
     { id: 'academy', label: 'Academy' },
     { id: 'mentorship', label: 'Mentorship' },
+    { id: 'tools', label: 'Calculators & Tools' },
     { id: 'coaching', label: 'Private Coaching' },
-    { id: 'tools', label: 'Tools & Analytics' },
+    { id: 'progress', label: 'Progress Tracking' },
+    { id: 'about', label: 'Philosophy' },
     { id: 'app', label: 'App Portal' }
   ];
 
@@ -53,7 +53,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           : 'bg-[#0D3B2E] border-b border-[#C5A869]/25 text-white'
       }`}
     >
-      {/* 1. Goldman Sachs Institutional Market Bar */}
+      {/* 1. Goldman Sachs Institutional Market Bar (Live Ticker) */}
       <MarketBar />
 
       {/* 2. Main Institutional Navigation Bar */}
@@ -80,7 +80,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           </div>
 
           {/* Desktop Navigation Links */}
-          <nav className="hidden lg:flex items-center gap-6 xl:gap-8 text-xs font-semibold uppercase tracking-wider">
+          <nav className="hidden xl:flex items-center gap-5 2xl:gap-7 text-xs font-semibold uppercase tracking-wider">
             {navLinks.map((link) => {
               if (link.id === 'app') {
                 return (
@@ -115,19 +115,8 @@ export const Navbar: React.FC<NavbarProps> = ({
             })}
           </nav>
 
-          {/* Right Header Controls */}
+          {/* Right Header Action Button */}
           <div className="hidden sm:flex items-center gap-3">
-            {onOpenCompanyDispatch && (
-              <button
-                onClick={onOpenCompanyDispatch}
-                className="py-2 px-2.5 text-slate-300 hover:text-[#C5A869] hover:bg-white/5 rounded-xs transition-colors cursor-pointer flex items-center gap-1.5 text-xs font-medium border border-transparent hover:border-[#C5A869]/30"
-                title="Company Inbound Leads & Notification Settings"
-              >
-                <ShieldCheck className="w-3.5 h-3.5 text-[#C5A869]" />
-                <span className="hidden xl:inline text-[10px] tracking-wide uppercase font-mono">Inbound Leads</span>
-              </button>
-            )}
-
             <button
               onClick={onOpenGetStarted}
               className="py-2.5 px-4.5 bg-gradient-to-r from-[#C5A869] to-[#DFCA96] hover:from-[#B89748] hover:to-[#C5A869] text-[#07251C] font-semibold text-xs rounded-xs transition-all cursor-pointer shadow-sm hover:shadow-md flex items-center gap-2 uppercase tracking-wider border border-[#DFCA96]/40"
@@ -138,7 +127,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           </div>
 
           {/* Mobile Menu Toggle Button */}
-          <div className="flex lg:hidden items-center gap-2">
+          <div className="flex xl:hidden items-center gap-2">
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="p-2 text-white hover:text-[#C5A869] rounded-xs cursor-pointer"
@@ -152,7 +141,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
       {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
-        <div className="lg:hidden bg-[#07251C] border-b border-[#C5A869]/30 px-4 pt-3 pb-6 space-y-2 shadow-2xl animate-in slide-in-from-top-4 duration-150">
+        <div className="xl:hidden bg-[#07251C] border-b border-[#C5A869]/30 px-4 pt-3 pb-6 space-y-2 shadow-2xl animate-in slide-in-from-top-4 duration-150">
           <div className="flex flex-col space-y-1">
             {navLinks.map((link) => {
               if (link.id === 'app') {
@@ -199,18 +188,6 @@ export const Navbar: React.FC<NavbarProps> = ({
               <span>Explore Curriculum</span>
               <ArrowRight className="w-4 h-4 text-[#07251C]" />
             </button>
-
-            {onOpenCompanyDispatch && (
-              <button
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  onOpenCompanyDispatch();
-                }}
-                className="w-full py-2.5 text-center text-[11px] uppercase tracking-wider text-[#C5A869] hover:underline font-mono"
-              >
-                Inbound Lead Center
-              </button>
-            )}
           </div>
         </div>
       )}

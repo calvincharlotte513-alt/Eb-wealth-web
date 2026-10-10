@@ -27,6 +27,7 @@ import { CompanyDispatchModal } from './components/CompanyDispatchModal';
 
 import { Course, CoachingPackage, MentorshipTier } from './types';
 import { PageId } from './types/navigation';
+import { MarketDataProvider } from './context/MarketDataContext';
 
 export default function App() {
   // Navigation state (Multi-page routing with browser history sync)
@@ -126,7 +127,8 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC] text-[#0F172A] flex flex-col font-sans selection:bg-[#2563EB]/20 selection:text-[#1E40AF]">
+    <MarketDataProvider>
+      <div className="min-h-screen bg-[#FAF9F5] text-[#141E18] flex flex-col font-sans selection:bg-[#C5A869]/30 selection:text-[#0D3B2E]">
       {/* Universal Top Navigation Header */}
       <Navbar
         currentPage={currentPage}
@@ -258,5 +260,6 @@ export default function App() {
         onClose={() => setCompanyDispatchModalOpen(false)}
       />
     </div>
+    </MarketDataProvider>
   );
 }
