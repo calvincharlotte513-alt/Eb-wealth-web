@@ -107,11 +107,12 @@ export const ProgressPage: React.FC<ProgressPageProps> = ({
   return (
     <div className="bg-[#FAF9F5] text-[#141E18]">
       {/* 1. Institutional Hero Banner */}
-      <section className="relative pt-36 pb-20 overflow-hidden bg-[#0D3B2E] text-white border-b border-[#C5A869]/30">
+      <section className="relative pt-36 pb-20 overflow-hidden bg-[#071F18] text-white border-b border-[#C5A869]/30">
         <HeroBackground
           imageSrc={HERO_BACKGROUNDS.academy}
           fallbackSrc={HERO_FALLBACKS.academy}
-          imageOpacity="opacity-20"
+          overlayOpacity="dark"
+          imageOpacity="opacity-100"
         />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">

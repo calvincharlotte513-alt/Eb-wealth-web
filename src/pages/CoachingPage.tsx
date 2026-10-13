@@ -22,39 +22,39 @@ export const CoachingPage: React.FC<CoachingPageProps> = ({
   return (
     <div className="pt-24 pb-20 text-[#141E18] bg-[#FAF9F5]">
       {/* Header Banner with authentic Hero Background */}
-      <section className="relative py-20 lg:py-28 border-b border-stone-200 overflow-hidden bg-[#FAF9F5]">
+      <section className="relative py-20 lg:py-28 border-b border-[#C5A869]/30 overflow-hidden bg-[#071F18]">
         <HeroBackground
           imageSrc={HERO_BACKGROUNDS.coaching}
           fallbackSrc={HERO_FALLBACKS.coaching || coachingHeroBg}
-          overlayOpacity="subtle"
-          imageOpacity="opacity-95 md:opacity-100"
+          overlayOpacity="none"
+          imageOpacity="opacity-100"
         />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="max-w-3xl bg-white/90 backdrop-blur-xs p-8 sm:p-10 rounded-xs border border-stone-200 shadow-sm">
-            <div className="flex items-center gap-2 text-[11px] font-mono uppercase tracking-widest text-[#C5A869] font-bold mb-3">
-              <Target className="w-3.5 h-3.5 text-[#C5A869]" />
+          <div className="max-w-3xl bg-black/40 backdrop-blur-md p-8 sm:p-10 rounded-sm border border-[#C5A869]/50 shadow-2xl">
+            <div className="flex items-center gap-2 text-[11px] font-mono uppercase tracking-widest text-[#E2C98A] font-bold mb-3">
+              <Target className="w-3.5 h-3.5 text-[#E2C98A]" />
               <span>1-to-1 Private Strategy & Consultation</span>
             </div>
-            <h1 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-[#0D3B2E] leading-tight">
+            <h1 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-tight">
               Bespoke Guidance for Your Personal Capital Roadmap.
             </h1>
-            <p className="text-base sm:text-lg text-stone-600 mt-4 leading-relaxed font-sans">
+            <p className="text-base sm:text-lg text-stone-200 mt-4 leading-relaxed font-sans">
               Tailored, objective guidance for individuals who require direct feedback on their investment knowledge, portfolio framework, business strategy, and technological integration.
             </p>
 
             <div className="mt-6 flex flex-wrap items-center gap-3">
               <button
                 onClick={() => onBookSession(COACHING_PACKAGES[0])}
-                className="py-3 px-6 bg-[#0D3B2E] hover:bg-[#124E3F] text-[#FAF9F5] font-medium text-xs rounded-xs border border-[#C5A869]/50 shadow-xs transition-all flex items-center gap-2 cursor-pointer"
+                className="py-3 px-6 bg-[#C5A869] hover:bg-[#D5BC7D] text-[#07251C] font-bold text-xs uppercase tracking-wider rounded-sm border border-[#DFCA96] shadow-lg transition-all flex items-center gap-2 cursor-pointer"
               >
                 <span>Book a Consultation Session</span>
-                <ArrowRight className="w-4 h-4 text-[#C5A869]" />
+                <ArrowRight className="w-4 h-4 text-[#07251C]" />
               </button>
               <button
                 onClick={() => onOpenAppDownload('Coaching Booking')}
-                className="py-3 px-6 bg-white hover:bg-stone-50 text-[#0D3B2E] border border-stone-300 font-medium text-xs rounded-xs transition-all flex items-center gap-2 cursor-pointer"
+                className="py-3 px-6 bg-white/10 hover:bg-white/20 text-white border border-white/30 font-medium text-xs rounded-sm transition-all flex items-center gap-2 cursor-pointer backdrop-blur-xs"
               >
-                <Smartphone className="w-4 h-4 text-[#C5A869]" />
+                <Smartphone className="w-4 h-4 text-[#E2C98A]" />
                 <span>Schedule in Mobile App</span>
               </button>
             </div>

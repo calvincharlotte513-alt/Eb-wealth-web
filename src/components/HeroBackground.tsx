@@ -4,7 +4,7 @@ interface HeroBackgroundProps {
   imageSrc: string;
   fallbackSrc?: string;
   accent?: 'emerald' | 'blue' | 'gold' | 'mint' | 'none';
-  overlayOpacity?: 'none' | 'subtle' | 'light' | 'visible';
+  overlayOpacity?: 'none' | 'subtle' | 'light' | 'visible' | 'dark';
   imageOpacity?: string;
   className?: string;
 }
@@ -49,19 +49,24 @@ export const HeroBackground: React.FC<HeroBackgroundProps> = ({
         }}
       />
 
-      {/* Gentle, non-obscuring readability gradient that leaves the background image fully visible */}
+      {/* Gentle, non-obscuring readability gradient only when explicitly requested */}
       {overlayOpacity === 'subtle' && (
-        <div className="absolute inset-0 bg-gradient-to-r from-white/25 via-white/5 to-transparent pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-r from-white/10 via-transparent to-transparent pointer-events-none" />
       )}
       {overlayOpacity === 'light' && (
-        <div className="absolute inset-0 bg-white/10 pointer-events-none" />
+        <div className="absolute inset-0 bg-white/5 pointer-events-none" />
       )}
       {overlayOpacity === 'visible' && (
-        <div className="absolute inset-0 bg-gradient-to-r from-white/30 via-white/10 to-transparent pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-r from-white/20 via-white/5 to-transparent pointer-events-none" />
+      )}
+      {overlayOpacity === 'dark' && (
+        <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-black/20 to-transparent pointer-events-none" />
       )}
 
-      {/* Subtle bottom edge melt into the page content below */}
-      <div className="absolute inset-x-0 bottom-0 h-8 bg-gradient-to-t from-[#F8FAFC]/60 to-transparent pointer-events-none" />
+      {/* Bottom edge melt only when not in clear/none mode */}
+      {overlayOpacity !== 'none' && (
+        <div className="absolute inset-x-0 bottom-0 h-8 bg-gradient-to-t from-[#FAF9F5]/40 to-transparent pointer-events-none" />
+      )}
     </div>
   );
 };
