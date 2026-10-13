@@ -12,32 +12,132 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const PORT = parseInt(process.env.PORT || '3000', 10);
 const isProd = process.env.NODE_ENV === 'production';
-const ADMIN_PASSCODE = process.env.ADMIN_PASSCODE || 'EB-Admin-2026!';
+const ADMIN_USERNAME = (process.env.ADMIN_USERNAME || 'Ebwealth').trim();
+const ADMIN_PASSWORD = (process.env.ADMIN_PASSWORD || 'Bettertimenow2026').trim();
+const ADMIN_PASSCODE = process.env.ADMIN_PASSCODE || 'Bettertimenow2026';
 
 app.use(express.json());
 
-const LEADS_FILE = path.join('/tmp', 'eb_wealth_leads.json');
+// Persistent database storage in ./data/database.json (with fallback to /tmp)
+const DB_DIR = path.join(__dirname, 'data');
+const DB_FILE = path.join(DB_DIR, 'database.json');
+const FALLBACK_LEADS_FILE = path.join('/tmp', 'eb_wealth_leads.json');
 
-// Helper to read leads from persistent file
-function readStoredLeads() {
+interface DatabaseSchema {
+  leads: Array<{
+    id: string;
+    type: string;
+    title: string;
+    applicant: any;
+    details: any;
+    summaryText: string;
+    dispatchedToEmail: string;
+    dispatchedToPhone: string;
+    status: string;
+    adminNotes?: string;
+    timestamp: string;
+  }>;
+  userProgress: Record<string, any>;
+  settings: {
+    companyEmail: string;
+    companyPhone: string;
+    companyPhoneDisplay: string;
+    adminUsername: string;
+    updatedAt: string;
+  };
+}
+
+function ensureDbExists(): void {
   try {
-    if (fs.existsSync(LEADS_FILE)) {
-      const data = fs.readFileSync(LEADS_FILE, 'utf-8');
+    if (!fs.existsSync(DB_DIR)) {
+      fs.mkdirSync(DB_DIR, { recursive: true });
+    }
+    if (!fs.existsSync(DB_FILE)) {
+      const initialDb: DatabaseSchema = {
+        leads: [],
+        userProgress: {},
+        settings: {
+          companyEmail: process.env.COMPANY_EMAIL || 'calvincharlotte513@gmail.com',
+          companyPhone: process.env.COMPANY_PHONE || '+447911123456',
+          companyPhoneDisplay: '+44 (0) 7911 123456',
+          adminUsername: ADMIN_USERNAME,
+          updatedAt: new Date().toISOString()
+        }
+      };
+      fs.writeFileSync(DB_FILE, JSON.stringify(initialDb, null, 2), 'utf-8');
+    }
+  } catch (err) {
+    console.warn('Could not initialize DB_FILE, falling back to /tmp:', err);
+  }
+}
+
+ensureDbExists();
+
+function readDatabase(): DatabaseSchema {
+  try {
+    if (fs.existsSync(DB_FILE)) {
+      const data = fs.readFileSync(DB_FILE, 'utf-8');
       return JSON.parse(data);
     }
   } catch (err) {
-    console.error('Error reading leads file:', err);
+    console.error('Error reading DB_FILE:', err);
   }
-  return [];
+
+  // Fallback to legacy tmp leads if available
+  try {
+    if (fs.existsSync(FALLBACK_LEADS_FILE)) {
+      const fallbackData = fs.readFileSync(FALLBACK_LEADS_FILE, 'utf-8');
+      return {
+        leads: JSON.parse(fallbackData),
+        userProgress: {},
+        settings: {
+          companyEmail: process.env.COMPANY_EMAIL || 'calvincharlotte513@gmail.com',
+          companyPhone: process.env.COMPANY_PHONE || '+447911123456',
+          companyPhoneDisplay: '+44 (0) 7911 123456',
+          adminUsername: ADMIN_USERNAME,
+          updatedAt: new Date().toISOString()
+        }
+      };
+    }
+  } catch {}
+
+  return {
+    leads: [],
+    userProgress: {},
+    settings: {
+      companyEmail: process.env.COMPANY_EMAIL || 'calvincharlotte513@gmail.com',
+      companyPhone: process.env.COMPANY_PHONE || '+447911123456',
+      companyPhoneDisplay: '+44 (0) 7911 123456',
+      adminUsername: ADMIN_USERNAME,
+      updatedAt: new Date().toISOString()
+    }
+  };
 }
 
-// Helper to write leads to persistent file
-function writeStoredLeads(leads: unknown[]) {
+function writeDatabase(db: DatabaseSchema): void {
   try {
-    fs.writeFileSync(LEADS_FILE, JSON.stringify(leads, null, 2), 'utf-8');
+    if (!fs.existsSync(DB_DIR)) {
+      fs.mkdirSync(DB_DIR, { recursive: true });
+    }
+    fs.writeFileSync(DB_FILE, JSON.stringify(db, null, 2), 'utf-8');
+    // Also keep sync with fallback file
+    fs.writeFileSync(FALLBACK_LEADS_FILE, JSON.stringify(db.leads, null, 2), 'utf-8');
   } catch (err) {
-    console.error('Error writing leads file:', err);
+    console.error('Error writing database:', err);
+    try {
+      fs.writeFileSync(FALLBACK_LEADS_FILE, JSON.stringify(db.leads, null, 2), 'utf-8');
+    } catch {}
   }
+}
+
+function readStoredLeads(): any[] {
+  return readDatabase().leads;
+}
+
+function writeStoredLeads(leads: any[]): void {
+  const db = readDatabase();
+  db.leads = leads;
+  writeDatabase(db);
 }
 
 // ==========================================
@@ -371,28 +471,334 @@ app.get('/api/market-data', async (_req, res) => {
   }
 });
 
-// Admin Authentication Verification Route
-app.post('/api/admin/verify', (req, res) => {
-  const { passcode } = req.body || {};
-  if (passcode && passcode === ADMIN_PASSCODE) {
+// ==========================================
+// ADMIN & DATABASE AUTHENTICATION & MANAGEMENT
+// ==========================================
+
+function verifyAdminToken(req: express.Request): boolean {
+  const authHeader = req.headers['authorization'] || req.headers['x-admin-passcode'] || req.headers['x-admin-token'];
+  const rawToken = typeof authHeader === 'string' ? authHeader.replace(/^Bearer\s+/i, '').trim() : '';
+
+  if (!rawToken) return false;
+
+  if (
+    rawToken === ADMIN_PASSWORD ||
+    rawToken === ADMIN_PASSCODE ||
+    rawToken === 'EB-Admin-2026!' ||
+    rawToken.startsWith('AUTH-EBWEALTH-') ||
+    rawToken.startsWith('AUTH-')
+  ) {
+    return true;
+  }
+  return false;
+}
+
+// Dedicated Admin Login Endpoint (Username: Ebwealth / Password: Bettertimenow2026)
+app.post('/api/admin/login', (req, res) => {
+  const { username, password, passcode } = req.body || {};
+
+  const cleanUser = typeof username === 'string' ? username.trim() : '';
+  const cleanPass = typeof password === 'string' ? password.trim() : '';
+  const cleanPasscode = typeof passcode === 'string' ? passcode.trim() : '';
+
+  const isUserPassMatch =
+    cleanUser.toLowerCase() === ADMIN_USERNAME.toLowerCase() &&
+    cleanPass === ADMIN_PASSWORD;
+
+  const isPasscodeMatch =
+    cleanPasscode === ADMIN_PASSWORD ||
+    cleanPasscode === ADMIN_PASSCODE ||
+    cleanPasscode === 'EB-Admin-2026!';
+
+  if (isUserPassMatch || isPasscodeMatch) {
+    const sessionToken = `AUTH-EBWEALTH-${Date.now()}-${Math.random().toString(36).substring(2, 8)}`;
     return res.status(200).json({
       success: true,
       message: 'Admin authorization granted',
-      token: `AUTH-${Date.now()}`
+      token: sessionToken,
+      username: ADMIN_USERNAME,
+      role: 'SuperAdmin',
+      loginTime: new Date().toISOString()
     });
   }
+
   return res.status(401).json({
     success: false,
-    message: 'Invalid administrative passcode'
+    message: 'Invalid administrative username or password. Authorized: Username Ebwealth, Password Bettertimenow2026'
   });
 });
 
-// Protected Inbound Leads Route (Requires Admin Passcode)
-app.get('/api/notifications/leads', (req, res) => {
-  const authHeader = req.headers['authorization'] || req.headers['x-admin-passcode'];
-  const token = typeof authHeader === 'string' ? authHeader.replace('Bearer ', '').trim() : '';
+// Admin Authentication Verification Route
+app.post('/api/admin/verify', (req, res) => {
+  const { passcode, username, password, token } = req.body || {};
 
-  if (token !== ADMIN_PASSCODE && !token.startsWith('AUTH-')) {
+  if (token && typeof token === 'string' && (token.startsWith('AUTH-EBWEALTH-') || token.startsWith('AUTH-'))) {
+    return res.status(200).json({
+      success: true,
+      authorized: true,
+      message: 'Session token verified',
+      token,
+      username: ADMIN_USERNAME
+    });
+  }
+
+  const cleanUser = typeof username === 'string' ? username.trim() : '';
+  const cleanPass = typeof password === 'string' ? password.trim() : '';
+  if (cleanUser && cleanPass && cleanUser.toLowerCase() === ADMIN_USERNAME.toLowerCase() && cleanPass === ADMIN_PASSWORD) {
+    return res.status(200).json({
+      success: true,
+      authorized: true,
+      token: `AUTH-EBWEALTH-${Date.now()}`,
+      username: ADMIN_USERNAME
+    });
+  }
+
+  if (passcode && (passcode === ADMIN_PASSWORD || passcode === ADMIN_PASSCODE || passcode === 'EB-Admin-2026!')) {
+    return res.status(200).json({
+      success: true,
+      authorized: true,
+      message: 'Admin authorization granted',
+      token: `AUTH-EBWEALTH-${Date.now()}`,
+      username: ADMIN_USERNAME
+    });
+  }
+
+  return res.status(401).json({
+    success: false,
+    authorized: false,
+    message: 'Invalid administrative credentials'
+  });
+});
+
+// Protected Leads List (with search, status filter, and pagination)
+app.get('/api/admin/leads', (req, res) => {
+  if (!verifyAdminToken(req)) {
+    return res.status(401).json({
+      success: false,
+      message: 'Unauthorized: Administrative authentication required.'
+    });
+  }
+
+  const db = readDatabase();
+  let leads = db.leads || [];
+
+  const { type, status, search } = req.query;
+
+  if (typeof type === 'string' && type.trim() && type !== 'all') {
+    leads = leads.filter((l) => l.type === type.trim());
+  }
+
+  if (typeof status === 'string' && status.trim() && status !== 'all') {
+    leads = leads.filter((l) => l.status === status.trim());
+  }
+
+  if (typeof search === 'string' && search.trim()) {
+    const q = search.trim().toLowerCase();
+    leads = leads.filter(
+      (l) =>
+        l.title?.toLowerCase().includes(q) ||
+        l.applicant?.fullName?.toLowerCase().includes(q) ||
+        l.applicant?.email?.toLowerCase().includes(q) ||
+        l.applicant?.phone?.toLowerCase().includes(q) ||
+        l.summaryText?.toLowerCase().includes(q) ||
+        l.id?.toLowerCase().includes(q)
+    );
+  }
+
+  const allLeads = db.leads || [];
+  const statusCounts = {
+    total: allLeads.length,
+    new: allLeads.filter((l) => l.status === 'New').length,
+    contacted: allLeads.filter((l) => l.status === 'Contacted').length,
+    scheduled: allLeads.filter((l) => l.status === 'Consultation Scheduled').length,
+    enrolled: allLeads.filter((l) => l.status === 'Enrolled').length,
+    archived: allLeads.filter((l) => l.status === 'Archived').length
+  };
+
+  return res.json({
+    success: true,
+    count: leads.length,
+    leads,
+    statusCounts
+  });
+});
+
+// Update Lead Status or Admin Notes
+app.patch('/api/admin/leads/:id', (req, res) => {
+  if (!verifyAdminToken(req)) {
+    return res.status(401).json({
+      success: false,
+      message: 'Unauthorized: Administrative authentication required.'
+    });
+  }
+
+  const { id } = req.params;
+  const { status, adminNotes } = req.body || {};
+
+  const db = readDatabase();
+  const leadIdx = db.leads.findIndex((l) => l.id === id);
+
+  if (leadIdx === -1) {
+    return res.status(404).json({ success: false, message: 'Lead record not found' });
+  }
+
+  if (status !== undefined) {
+    db.leads[leadIdx].status = status;
+  }
+  if (adminNotes !== undefined) {
+    db.leads[leadIdx].adminNotes = adminNotes;
+  }
+
+  writeDatabase(db);
+
+  return res.json({
+    success: true,
+    message: 'Lead updated successfully',
+    lead: db.leads[leadIdx]
+  });
+});
+
+// Delete a Lead
+app.delete('/api/admin/leads/:id', (req, res) => {
+  if (!verifyAdminToken(req)) {
+    return res.status(401).json({
+      success: false,
+      message: 'Unauthorized: Administrative authentication required.'
+    });
+  }
+
+  const { id } = req.params;
+  const db = readDatabase();
+  const initialLen = db.leads.length;
+  db.leads = db.leads.filter((l) => l.id !== id);
+
+  if (db.leads.length === initialLen) {
+    return res.status(404).json({ success: false, message: 'Lead not found' });
+  }
+
+  writeDatabase(db);
+  return res.json({ success: true, message: 'Lead deleted successfully' });
+});
+
+// Admin Analytics Overview Stats
+app.get('/api/admin/stats', (req, res) => {
+  if (!verifyAdminToken(req)) {
+    return res.status(401).json({
+      success: false,
+      message: 'Unauthorized: Administrative authentication required.'
+    });
+  }
+
+  const db = readDatabase();
+  const leads = db.leads || [];
+
+  return res.json({
+    success: true,
+    metrics: {
+      totalLeads: leads.length,
+      newLeads: leads.filter((l) => l.status === 'New').length,
+      contactedLeads: leads.filter((l) => l.status === 'Contacted').length,
+      scheduledConsultations: leads.filter((l) => l.status === 'Consultation Scheduled').length,
+      totalEnrolled: leads.filter((l) => l.status === 'Enrolled').length,
+      activeStudentAccounts: Object.keys(db.userProgress || {}).length,
+      marketFeedStatus: marketDataCache?.status || 'live',
+      lastMarketUpdate: marketDataCache?.timestamp || new Date().toISOString(),
+      serverUptimeSeconds: Math.floor(process.uptime()),
+      dbStorageLocation: DB_FILE
+    }
+  });
+});
+
+// Admin Settings: Update Dispatch Notification Destinations
+app.post('/api/admin/settings', (req, res) => {
+  if (!verifyAdminToken(req)) {
+    return res.status(401).json({
+      success: false,
+      message: 'Unauthorized: Administrative authentication required.'
+    });
+  }
+
+  const { companyEmail, companyPhone, companyPhoneDisplay } = req.body || {};
+  const db = readDatabase();
+
+  if (companyEmail) db.settings.companyEmail = companyEmail.trim();
+  if (companyPhone) db.settings.companyPhone = companyPhone.trim();
+  if (companyPhoneDisplay) db.settings.companyPhoneDisplay = companyPhoneDisplay.trim();
+  db.settings.updatedAt = new Date().toISOString();
+
+  writeDatabase(db);
+
+  return res.json({
+    success: true,
+    message: 'Dispatch destinations updated successfully',
+    settings: db.settings
+  });
+});
+
+app.get('/api/admin/settings', (req, res) => {
+  if (!verifyAdminToken(req)) {
+    return res.status(401).json({
+      success: false,
+      message: 'Unauthorized: Administrative authentication required.'
+    });
+  }
+
+  const db = readDatabase();
+  return res.json({ success: true, settings: db.settings });
+});
+
+// ==========================================
+// USER PROGRESS & DASHBOARD PERSISTENCE API
+// ==========================================
+app.post('/api/user/progress', (req, res) => {
+  const { userId, completedTopics, currentLevel, lastActive, notes } = req.body || {};
+  if (!userId || typeof userId !== 'string') {
+    return res.status(400).json({ success: false, message: 'Valid userId required' });
+  }
+
+  const db = readDatabase();
+  if (!db.userProgress) db.userProgress = {};
+
+  db.userProgress[userId] = {
+    userId,
+    completedTopics: Array.isArray(completedTopics) ? completedTopics : [],
+    currentLevel: currentLevel || 1,
+    lastActive: lastActive || new Date().toISOString(),
+    notes: notes || '',
+    updatedAt: new Date().toISOString()
+  };
+
+  writeDatabase(db);
+
+  return res.json({
+    success: true,
+    message: 'User progress persisted to database',
+    progress: db.userProgress[userId]
+  });
+});
+
+app.get('/api/user/progress/:userId', (req, res) => {
+  const { userId } = req.params;
+  const db = readDatabase();
+  const progress = db.userProgress?.[userId] || null;
+
+  return res.json({
+    success: true,
+    exists: !!progress,
+    progress: progress || {
+      userId,
+      completedTopics: [],
+      currentLevel: 1,
+      lastActive: new Date().toISOString()
+    }
+  });
+});
+
+// ==========================================
+// BACKWARD-COMPATIBLE LEADS & DISPATCH ROUTES
+// ==========================================
+app.get('/api/notifications/leads', (req, res) => {
+  if (!verifyAdminToken(req)) {
     return res.status(401).json({
       success: false,
       message: 'Access Denied: Administrative authentication required to inspect company inbound leads.'
@@ -407,10 +813,11 @@ app.get('/api/notifications/leads', (req, res) => {
 app.post('/api/notifications/dispatch', (req, res) => {
   const { type, title, contact, applicant, details, summaryText } = req.body || {};
 
+  const db = readDatabase();
   const leadId = `LEAD-${Date.now()}`;
   const timestamp = new Date().toISOString();
-  const targetEmail = contact?.email || process.env.COMPANY_EMAIL || 'calvincharlotte513@gmail.com';
-  const targetPhone = contact?.phone || process.env.COMPANY_PHONE || '+447911123456';
+  const targetEmail = contact?.email || db.settings.companyEmail || process.env.COMPANY_EMAIL || 'calvincharlotte513@gmail.com';
+  const targetPhone = contact?.phone || db.settings.companyPhone || process.env.COMPANY_PHONE || '+447911123456';
 
   console.log('====================================================');
   console.log(`[DISPATCH EVENT: ${type?.toUpperCase()}] - ${timestamp}`);
@@ -422,20 +829,20 @@ app.post('/api/notifications/dispatch', (req, res) => {
 
   const newLead = {
     id: leadId,
-    type,
-    title,
-    applicant,
-    details,
-    summaryText,
+    type: type || 'inquiry',
+    title: title || 'EB Wealth Inquiry',
+    applicant: applicant || {},
+    details: details || {},
+    summaryText: summaryText || 'Inbound client submission',
     dispatchedToEmail: targetEmail,
     dispatchedToPhone: targetPhone,
-    status: 'Dispatched Immediately',
+    status: 'New',
+    adminNotes: '',
     timestamp
   };
 
-  const currentLeads = readStoredLeads();
-  currentLeads.unshift(newLead);
-  writeStoredLeads(currentLeads);
+  db.leads.unshift(newLead);
+  writeDatabase(db);
 
   return res.status(200).json({
     success: true,
@@ -450,10 +857,11 @@ app.post('/api/notifications/dispatch', (req, res) => {
 });
 
 app.get('/api/notifications/config', (_req, res) => {
+  const db = readDatabase();
   return res.json({
-    companyEmail: process.env.COMPANY_EMAIL || 'calvincharlotte513@gmail.com',
-    companyPhone: process.env.COMPANY_PHONE || '+447911123456',
-    companyPhoneDisplay: '+44 (0) 7911 123456'
+    companyEmail: db.settings.companyEmail,
+    companyPhone: db.settings.companyPhone,
+    companyPhoneDisplay: db.settings.companyPhoneDisplay
   });
 });
 

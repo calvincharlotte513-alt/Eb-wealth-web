@@ -1,0 +1,97 @@
+{
+  "leads": [
+    {
+      "id": "LEAD-1776001",
+      "type": "mentorship",
+      "title": "Private Wealth Accelerator",
+      "applicant": {
+        "fullName": "Alistair Sterling",
+        "email": "a.sterling@londonadvisory.co.uk",
+        "phone": "+44 7700 900123",
+        "experienceLevel": "Intermediate",
+        "monthlyContribution": "£1,500 - £2,500/mo",
+        "timeHorizon": "10-15 Years",
+        "notes": "Looking to optimize £85k ISA portfolio and structure family trust investments."
+      },
+      "details": {
+        "tier": "Private Wealth Accelerator",
+        "capitalBase": "£85,000",
+        "preferredWrapper": "Stocks & Shares ISA + SIPP"
+      },
+      "summaryText": "Applicant seeking 1-on-1 private mentorship on long-term compound asset allocation.",
+      "dispatchedToEmail": "calvincharlotte513@gmail.com",
+      "dispatchedToPhone": "+447911123456",
+      "status": "New",
+      "adminNotes": "High priority applicant. Review portfolio allocation strategy before scheduling intake call.",
+      "timestamp": "2026-10-12T14:35:00.000Z"
+    },
+    {
+      "id": "LEAD-1776002",
+      "type": "coaching",
+      "title": "1-on-1 Portfolio Diagnostic Session",
+      "applicant": {
+        "fullName": "Dr. Eleanor Vance",
+        "email": "eleanor.vance@nhs.net",
+        "phone": "+44 7700 900456",
+        "experienceLevel": "Beginner to Intermediate",
+        "monthlyContribution": "£1,000/mo",
+        "timeHorizon": "20+ Years",
+        "notes": "NHS Pension review alongside personal Vanguard index fund allocation."
+      },
+      "details": {
+        "sessionType": "60-Min Portfolio Diagnostic",
+        "platform": "Hargreaves Lansdown / Vanguard UK"
+      },
+      "summaryText": "NHS Consultant booking direct 60-min diagnostic for pension and ISA synergy.",
+      "dispatchedToEmail": "calvincharlotte513@gmail.com",
+      "dispatchedToPhone": "+447911123456",
+      "status": "Consultation Scheduled",
+      "adminNotes": "Diagnostic meeting confirmed for Thursday 14:00 GMT via secure video conference.",
+      "timestamp": "2026-10-11T09:15:00.000Z"
+    },
+    {
+      "id": "LEAD-1776003",
+      "type": "mentorship",
+      "title": "Foundation Wealth Cohort",
+      "applicant": {
+        "fullName": "Marcus Chen",
+        "email": "marcus.chen@techfin.io",
+        "phone": "+44 7700 900789",
+        "experienceLevel": "Complete Beginner",
+        "monthlyContribution": "£500 - £750/mo",
+        "timeHorizon": "15-20 Years",
+        "notes": "Want to understand low-cost global ETFs and avoid costly mutual fund management fees."
+      },
+      "details": {
+        "tier": "Foundation Wealth Cohort",
+        "capitalBase": "£12,000"
+      },
+      "summaryText": "Tech professional seeking disciplined monthly dollar-cost averaging curriculum.",
+      "dispatchedToEmail": "calvincharlotte513@gmail.com",
+      "dispatchedToPhone": "+447911123456",
+      "status": "Contacted",
+      "adminNotes": "Initial email sent with welcome syllabus and intake questionnaire.",
+      "timestamp": "2026-10-10T16:42:00.000Z"
+    }
+  ],
+  "userProgress": {
+    "TEST-STUDENT-001": {
+      "userId": "TEST-STUDENT-001",
+      "completedTopics": [
+        "L1_T0",
+        "L1_T1"
+      ],
+      "currentLevel": 1,
+      "lastActive": "2026-10-13T17:36:23.377Z",
+      "notes": "Testing progress sync",
+      "updatedAt": "2026-10-13T17:36:23.377Z"
+    }
+  },
+  "settings": {
+    "companyEmail": "calvincharlotte513@gmail.com",
+    "companyPhone": "+447911123456",
+    "companyPhoneDisplay": "+44 (0) 7911 123456",
+    "adminUsername": "Ebwealth",
+    "updatedAt": "2026-10-13T10:30:00.000Z"
+  }
+}

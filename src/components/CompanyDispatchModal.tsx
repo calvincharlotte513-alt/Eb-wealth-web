@@ -225,8 +225,8 @@ export const CompanyDispatchModal: React.FC<CompanyDispatchModalProps> = ({
               </button>
             </form>
 
-            <div className="text-[11px] font-mono text-stone-400">
-              Default authorized credential: <code className="text-[#0D3B2E] font-bold">EB-Admin-2026!</code>
+            <div className="text-[11px] font-mono text-stone-500">
+              Authorized admin passcode: <code className="text-[#0D3B2E] font-bold">Bettertimenow2026</code>
             </div>
           </div>
         ) : (

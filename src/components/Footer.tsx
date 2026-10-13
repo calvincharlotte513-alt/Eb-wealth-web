@@ -226,18 +226,16 @@ export const Footer: React.FC<FooterProps> = ({
                   <span>Privacy Policy (UK GDPR)</span>
                 </button>
               </li>
-              {onOpenCompanyDispatch && (
-                <li className="pt-2 border-t border-stone-800">
-                  <button
-                    onClick={onOpenCompanyDispatch}
-                    className="text-stone-400 hover:text-[#C5A869] transition-colors cursor-pointer flex items-center gap-1.5 text-[11px] font-mono"
-                    title="Administrative Access Only"
-                  >
-                    <Lock className="w-3 h-3 text-stone-500" />
-                    <span>Client Inbound Leads Center</span>
-                  </button>
-                </li>
-              )}
+              <li className="pt-2 border-t border-stone-800">
+                <button
+                  onClick={() => onNavigate('admin')}
+                  className="text-stone-400 hover:text-[#C5A869] transition-colors cursor-pointer flex items-center gap-1.5 text-[11px] font-mono"
+                  title="Administrative Access Only"
+                >
+                  <Lock className="w-3 h-3 text-[#C5A869]" />
+                  <span>Executive Administrative Portal</span>
+                </button>
+              </li>
               <li className="pt-1 text-[11px] font-mono text-stone-400">
                 Jurisdiction: United Kingdom
               </li>

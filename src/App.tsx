@@ -15,6 +15,8 @@ import { MentorshipPage } from './pages/MentorshipPage';
 import { CoachingPage } from './pages/CoachingPage';
 import { ToolsPage } from './pages/ToolsPage';
 import { CompliancePage } from './pages/CompliancePage';
+import { ProgressPage } from './pages/ProgressPage';
+import { AdminPage } from './pages/AdminPage';
 
 // Modals
 import { AppDownloadModal } from './components/AppDownloadModal';
@@ -40,7 +42,9 @@ export default function App() {
       'mentorship',
       'coaching',
       'tools',
-      'compliance'
+      'progress',
+      'compliance',
+      'admin'
     ];
     if (validPages.includes(hash as PageId)) {
       return hash as PageId;
@@ -65,7 +69,9 @@ export default function App() {
         'mentorship',
         'coaching',
         'tools',
-        'compliance'
+        'progress',
+        'compliance',
+        'admin'
       ];
       if (validPages.includes(hash as PageId)) {
         setCurrentPage(hash as PageId);
@@ -197,6 +203,21 @@ export default function App() {
 
         {currentPage === 'compliance' && (
           <CompliancePage
+            onNavigate={navigateTo}
+          />
+        )}
+
+        {currentPage === 'progress' && (
+          <ProgressPage
+            onNavigate={navigateTo}
+            onSelectCourse={handleOpenCourseDetail}
+            onOpenMentorship={() => handleApplyMentorship()}
+            onOpenAppDownload={handleOpenAppDownload}
+          />
+        )}
+
+        {currentPage === 'admin' && (
+          <AdminPage
             onNavigate={navigateTo}
           />
         )}

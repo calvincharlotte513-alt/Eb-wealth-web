@@ -6,4 +6,5 @@ export type PageId =
   | 'coaching'
   | 'tools'
   | 'progress'
-  | 'compliance';
+  | 'compliance'
+  | 'admin';
