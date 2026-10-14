@@ -68,6 +68,10 @@ interface StudentRecord {
   notes?: string;
   updatedAt?: string;
   portfolioPlan?: any;
+  isSignedUp?: boolean;
+  authProvider?: string;
+  photoURL?: string;
+  createdAt?: string;
 }
 
 interface AdminStats {
@@ -99,6 +103,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onNavigate }) => {
   const [activeTab, setActiveTab] = useState<'leads' | 'students' | 'settings' | 'diagnostics'>('leads');
   const [leads, setLeads] = useState<AdminLead[]>([]);
   const [students, setStudents] = useState<StudentRecord[]>([]);
+  const [studentFilter, setStudentFilter] = useState<'all' | 'verified' | 'guests'>('all');
   const [stats, setStats] = useState<AdminStats | null>(null);
   const [isLoadingData, setIsLoadingData] = useState<boolean>(false);
   const [searchQuery, setSearchQuery] = useState<string>('');
@@ -207,7 +212,11 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onNavigate }) => {
                 lastActive: fu.lastActive || new Date().toISOString(),
                 notes: fu.notes || '',
                 updatedAt: fu.updatedAt || new Date().toISOString(),
-                portfolioPlan: fu.portfolioPlan || null
+                portfolioPlan: fu.portfolioPlan || null,
+                isSignedUp: fu.isSignedUp,
+                authProvider: fu.authProvider,
+                photoURL: fu.photoURL,
+                createdAt: fu.createdAt
               });
             });
             const list = Array.from(map.values());
@@ -728,26 +737,35 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onNavigate }) => {
         {activeTab === 'leads' && (
           <div className="space-y-6">
             {/* Quick Metrics Bar */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-              <div className="bg-white border border-[#C5A869]/30 rounded-xs p-4 shadow-xs">
+            <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
+              <div className="bg-white border border-[#C5A869]/30 rounded-xs p-3.5 shadow-xs">
                 <div className="text-[10px] font-mono uppercase text-stone-500">Total Leads</div>
                 <div className="font-serif text-2xl font-bold text-[#0D3B2E] mt-1">{leads.length}</div>
               </div>
-              <div className="bg-white border border-[#C5A869]/30 rounded-xs p-4 shadow-xs">
+              <div className="bg-white border border-[#C5A869]/30 rounded-xs p-3.5 shadow-xs">
                 <div className="text-[10px] font-mono uppercase text-amber-700">New Applications</div>
                 <div className="font-serif text-2xl font-bold text-amber-600 mt-1">
                   {leads.filter((l) => l.status === 'New').length}
                 </div>
               </div>
-              <div className="bg-white border border-[#C5A869]/30 rounded-xs p-4 shadow-xs">
+              <div className="bg-white border border-[#C5A869]/30 rounded-xs p-3.5 shadow-xs">
                 <div className="text-[10px] font-mono uppercase text-blue-700">Scheduled Sessions</div>
                 <div className="font-serif text-2xl font-bold text-blue-600 mt-1">
                   {leads.filter((l) => l.status === 'Consultation Scheduled').length}
                 </div>
               </div>
-              <div className="bg-white border border-[#C5A869]/30 rounded-xs p-4 shadow-xs">
-                <div className="text-[10px] font-mono uppercase text-emerald-700">Enrolled Clients</div>
-                <div className="font-serif text-2xl font-bold text-emerald-600 mt-1">
+              <div className="bg-white border border-emerald-500/40 rounded-xs p-3.5 shadow-xs bg-gradient-to-br from-emerald-50/40 to-white">
+                <div className="text-[10px] font-mono uppercase text-emerald-800 font-bold flex items-center gap-1">
+                  <CheckCircle2 className="w-3 h-3 text-emerald-600" />
+                  <span>Verified Students</span>
+                </div>
+                <div className="font-serif text-2xl font-bold text-emerald-700 mt-1">
+                  {students.filter((s) => s.isSignedUp || s.authProvider === 'google.com').length}
+                </div>
+              </div>
+              <div className="bg-white border border-[#C5A869]/30 rounded-xs p-3.5 shadow-xs">
+                <div className="text-[10px] font-mono uppercase text-purple-700">Enrolled Clients</div>
+                <div className="font-serif text-2xl font-bold text-purple-600 mt-1">
                   {leads.filter((l) => l.status === 'Enrolled').length}
                 </div>
               </div>
@@ -966,7 +984,8 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onNavigate }) => {
         {/* TAB 2: ACTIVE STUDENTS */}
         {activeTab === 'students' && (
           <div className="bg-white border border-[#C5A869]/30 rounded-xs p-6 shadow-xs space-y-6">
-            <div className="flex items-center justify-between pb-4 border-b border-stone-200">
+            {/* Header with Account Type Filter */}
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-stone-200 gap-4">
               <div>
                 <h2 className="font-serif text-2xl font-bold text-[#0D3B2E]">
                   Registered Students & Learning Accounts
@@ -975,9 +994,41 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onNavigate }) => {
                   Synchronized live with Cloud Firestore collection <code className="text-[#0D3B2E]">/userProgress</code>
                 </p>
               </div>
-              <span className="px-3 py-1 bg-[#FAF9F5] border border-stone-300 text-xs font-mono font-bold text-[#0D3B2E] rounded-xs">
-                {students.length} Accounts
-              </span>
+
+              {/* Sub-Filter Tabs */}
+              <div className="flex items-center gap-2 p-1 bg-stone-100 rounded-xs text-xs font-mono">
+                <button
+                  onClick={() => setStudentFilter('all')}
+                  className={`px-3 py-1.5 rounded-xs font-semibold transition-all cursor-pointer ${
+                    studentFilter === 'all'
+                      ? 'bg-[#0D3B2E] text-white shadow-xs'
+                      : 'text-stone-600 hover:text-stone-900'
+                  }`}
+                >
+                  All ({students.length})
+                </button>
+                <button
+                  onClick={() => setStudentFilter('verified')}
+                  className={`px-3 py-1.5 rounded-xs font-semibold transition-all cursor-pointer flex items-center gap-1 ${
+                    studentFilter === 'verified'
+                      ? 'bg-emerald-800 text-white shadow-xs'
+                      : 'text-emerald-800 hover:text-emerald-950'
+                  }`}
+                >
+                  <CheckCircle2 className="w-3 h-3 text-emerald-400" />
+                  <span>Google Verified ({students.filter((s) => s.isSignedUp || s.authProvider === 'google.com').length})</span>
+                </button>
+                <button
+                  onClick={() => setStudentFilter('guests')}
+                  className={`px-3 py-1.5 rounded-xs font-semibold transition-all cursor-pointer ${
+                    studentFilter === 'guests'
+                      ? 'bg-[#0D3B2E] text-white shadow-xs'
+                      : 'text-stone-600 hover:text-stone-900'
+                  }`}
+                >
+                  Guests ({students.filter((s) => !s.isSignedUp && s.authProvider !== 'google.com').length})
+                </button>
+              </div>
             </div>
 
             {students.length === 0 ? (
@@ -986,69 +1037,126 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onNavigate }) => {
               </div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {students.map((student) => {
-                  const topicsCount = student.completedTopics?.length || 0;
-                  const dca = student.portfolioPlan?.monthlyDca || 1000;
-                  const isaPct = student.portfolioPlan?.isaAllocation || 70;
-                  const sippPct = student.portfolioPlan?.sippAllocation || 30;
+                {students
+                  .filter((s) => {
+                    if (studentFilter === 'verified') return s.isSignedUp || s.authProvider === 'google.com';
+                    if (studentFilter === 'guests') return !s.isSignedUp && s.authProvider !== 'google.com';
+                    return true;
+                  })
+                  .map((student) => {
+                    const isVerified = student.isSignedUp || student.authProvider === 'google.com';
+                    const topicsCount = student.completedTopics?.length || 0;
+                    const dca = student.portfolioPlan?.monthlyDca || 1000;
+                    const isaPct = student.portfolioPlan?.isaAllocation || 70;
+                    const sippPct = student.portfolioPlan?.sippAllocation || 30;
 
-                  return (
-                    <div
-                      key={student.userId}
-                      className="border border-stone-200 rounded-xs p-4 bg-[#FAF9F5] hover:border-[#C5A869]/60 transition-all space-y-3"
-                    >
-                      <div className="flex items-center justify-between pb-2 border-b border-stone-200">
-                        <div>
-                          <h4 className="font-serif text-base font-bold text-[#0D3B2E]">
-                            {student.studentName || 'Private Investor'}
-                          </h4>
-                          <span className="text-[10px] font-mono text-stone-500">
-                            User ID: {student.userId}
-                          </span>
+                    return (
+                      <div
+                        key={student.userId}
+                        className={`border rounded-xs p-5 transition-all space-y-3.5 shadow-xs ${
+                          isVerified
+                            ? 'bg-gradient-to-br from-emerald-50/50 via-white to-white border-emerald-500/40 hover:border-emerald-600'
+                            : 'bg-[#FAF9F5] border-stone-200 hover:border-[#C5A869]/60'
+                        }`}
+                      >
+                        <div className="flex items-start justify-between pb-3 border-b border-stone-200 gap-3">
+                          <div className="flex items-center gap-3">
+                            {student.photoURL ? (
+                              <img
+                                src={student.photoURL}
+                                alt={student.studentName || 'Student'}
+                                className="w-11 h-11 rounded-full border-2 border-emerald-600 object-cover shrink-0 shadow-xs"
+                              />
+                            ) : (
+                              <div
+                                className={`w-11 h-11 rounded-full border-2 flex items-center justify-center font-serif font-bold text-sm shrink-0 shadow-xs ${
+                                  isVerified
+                                    ? 'bg-[#165342] text-[#DFCA96] border-emerald-600'
+                                    : 'bg-stone-200 text-stone-700 border-stone-300'
+                                }`}
+                              >
+                                {(student.studentName || 'S').charAt(0)}
+                              </div>
+                            )}
+
+                            <div>
+                              <div className="flex flex-wrap items-center gap-2">
+                                <h4 className="font-serif text-base font-bold text-[#0D3B2E]">
+                                  {student.studentName || 'Private Investor'}
+                                </h4>
+                                {isVerified ? (
+                                  <span className="px-2 py-0.5 bg-emerald-950 text-emerald-300 border border-emerald-500/50 text-[10px] font-mono font-bold uppercase rounded-xs flex items-center gap-1 shadow-xs">
+                                    <CheckCircle2 className="w-3 h-3 text-emerald-400" />
+                                    Google Verified Student
+                                  </span>
+                                ) : (
+                                  <span className="px-2 py-0.5 bg-stone-200 text-stone-700 text-[10px] font-mono font-semibold rounded-xs">
+                                    Guest Session
+                                  </span>
+                                )}
+                              </div>
+                              <div className="text-[10px] font-mono text-stone-500 flex flex-wrap items-center gap-2 mt-0.5">
+                                <span>UID: {student.userId.slice(0, 14)}...</span>
+                                {student.createdAt && (
+                                  <>
+                                    <span>•</span>
+                                    <span>Joined: {new Date(student.createdAt).toLocaleDateString('en-GB')}</span>
+                                  </>
+                                )}
+                              </div>
+                            </div>
+                          </div>
+
+                          <button
+                            onClick={() => handleDeleteStudent(student.userId)}
+                            className="text-stone-400 hover:text-red-600 transition-colors cursor-pointer shrink-0"
+                            title="Remove Student Record"
+                          >
+                            <Trash2 className="w-3.5 h-3.5" />
+                          </button>
                         </div>
-                        <button
-                          onClick={() => handleDeleteStudent(student.userId)}
-                          className="text-stone-400 hover:text-red-600 transition-colors cursor-pointer"
-                          title="Remove Student Record"
-                        >
-                          <Trash2 className="w-3.5 h-3.5" />
-                        </button>
+
+                        <div className="grid grid-cols-2 gap-2 text-xs font-mono">
+                          <div className="p-2 bg-white/80 rounded-xs border border-stone-100">
+                            <span className="text-stone-500 text-[10px] block">Curriculum Level</span>
+                            <span className="font-bold text-[#0D3B2E]">Level {student.currentLevel || 1}</span>
+                          </div>
+                          <div className="p-2 bg-white/80 rounded-xs border border-stone-100">
+                            <span className="text-stone-500 text-[10px] block">Topics Mastered</span>
+                            <span className="font-bold text-emerald-700">{topicsCount} Completed</span>
+                          </div>
+                          <div className="p-2 bg-white/80 rounded-xs border border-stone-100">
+                            <span className="text-stone-500 text-[10px] block">Planned DCA</span>
+                            <span className="font-bold text-[#9E8040]">£{dca.toLocaleString('en-GB')}/mo</span>
+                          </div>
+                          <div className="p-2 bg-white/80 rounded-xs border border-stone-100">
+                            <span className="text-stone-500 text-[10px] block">ISA / SIPP Split</span>
+                            <span className="font-bold text-stone-700">{isaPct}% / {sippPct}%</span>
+                          </div>
+                        </div>
+
+                        {student.studentEmail && (
+                          <div className="text-xs text-stone-700 font-mono flex items-center justify-between pt-1 border-t border-stone-200">
+                            <div className="flex items-center gap-1.5 truncate">
+                              <Mail className="w-3.5 h-3.5 text-[#C5A869]" />
+                              <span className="truncate">{student.studentEmail}</span>
+                            </div>
+                            {isVerified && (
+                              <span className="text-[10px] text-emerald-700 font-semibold shrink-0">
+                                Authenticated ✓
+                              </span>
+                            )}
+                          </div>
+                        )}
+
+                        {student.notes && (
+                          <div className="text-[11px] p-2 bg-white border border-stone-200 rounded-xs text-stone-600 italic">
+                            "{student.notes}"
+                          </div>
+                        )}
                       </div>
-
-                      <div className="grid grid-cols-2 gap-2 text-xs font-mono">
-                        <div>
-                          <span className="text-stone-500 text-[10px] block">Curriculum Level</span>
-                          <span className="font-bold text-[#0D3B2E]">Level {student.currentLevel || 1}</span>
-                        </div>
-                        <div>
-                          <span className="text-stone-500 text-[10px] block">Topics Mastered</span>
-                          <span className="font-bold text-emerald-700">{topicsCount} Completed</span>
-                        </div>
-                        <div>
-                          <span className="text-stone-500 text-[10px] block">Planned DCA</span>
-                          <span className="font-bold text-[#9E8040]">£{dca.toLocaleString('en-GB')}/mo</span>
-                        </div>
-                        <div>
-                          <span className="text-stone-500 text-[10px] block">ISA / SIPP Split</span>
-                          <span className="font-bold text-stone-700">{isaPct}% / {sippPct}%</span>
-                        </div>
-                      </div>
-
-                      {student.studentEmail && (
-                        <div className="text-xs text-stone-600 font-mono flex items-center gap-1.5 pt-2 border-t border-stone-200">
-                          <Mail className="w-3 h-3 text-[#C5A869]" />
-                          <span className="truncate">{student.studentEmail}</span>
-                        </div>
-                      )}
-
-                      {student.notes && (
-                        <div className="text-[11px] p-2 bg-white border border-stone-200 rounded-xs text-stone-600 italic">
-                          "{student.notes}"
-                        </div>
-                      )}
-                    </div>
-                  );
-                })}
+                    );
+                  })}
               </div>
             )}
           </div>

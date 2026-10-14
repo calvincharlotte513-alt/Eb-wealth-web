@@ -874,7 +874,7 @@ app.get('/api/admin/settings', (req, res) => {
 // USER PROGRESS & DASHBOARD PERSISTENCE API
 // ==========================================
 app.post('/api/user/progress', (req, res) => {
-  const { userId, studentName, studentEmail, completedTopics, currentLevel, lastActive, notes, portfolioPlan } = req.body || {};
+  const { userId, studentName, studentEmail, completedTopics, currentLevel, lastActive, notes, portfolioPlan, isSignedUp, authProvider, photoURL, createdAt } = req.body || {};
   if (!userId || typeof userId !== 'string') {
     return res.status(400).json({ success: false, message: 'Valid userId required' });
   }
@@ -893,6 +893,10 @@ app.post('/api/user/progress', (req, res) => {
     lastActive: lastActive || new Date().toISOString(),
     notes: notes !== undefined ? notes : (existing.notes || ''),
     portfolioPlan: portfolioPlan || existing.portfolioPlan || null,
+    isSignedUp: isSignedUp !== undefined ? isSignedUp : (existing.isSignedUp || false),
+    authProvider: authProvider || existing.authProvider || '',
+    photoURL: photoURL || existing.photoURL || '',
+    createdAt: createdAt || existing.createdAt || new Date().toISOString(),
     updatedAt: new Date().toISOString()
   };
 

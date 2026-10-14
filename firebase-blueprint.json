@@ -32,6 +32,10 @@
         "lastActive": { "type": "string", "maxLength": 64 },
         "notes": { "type": "string", "maxLength": 4000 },
         "portfolioPlan": { "type": "object", "description": "Monthly DCA and ISA/SIPP allocation parameters" },
+        "isSignedUp": { "type": "boolean", "description": "Indicates if student formally signed up with verified account" },
+        "authProvider": { "type": "string", "maxLength": 64 },
+        "photoURL": { "type": "string", "maxLength": 500 },
+        "createdAt": { "type": "string", "maxLength": 64 },
         "updatedAt": { "type": "string", "maxLength": 64 }
       },
       "required": ["userId", "completedTopics", "currentLevel", "updatedAt"]

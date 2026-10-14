@@ -49,6 +49,10 @@ export interface FirestoreUserProgress {
     isaAllocation?: number;
     sippAllocation?: number;
   } | null;
+  isSignedUp?: boolean;
+  authProvider?: string;
+  photoURL?: string;
+  createdAt?: string;
   updatedAt: string;
 }
 

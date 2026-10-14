@@ -3,6 +3,8 @@ import { PageId } from '../types/navigation';
 import { ACADEMY_LEVELS, REGULATORY_DISCLAIMER_SHORT, HERO_BACKGROUNDS, HERO_FALLBACKS, FOUNDER_IMAGE_URL } from '../data/content';
 import { progressService, OverallProgressInfo } from '../services/progressService';
 import { firebaseDataService } from '../services/firebaseDataService';
+import { auth, signInWithGoogle, logOutFirebase } from '../services/firebase';
+import { onAuthStateChanged, User as FirebaseUser } from 'firebase/auth';
 import { Course } from '../types';
 import {
   Trophy,
@@ -26,7 +28,9 @@ import {
   Save,
   Clock,
   Layers,
-  PieChart
+  PieChart,
+  LogOut,
+  LogIn
 } from 'lucide-react';
 import { HeroBackground } from '../components/HeroBackground';
 
@@ -48,6 +52,10 @@ export const ProgressPage: React.FC<ProgressPageProps> = ({
   // Overall curriculum progress
   const [progress, setProgress] = useState<OverallProgressInfo>(progressService.getOverallProgress());
   const [activeLevelTab, setActiveLevelTab] = useState<number>(1);
+
+  // Authentication & Verified Student State
+  const [currentUser, setCurrentUser] = useState<FirebaseUser | null>(null);
+  const [isSigningIn, setIsSigningIn] = useState<boolean>(false);
 
   // Student Profile State
   const [studentId, setStudentId] = useState<string>(() => {
@@ -103,7 +111,131 @@ export const ProgressPage: React.FC<ProgressPageProps> = ({
     return () => unsubscribe();
   }, []);
 
-  // Restore student progress from Cloud Firestore on initial load
+  // Listen to Firebase Auth state for User Dashboard
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      setCurrentUser(user);
+      if (user) {
+        setStudentId(user.uid);
+        localStorage.setItem('eb_student_id', user.uid);
+        if (user.displayName) {
+          setStudentName(user.displayName);
+          localStorage.setItem('eb_student_name', user.displayName);
+        }
+        if (user.email) {
+          setStudentEmail(user.email);
+          localStorage.setItem('eb_student_email', user.email);
+        }
+
+        try {
+          const remote = await firebaseDataService.getUserProgress(user.uid);
+          if (remote) {
+            if (remote.studentName) {
+              setStudentName(remote.studentName);
+              localStorage.setItem('eb_student_name', remote.studentName);
+            }
+            if (remote.studentEmail) {
+              setStudentEmail(remote.studentEmail);
+              localStorage.setItem('eb_student_email', remote.studentEmail);
+            }
+            if (remote.notes) {
+              setStudentNotes(remote.notes);
+              localStorage.setItem('eb_student_notes', remote.notes);
+            }
+            if (remote.portfolioPlan) {
+              if (remote.portfolioPlan.monthlyDca) {
+                setMonthlyDca(remote.portfolioPlan.monthlyDca);
+                localStorage.setItem('eb_portfolio_monthly_dca', remote.portfolioPlan.monthlyDca.toString());
+              }
+              if (remote.portfolioPlan.isaAllocation) {
+                setIsaAllocation(remote.portfolioPlan.isaAllocation);
+                localStorage.setItem('eb_portfolio_isa_pct', remote.portfolioPlan.isaAllocation.toString());
+              }
+              if (remote.portfolioPlan.sippAllocation) {
+                setSippAllocation(remote.portfolioPlan.sippAllocation);
+                localStorage.setItem('eb_portfolio_sipp_pct', remote.portfolioPlan.sippAllocation.toString());
+              }
+            }
+            if (Array.isArray(remote.completedTopics) && remote.completedTopics.length > 0) {
+              progressService.setAllCompletedKeys(remote.completedTopics);
+              setProgress(progressService.getOverallProgress());
+            }
+            if (remote.currentLevel) {
+              setActiveLevelTab(remote.currentLevel);
+            }
+          } else {
+            // First time signed in: create initial document with isSignedUp: true
+            const rawCompleted = localStorage.getItem('eb_wealth_student_progress_v2');
+            const topics = rawCompleted ? JSON.parse(rawCompleted) : [];
+            await firebaseDataService.saveUserProgress({
+              userId: user.uid,
+              studentName: user.displayName || 'Private Investor',
+              studentEmail: user.email || '',
+              completedTopics: topics,
+              currentLevel: activeLevelTab,
+              lastActive: new Date().toISOString(),
+              notes: studentNotes,
+              portfolioPlan: { monthlyDca, isaAllocation, sippAllocation },
+              isSignedUp: true,
+              authProvider: 'google.com',
+              photoURL: user.photoURL || '',
+              createdAt: new Date().toISOString(),
+              updatedAt: new Date().toISOString()
+            });
+          }
+        } catch (err) {
+          console.warn('Signed-in progress sync notice:', err);
+        }
+      }
+    });
+    return () => unsubscribe();
+  }, [activeLevelTab, monthlyDca, isaAllocation, sippAllocation, studentNotes]);
+
+  const handleGoogleSignIn = async () => {
+    setIsSigningIn(true);
+    try {
+      const res = await signInWithGoogle();
+      if (res.user) {
+        const u = res.user;
+        const rawCompleted = localStorage.getItem('eb_wealth_student_progress_v2');
+        const topics = rawCompleted ? JSON.parse(rawCompleted) : [];
+        await firebaseDataService.saveUserProgress({
+          userId: u.uid,
+          studentName: u.displayName || studentName,
+          studentEmail: u.email || studentEmail,
+          completedTopics: topics,
+          currentLevel: activeLevelTab,
+          lastActive: new Date().toISOString(),
+          notes: studentNotes,
+          portfolioPlan: { monthlyDca, isaAllocation, sippAllocation },
+          isSignedUp: true,
+          authProvider: 'google.com',
+          photoURL: u.photoURL || '',
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString()
+        });
+      }
+    } catch (err) {
+      console.warn('Google sign-in error:', err);
+    } finally {
+      setIsSigningIn(false);
+    }
+  };
+
+  const handleGoogleSignOut = async () => {
+    try {
+      await logOutFirebase();
+      const newGuestId = `STU-${Date.now().toString().slice(-6)}`;
+      setStudentId(newGuestId);
+      localStorage.setItem('eb_student_id', newGuestId);
+      setStudentName('Private Investor');
+      localStorage.setItem('eb_student_name', 'Private Investor');
+    } catch (err) {
+      console.warn('Sign-out notice:', err);
+    }
+  };
+
+  // Restore student progress from Cloud Firestore on initial load for guest learners
   useEffect(() => {
     let isMounted = true;
     const fetchRemoteProgress = async () => {
@@ -175,6 +307,9 @@ export const ProgressPage: React.FC<ProgressPageProps> = ({
             isaAllocation,
             sippAllocation
           },
+          isSignedUp: !!currentUser,
+          authProvider: currentUser ? 'google.com' : 'guest',
+          photoURL: currentUser?.photoURL || '',
           updatedAt: new Date().toISOString()
         });
 
@@ -316,6 +451,86 @@ export const ProgressPage: React.FC<ProgressPageProps> = ({
                 <span>Completion Certificate</span>
               </button>
             </div>
+          </div>
+
+          {/* Student Account Status / Google Sign-Up Banner */}
+          <div className="mt-6 p-4 sm:p-5 rounded-xs border transition-all bg-[#08231B]/95 border-[#C5A869]/50 shadow-md">
+            {currentUser ? (
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div className="flex items-center gap-3">
+                  {currentUser.photoURL ? (
+                    <img
+                      src={currentUser.photoURL}
+                      alt={currentUser.displayName || 'Student'}
+                      className="w-10 h-10 rounded-full border-2 border-[#C5A869] object-cover"
+                    />
+                  ) : (
+                    <div className="w-10 h-10 rounded-full bg-[#165342] text-[#DFCA96] font-bold font-serif flex items-center justify-center text-sm border-2 border-[#C5A869]">
+                      {(currentUser.displayName || studentName).charAt(0)}
+                    </div>
+                  )}
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <span className="font-serif text-base font-bold text-white">
+                        {currentUser.displayName || studentName}
+                      </span>
+                      <span className="px-2 py-0.5 bg-emerald-950 text-emerald-400 border border-emerald-500/40 text-[10px] font-mono font-bold uppercase rounded-xs flex items-center gap-1">
+                        <CheckCircle2 className="w-3 h-3 text-emerald-400" />
+                        Google Verified Student
+                      </span>
+                    </div>
+                    <div className="text-xs text-stone-300 font-mono mt-0.5 flex items-center gap-2">
+                      <span>{currentUser.email}</span>
+                      <span>•</span>
+                      <span className="text-[#DFCA96]">Cloud Firestore Active</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-3 self-end sm:self-center">
+                  <span className="text-[11px] text-stone-300 hidden md:inline font-sans">
+                    Progress permanently linked to your Google Account
+                  </span>
+                  <button
+                    onClick={handleGoogleSignOut}
+                    className="py-1.5 px-3 bg-white/10 hover:bg-white/20 text-stone-200 text-xs font-semibold rounded-xs border border-white/20 flex items-center gap-1.5 transition-colors cursor-pointer"
+                  >
+                    <LogOut className="w-3.5 h-3.5" />
+                    <span>Sign Out</span>
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+                <div className="flex items-start gap-3">
+                  <div className="w-9 h-9 rounded-xs bg-[#165342] border border-[#C5A869] flex items-center justify-center text-[#DFCA96] shrink-0 mt-0.5">
+                    <ShieldCheck className="w-5 h-5 text-[#C5A869]" />
+                  </div>
+                  <div>
+                    <div className="font-serif text-sm sm:text-base font-bold text-white flex items-center gap-2">
+                      <span>Sign Up to Secure Your EB Wealth Academy Account</span>
+                      <span className="px-2 py-0.5 bg-[#165342] text-[#DFCA96] border border-[#C5A869]/40 text-[9px] font-mono uppercase font-bold rounded-xs">
+                        Free Student Sign-Up
+                      </span>
+                    </div>
+                    <p className="text-xs text-stone-300 mt-1 max-w-2xl font-sans leading-relaxed">
+                      Link your curriculum progress, UK ISA & SIPP portfolio plan, and certificate of completion directly to your Google account. Your student record will be registered in the EB Wealth database.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-3 shrink-0">
+                  <button
+                    onClick={handleGoogleSignIn}
+                    disabled={isSigningIn}
+                    className="py-2.5 px-5 bg-gradient-to-r from-[#C5A869] to-[#DFCA96] hover:from-[#B89748] hover:to-[#C5A869] text-[#07251C] text-xs font-bold uppercase tracking-wider rounded-xs border border-[#DFCA96] transition-all cursor-pointer flex items-center justify-center gap-2 shadow-sm font-sans"
+                  >
+                    <LogIn className="w-4 h-4 text-[#07251C]" />
+                    <span>{isSigningIn ? 'Connecting with Google...' : 'Sign Up / Sign In with Google'}</span>
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Metric KPI Overview Grid */}
