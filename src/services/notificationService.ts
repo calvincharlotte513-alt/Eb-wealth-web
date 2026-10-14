@@ -1,4 +1,5 @@
 import { getCompanyContact, CompanyContactConfig } from '../data/companyContact';
+import { firebaseDataService } from './firebaseDataService';
 
 export interface DispatchedLead {
   id: string;
@@ -172,6 +173,27 @@ export const notificationService = {
 
     saveDispatchedLead(lead);
 
+    // Save directly to Firebase Firestore
+    firebaseDataService.saveLead({
+      id: leadId,
+      type: 'booking',
+      title: lead.title,
+      applicant: {
+        fullName: data.clientName,
+        email: data.clientEmail,
+        phone: data.clientPhone,
+        experienceLevel: data.primaryFocus,
+        notes: data.notes || ''
+      },
+      details,
+      summaryText,
+      dispatchedToEmail: contact.email,
+      dispatchedToPhone: contact.phone,
+      status: 'New',
+      adminNotes: '',
+      timestamp: new Date().toISOString()
+    });
+
     // Dispatch to backend API
     await sendToServer({
       type: 'booking',
@@ -261,6 +283,28 @@ export const notificationService = {
 
     saveDispatchedLead(lead);
 
+    // Save directly to Firebase Firestore
+    firebaseDataService.saveLead({
+      id: leadId,
+      type: 'mentorship_application',
+      title: lead.title,
+      applicant: {
+        fullName: data.name,
+        email: data.email,
+        phone: data.phone,
+        experienceLevel: data.experienceLevel,
+        monthlyContribution: data.timeCommitment,
+        notes: `Goal: ${data.primaryGoal}. Challenge: ${data.biggestBottleneck || 'N/A'}`
+      },
+      details,
+      summaryText,
+      dispatchedToEmail: contact.email,
+      dispatchedToPhone: contact.phone,
+      status: 'New',
+      adminNotes: '',
+      timestamp: new Date().toISOString()
+    });
+
     await sendToServer({
       type: 'mentorship_application',
       title: lead.title,
@@ -341,6 +385,26 @@ export const notificationService = {
     };
 
     saveDispatchedLead(lead);
+
+    // Save directly to Firebase Firestore
+    firebaseDataService.saveLead({
+      id: leadId,
+      type: 'inquiry',
+      title: lead.title,
+      applicant: {
+        fullName: data.name,
+        email: data.email,
+        phone: data.phone,
+        notes: data.message
+      },
+      details,
+      summaryText,
+      dispatchedToEmail: contact.email,
+      dispatchedToPhone: contact.phone,
+      status: 'New',
+      adminNotes: '',
+      timestamp: new Date().toISOString()
+    });
 
     await sendToServer({
       type: 'inquiry',

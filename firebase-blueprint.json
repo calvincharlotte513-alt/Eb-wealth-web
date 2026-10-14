@@ -1,0 +1,82 @@
+{
+  "entities": {
+    "Lead": {
+      "title": "Lead",
+      "description": "Inbound client consultation or mentorship inquiry",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "type": { "type": "string", "maxLength": 64 },
+        "title": { "type": "string", "maxLength": 200 },
+        "applicant": { "type": "object", "description": "Applicant contact details and financial profile" },
+        "details": { "type": "object", "description": "Submission specific details" },
+        "summaryText": { "type": "string", "maxLength": 1000 },
+        "dispatchedToEmail": { "type": "string", "maxLength": 128 },
+        "dispatchedToPhone": { "type": "string", "maxLength": 64 },
+        "status": { "type": "string", "maxLength": 64 },
+        "adminNotes": { "type": "string", "maxLength": 2000 },
+        "timestamp": { "type": "string", "maxLength": 64 }
+      },
+      "required": ["id", "type", "title", "status", "timestamp"]
+    },
+    "UserProgress": {
+      "title": "UserProgress",
+      "description": "Student academy curriculum progress and portfolio planner state",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "maxLength": 128 },
+        "studentName": { "type": "string", "maxLength": 128 },
+        "studentEmail": { "type": "string", "maxLength": 128 },
+        "completedTopics": { "type": "array", "description": "Array of completed course topic IDs" },
+        "currentLevel": { "type": "number", "description": "Current active academy curriculum level" },
+        "lastActive": { "type": "string", "maxLength": 64 },
+        "notes": { "type": "string", "maxLength": 4000 },
+        "portfolioPlan": { "type": "object", "description": "Monthly DCA and ISA/SIPP allocation parameters" },
+        "updatedAt": { "type": "string", "maxLength": 64 }
+      },
+      "required": ["userId", "completedTopics", "currentLevel", "updatedAt"]
+    },
+    "Settings": {
+      "title": "Settings",
+      "description": "Company contact destinations and operational parameters",
+      "type": "object",
+      "properties": {
+        "companyEmail": { "type": "string", "maxLength": 128 },
+        "companyPhone": { "type": "string", "maxLength": 64 },
+        "companyPhoneDisplay": { "type": "string", "maxLength": 64 },
+        "adminUsername": { "type": "string", "maxLength": 64 },
+        "updatedAt": { "type": "string", "maxLength": 64 }
+      },
+      "required": ["companyEmail", "companyPhone", "updatedAt"]
+    },
+    "Admin": {
+      "title": "Admin",
+      "description": "System administrator account authorization document",
+      "type": "object",
+      "properties": {
+        "email": { "type": "string", "maxLength": 128 },
+        "role": { "type": "string", "maxLength": 64 },
+        "createdAt": { "type": "string", "maxLength": 64 }
+      },
+      "required": ["email", "role"]
+    }
+  },
+  "firestore": {
+    "/leads/{leadId}": {
+      "schema": "Lead",
+      "description": "Inbound client inquiry submissions and mentorship consultation bookings"
+    },
+    "/userProgress/{userId}": {
+      "schema": "UserProgress",
+      "description": "Academy learning progression and wealth plan for students"
+    },
+    "/settings/{settingId}": {
+      "schema": "Settings",
+      "description": "Operational settings and contact notification routing"
+    },
+    "/admins/{adminId}": {
+      "schema": "Admin",
+      "description": "Authorized administrator registry"
+    }
+  }
+}

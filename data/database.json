@@ -85,6 +85,21 @@
       "lastActive": "2026-10-13T17:36:23.377Z",
       "notes": "Testing progress sync",
       "updatedAt": "2026-10-13T17:36:23.377Z"
+    },
+    "STU-992211": {
+      "userId": "STU-992211",
+      "studentName": "Charlotte Bennett",
+      "studentEmail": "charlotte@example.co.uk",
+      "completedTopics": [
+        "L1_T0",
+        "L1_T1",
+        "L1_T2"
+      ],
+      "currentLevel": 2,
+      "lastActive": "2026-10-14T10:35:19.862Z",
+      "notes": "Completed Level 1 Foundations and configured £20,000 ISA target.",
+      "portfolioPlan": null,
+      "updatedAt": "2026-10-14T10:35:19.862Z"
     }
   },
   "settings": {

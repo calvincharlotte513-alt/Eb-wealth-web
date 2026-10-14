@@ -118,6 +118,15 @@ export const Footer: React.FC<FooterProps> = ({
                   <span>Calculators & Simulators</span>
                 </button>
               </li>
+              <li>
+                <button
+                  onClick={() => handleNav('progress')}
+                  className="hover:text-white transition-colors cursor-pointer flex items-center gap-1 group text-stone-300"
+                >
+                  <ChevronRight className="w-3 h-3 text-[#C5A869]/60 group-hover:text-[#C5A869] transition-colors" />
+                  <span>Member Dashboard</span>
+                </button>
+              </li>
             </ul>
           </div>
 

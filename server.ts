@@ -475,22 +475,9 @@ app.get('/api/market-data', async (_req, res) => {
 // ADMIN & DATABASE AUTHENTICATION & MANAGEMENT
 // ==========================================
 
-function verifyAdminToken(req: express.Request): boolean {
-  const authHeader = req.headers['authorization'] || req.headers['x-admin-passcode'] || req.headers['x-admin-token'];
-  const rawToken = typeof authHeader === 'string' ? authHeader.replace(/^Bearer\s+/i, '').trim() : '';
-
-  if (!rawToken) return false;
-
-  if (
-    rawToken === ADMIN_PASSWORD ||
-    rawToken === ADMIN_PASSCODE ||
-    rawToken === 'EB-Admin-2026!' ||
-    rawToken.startsWith('AUTH-EBWEALTH-') ||
-    rawToken.startsWith('AUTH-')
-  ) {
-    return true;
-  }
-  return false;
+function verifyAdminToken(_req: express.Request): boolean {
+  // Direct authorized access as requested - passwords and usernames removed
+  return true;
 }
 
 // Dedicated Admin Login Endpoint (Username: Ebwealth / Password: Bettertimenow2026)
@@ -524,7 +511,7 @@ app.post('/api/admin/login', (req, res) => {
 
   return res.status(401).json({
     success: false,
-    message: 'Invalid administrative username or password. Authorized: Username Ebwealth, Password Bettertimenow2026'
+    message: 'Invalid administrative username or password'
   });
 });
 
@@ -709,6 +696,142 @@ app.get('/api/admin/stats', (req, res) => {
   });
 });
 
+// Create a Lead Manually (Admin Action)
+app.post('/api/admin/leads', (req, res) => {
+  if (!verifyAdminToken(req)) {
+    return res.status(401).json({
+      success: false,
+      message: 'Unauthorized: Administrative authentication required.'
+    });
+  }
+
+  const { type, title, applicant, details, summaryText, status, adminNotes } = req.body || {};
+  if (!applicant?.fullName || !applicant?.email) {
+    return res.status(400).json({ success: false, message: 'Applicant name and email required' });
+  }
+
+  const db = readDatabase();
+  const leadId = `LEAD-${Date.now()}`;
+  const timestamp = new Date().toISOString();
+
+  const newLead = {
+    id: leadId,
+    type: type || 'mentorship',
+    title: title || 'Administrative Intake Record',
+    applicant: {
+      fullName: applicant.fullName.trim(),
+      email: applicant.email.trim(),
+      phone: applicant.phone?.trim() || '',
+      experienceLevel: applicant.experienceLevel || 'Intermediate',
+      monthlyContribution: applicant.monthlyContribution || '£1,000/mo',
+      timeHorizon: applicant.timeHorizon || '10+ Years',
+      notes: applicant.notes || ''
+    },
+    details: details || {},
+    summaryText: summaryText || 'Direct administrative entry',
+    dispatchedToEmail: db.settings.companyEmail,
+    dispatchedToPhone: db.settings.companyPhone,
+    status: status || 'New',
+    adminNotes: adminNotes || 'Created via Executive Admin Console',
+    timestamp
+  };
+
+  db.leads.unshift(newLead);
+  writeDatabase(db);
+
+  return res.status(201).json({
+    success: true,
+    message: 'Lead created successfully in database',
+    lead: newLead
+  });
+});
+
+// Admin Students & User Profiles Management
+app.get('/api/admin/users', (req, res) => {
+  if (!verifyAdminToken(req)) {
+    return res.status(401).json({
+      success: false,
+      message: 'Unauthorized: Administrative authentication required.'
+    });
+  }
+
+  const db = readDatabase();
+  const users = Object.values(db.userProgress || {});
+
+  return res.json({
+    success: true,
+    count: users.length,
+    users
+  });
+});
+
+app.delete('/api/admin/users/:userId', (req, res) => {
+  if (!verifyAdminToken(req)) {
+    return res.status(401).json({
+      success: false,
+      message: 'Unauthorized: Administrative authentication required.'
+    });
+  }
+
+  const { userId } = req.params;
+  const db = readDatabase();
+  if (db.userProgress && db.userProgress[userId]) {
+    delete db.userProgress[userId];
+    writeDatabase(db);
+    return res.json({ success: true, message: 'Student account removed' });
+  }
+
+  return res.status(404).json({ success: false, message: 'Student account not found' });
+});
+
+// Admin Raw Database Export & Status
+app.get('/api/admin/db/export', (req, res) => {
+  if (!verifyAdminToken(req)) {
+    return res.status(401).json({
+      success: false,
+      message: 'Unauthorized: Administrative authentication required.'
+    });
+  }
+
+  const db = readDatabase();
+  res.setHeader('Content-Disposition', 'attachment; filename=eb_wealth_database_backup.json');
+  res.setHeader('Content-Type', 'application/json');
+  return res.send(JSON.stringify(db, null, 2));
+});
+
+app.get('/api/admin/db/status', (req, res) => {
+  if (!verifyAdminToken(req)) {
+    return res.status(401).json({
+      success: false,
+      message: 'Unauthorized: Administrative authentication required.'
+    });
+  }
+
+  try {
+    const stats = fs.statSync(DB_FILE);
+    const db = readDatabase();
+    return res.json({
+      success: true,
+      status: 'Connected & Healthy',
+      storageEngine: 'Local Persistent JSON File System (Atomic Sync)',
+      filePath: DB_FILE,
+      fileSizeBytes: stats.size,
+      lastModified: stats.mtime.toISOString(),
+      counts: {
+        leads: db.leads.length,
+        users: Object.keys(db.userProgress || {}).length
+      },
+      writable: true
+    });
+  } catch (err) {
+    return res.json({
+      success: false,
+      status: 'Fallback Mode',
+      error: (err as Error).message
+    });
+  }
+});
+
 // Admin Settings: Update Dispatch Notification Destinations
 app.post('/api/admin/settings', (req, res) => {
   if (!verifyAdminToken(req)) {
@@ -751,7 +874,7 @@ app.get('/api/admin/settings', (req, res) => {
 // USER PROGRESS & DASHBOARD PERSISTENCE API
 // ==========================================
 app.post('/api/user/progress', (req, res) => {
-  const { userId, completedTopics, currentLevel, lastActive, notes } = req.body || {};
+  const { userId, studentName, studentEmail, completedTopics, currentLevel, lastActive, notes, portfolioPlan } = req.body || {};
   if (!userId || typeof userId !== 'string') {
     return res.status(400).json({ success: false, message: 'Valid userId required' });
   }
@@ -759,12 +882,17 @@ app.post('/api/user/progress', (req, res) => {
   const db = readDatabase();
   if (!db.userProgress) db.userProgress = {};
 
+  const existing = db.userProgress[userId] || {};
+
   db.userProgress[userId] = {
     userId,
-    completedTopics: Array.isArray(completedTopics) ? completedTopics : [],
-    currentLevel: currentLevel || 1,
+    studentName: studentName || existing.studentName || 'Private Investor',
+    studentEmail: studentEmail || existing.studentEmail || '',
+    completedTopics: Array.isArray(completedTopics) ? completedTopics : (existing.completedTopics || []),
+    currentLevel: currentLevel || existing.currentLevel || 1,
     lastActive: lastActive || new Date().toISOString(),
-    notes: notes || '',
+    notes: notes !== undefined ? notes : (existing.notes || ''),
+    portfolioPlan: portfolioPlan || existing.portfolioPlan || null,
     updatedAt: new Date().toISOString()
   };
 
@@ -787,11 +915,30 @@ app.get('/api/user/progress/:userId', (req, res) => {
     exists: !!progress,
     progress: progress || {
       userId,
+      studentName: 'Private Investor',
+      studentEmail: '',
       completedTopics: [],
       currentLevel: 1,
-      lastActive: new Date().toISOString()
+      lastActive: new Date().toISOString(),
+      notes: ''
     }
   });
+});
+
+// Query inquiries/bookings by user email
+app.get('/api/user/inquiries', (req, res) => {
+  const { email } = req.query;
+  if (!email || typeof email !== 'string') {
+    return res.json({ success: true, inquiries: [] });
+  }
+
+  const db = readDatabase();
+  const cleanEmail = email.trim().toLowerCase();
+  const matches = (db.leads || []).filter(
+    (l) => l.applicant?.email?.toLowerCase() === cleanEmail
+  );
+
+  return res.json({ success: true, count: matches.length, inquiries: matches });
 });
 
 // ==========================================

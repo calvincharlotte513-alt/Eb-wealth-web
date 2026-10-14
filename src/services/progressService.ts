@@ -83,6 +83,11 @@ export const progressService = {
     saveCompletedKeys(keys);
   },
 
+  setAllCompletedKeys(newKeys: string[]): void {
+    const keys = new Set<string>(newKeys);
+    saveCompletedKeys(keys);
+  },
+
   getOverallProgress(): OverallProgressInfo {
     const keys = getStoredCompletedKeys();
     let totalTopics = 0;

@@ -1,0 +1,97 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Default deny catch-all
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Helper functions
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() > 0 && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function isBootstrappedAdmin() {
+      return isSignedIn() && (
+        request.auth.token.email == 'calvincharlotte513@gmail.com' ||
+        (request.auth.token.email_verified == true && request.auth.token.email == 'calvincharlotte513@gmail.com')
+      );
+    }
+
+    function isAdmin() {
+      return isBootstrappedAdmin() || (isSignedIn() && exists(/databases/$(database)/documents/admins/$(request.auth.uid)));
+    }
+
+    function isValidLead(data) {
+      return data.keys().hasAll(['id', 'type', 'title', 'status', 'timestamp']) &&
+             data.id is string && data.id.size() <= 128 &&
+             data.type is string && data.type.size() <= 64 &&
+             data.title is string && data.title.size() <= 200 &&
+             data.status is string && data.status.size() <= 64 &&
+             data.timestamp is string && data.timestamp.size() <= 64;
+    }
+
+    function isValidUserProgress(data) {
+      return data.keys().hasAll(['userId', 'completedTopics', 'currentLevel', 'updatedAt']) &&
+             data.userId is string && data.userId.size() <= 128 &&
+             data.completedTopics is list && data.completedTopics.size() <= 100 &&
+             data.currentLevel is number &&
+             data.updatedAt is string && data.updatedAt.size() <= 64;
+    }
+
+    function isValidSettings(data) {
+      return data.keys().hasAll(['companyEmail', 'companyPhone', 'updatedAt']) &&
+             data.companyEmail is string && data.companyEmail.size() <= 128 &&
+             data.companyPhone is string && data.companyPhone.size() <= 64 &&
+             data.updatedAt is string && data.updatedAt.size() <= 64;
+    }
+
+    function isValidAdminDoc(data) {
+      return data.keys().hasAll(['email', 'role']) &&
+             data.email is string && data.email.size() <= 128 &&
+             data.role is string && data.role.size() <= 64;
+    }
+
+    // Inbound Inquiries and Consultation Bookings
+    match /leads/{leadId} {
+      allow get: if isValidId(leadId) && (isAdmin() || (isSignedIn() && resource.data.applicant.email == request.auth.token.email));
+      allow list: if isAdmin();
+      allow create: if isValidId(leadId) && isValidLead(incoming());
+      allow update: if isValidId(leadId) && (isAdmin() && isValidLead(incoming()));
+      allow delete: if isValidId(leadId) && isAdmin();
+    }
+
+    // Student Academy Curriculum Progress & Personal Wealth Plans
+    match /userProgress/{userId} {
+      allow get: if isValidId(userId);
+      allow list: if isAdmin();
+      allow create, update: if isValidId(userId) && isValidUserProgress(incoming());
+      allow delete: if isValidId(userId) && isAdmin();
+    }
+
+    // Application & Company Configuration Settings
+    match /settings/{settingId} {
+      allow read: if isValidId(settingId);
+      allow write: if isValidId(settingId) && (isAdmin() && isValidSettings(incoming()));
+    }
+
+    // Authorized Administrative Accounts
+    match /admins/{adminId} {
+      allow read: if isValidId(adminId) && isAdmin();
+      allow write: if isValidId(adminId) && isAdmin() && isValidAdminDoc(incoming());
+    }
+  }
+}
