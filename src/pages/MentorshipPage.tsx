@@ -1,5 +1,5 @@
 import React from 'react';
-import { MENTORSHIP_TIERS, REGULATORY_DISCLAIMER_SHORT, HERO_BACKGROUNDS, HERO_FALLBACKS } from '../data/content';
+import { MENTORSHIP_TIERS, REGULATORY_DISCLAIMER_SHORT, HERO_BACKGROUNDS, HERO_FALLBACKS, FOUNDER_IMAGE_URL } from '../data/content';
 import { MentorshipTier } from '../types';
 import { Compass, Check, ArrowRight, ShieldCheck, Smartphone } from 'lucide-react';
 import { PageId } from '../types/navigation';
@@ -131,6 +131,39 @@ export const MentorshipPage: React.FC<MentorshipPageProps> = ({
                   <div className="text-[11px] text-stone-500 mt-0.5 font-mono">
                     Selective cohorts with direct pedagogical access to senior leadership.
                   </div>
+                </div>
+              </div>
+
+              {/* Authentic Leadership & Cohort Director Profile */}
+              <div className="mt-8 p-6 bg-[#FAF9F5] border border-[#C5A869]/40 rounded-xs flex flex-col sm:flex-row items-center gap-6 shadow-2xs">
+                <div className="relative w-28 h-28 sm:w-32 sm:h-32 shrink-0 rounded-xs overflow-hidden border border-[#C5A869] shadow-sm bg-black/10">
+                  <img
+                    src={FOUNDER_IMAGE_URL}
+                    alt="Founder and Head of Investment Education of EB Wealth"
+                    className="w-full h-full object-cover object-top"
+                    loading="lazy"
+                    referrerPolicy="no-referrer"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      if (!target.src.includes('ceo_suit_portrait')) {
+                        target.src = '/images/ceo_suit_portrait_1791395753240.jpg';
+                      }
+                    }}
+                  />
+                  <div className="absolute inset-x-0 bottom-0 bg-[#08231B]/90 text-[9px] font-mono font-bold text-[#E2C98A] text-center py-0.5 uppercase tracking-wider">
+                    Executive Lead
+                  </div>
+                </div>
+                <div className="text-center sm:text-left space-y-1.5">
+                  <div className="text-[10px] font-mono uppercase tracking-widest text-[#9E8040] font-bold">
+                    Mentorship Curriculum Director
+                  </div>
+                  <h4 className="font-serif text-lg font-bold text-[#0D3B2E]">
+                    EB Wealth Founder & Head of Education
+                  </h4>
+                  <p className="text-xs text-stone-600 leading-relaxed font-sans">
+                    "True compounding begins when emotional panic is replaced with systematic rules. Every mentorship cohort is personally steered to ensure members build institutional-grade execution habits that endure for decades."
+                  </p>
                 </div>
               </div>
             </div>

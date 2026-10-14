@@ -1,5 +1,5 @@
 import React from 'react';
-import { MENTORSHIP_TIERS } from '../data/content';
+import { MENTORSHIP_TIERS, FOUNDER_IMAGE_URL } from '../data/content';
 import { MentorshipTier } from '../types';
 import { Compass, Check, ArrowRight, ShieldCheck, Users, Calendar, Target } from 'lucide-react';
 
@@ -74,6 +74,39 @@ export const Mentorship: React.FC<MentorshipProps> = ({
 
         {/* 3 Mentorship Tiers in Goldman Sachs Prestige Styling */}
         <div className="mb-12">
+          {/* Authentic Leadership & Cohort Director Profile */}
+          <div className="mb-12 p-6 sm:p-7 bg-[#FAF9F5] border border-[#C5A869]/35 rounded-sm flex flex-col sm:flex-row items-center gap-6 shadow-xs max-w-4xl mx-auto">
+            <div className="relative w-28 h-28 sm:w-32 sm:h-32 shrink-0 rounded-sm overflow-hidden border border-[#C5A869] shadow-sm bg-black/10">
+              <img
+                src={FOUNDER_IMAGE_URL}
+                alt="Founder and Head of Investment Education of EB Wealth"
+                className="w-full h-full object-cover object-top"
+                loading="lazy"
+                referrerPolicy="no-referrer"
+                onError={(e) => {
+                  const target = e.target as HTMLImageElement;
+                  if (!target.src.includes('ceo_suit_portrait')) {
+                    target.src = '/images/ceo_suit_portrait_1791395753240.jpg';
+                  }
+                }}
+              />
+              <div className="absolute inset-x-0 bottom-0 bg-[#08231B]/90 text-[9px] font-mono font-bold text-[#E2C98A] text-center py-0.5 uppercase tracking-wider">
+                Founder Lead
+              </div>
+            </div>
+            <div className="text-center sm:text-left space-y-1.5">
+              <div className="text-[10px] font-mono uppercase tracking-widest text-[#9E8040] font-bold">
+                Executive Leadership & Pedagogical Director
+              </div>
+              <h4 className="font-serif text-lg font-bold text-[#0D3B2E]">
+                Direct Mentorship with EB Wealth Founder
+              </h4>
+              <p className="text-xs text-stone-600 leading-relaxed font-sans">
+                "We don't teach speculation or crypto hype. We guide you step-by-step through the same low-cost, tax-sheltered compounding mechanisms utilized by top institutional family offices."
+              </p>
+            </div>
+          </div>
+
           <div className="text-center max-w-2xl mx-auto mb-10">
             <span className="text-[11px] font-mono font-bold uppercase tracking-widest text-[#9E8040]">
               Admissions Programs

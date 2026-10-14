@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { PageId } from '../types/navigation';
+import { FOUNDER_IMAGE_URL } from '../data/content';
 import {
   Lock,
   ShieldCheck,
@@ -453,6 +454,24 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onNavigate }) => {
           </div>
 
           <div className="flex items-center gap-3">
+            <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 bg-[#08231B] border border-[#C5A869]/40 rounded-xs">
+              <img
+                src={FOUNDER_IMAGE_URL}
+                alt="Ebwealth Executive"
+                className="w-7 h-7 rounded-full object-cover border border-[#C5A869]"
+                onError={(e) => {
+                  const target = e.target as HTMLImageElement;
+                  if (!target.src.includes('ceo_suit_portrait')) {
+                    target.src = '/images/ceo_suit_portrait_1791395753240.jpg';
+                  }
+                }}
+              />
+              <div className="text-left text-[11px] leading-tight">
+                <div className="font-semibold text-white">Ebwealth</div>
+                <div className="text-[9px] text-[#DFCA96] font-mono">Founder & Admin</div>
+              </div>
+            </div>
+
             <button
               onClick={loadDashboardData}
               className="py-2 px-3 bg-white/10 hover:bg-white/15 text-white text-xs font-semibold rounded-xs border border-white/20 flex items-center gap-1.5 transition-colors cursor-pointer"

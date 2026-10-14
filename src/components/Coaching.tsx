@@ -1,5 +1,5 @@
 import React from 'react';
-import { COACHING_PACKAGES } from '../data/content';
+import { COACHING_PACKAGES, FOUNDER_IMAGE_URL } from '../data/content';
 import { CoachingPackage } from '../types';
 import { Target, Clock, Check, ArrowRight, ShieldCheck, Calendar, FileText, Compass } from 'lucide-react';
 
@@ -100,6 +100,39 @@ export const Coaching: React.FC<CoachingProps> = ({ onBookSession }) => {
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+
+        {/* Executive Consultation Lead Card */}
+        <div className="mb-12 p-6 sm:p-7 bg-white border border-[#C5A869]/35 rounded-sm flex flex-col sm:flex-row items-center gap-6 shadow-xs max-w-4xl mx-auto">
+          <div className="relative w-28 h-28 sm:w-32 sm:h-32 shrink-0 rounded-sm overflow-hidden border border-[#C5A869] shadow-sm bg-black/10">
+            <img
+              src={FOUNDER_IMAGE_URL}
+              alt="Founder & Head of Investment Education"
+              className="w-full h-full object-cover object-top"
+              loading="lazy"
+              referrerPolicy="no-referrer"
+              onError={(e) => {
+                const target = e.target as HTMLImageElement;
+                if (!target.src.includes('ceo_suit_portrait')) {
+                  target.src = '/images/ceo_suit_portrait_1791395753240.jpg';
+                }
+              }}
+            />
+            <div className="absolute inset-x-0 bottom-0 bg-[#08231B]/90 text-[9px] font-mono font-bold text-[#E2C98A] text-center py-0.5 uppercase tracking-wider">
+              Lead Coach
+            </div>
+          </div>
+          <div className="text-center sm:text-left space-y-1.5">
+            <div className="text-[10px] font-mono uppercase tracking-widest text-[#9E8040] font-bold">
+              Private 1-on-1 Consultation Leadership
+            </div>
+            <h4 className="font-serif text-lg font-bold text-[#0D3B2E]">
+              Private Strategy Sessions with EB Wealth Founder
+            </h4>
+            <p className="text-xs text-stone-600 leading-relaxed font-sans">
+              Every coaching session is conducted directly by the Founder & Head of Investment Education, evaluating your asset allocation, platform costs, and HMRC wrapper sequencing with surgical objectivity.
+            </p>
           </div>
         </div>
 

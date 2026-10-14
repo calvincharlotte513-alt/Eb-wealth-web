@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { PageId } from '../types/navigation';
-import { ACADEMY_LEVELS, REGULATORY_DISCLAIMER_SHORT, HERO_BACKGROUNDS, HERO_FALLBACKS } from '../data/content';
+import { ACADEMY_LEVELS, REGULATORY_DISCLAIMER_SHORT, HERO_BACKGROUNDS, HERO_FALLBACKS, FOUNDER_IMAGE_URL } from '../data/content';
 import { progressService, OverallProgressInfo } from '../services/progressService';
 import { Course } from '../types';
 import {
@@ -293,17 +293,34 @@ export const ProgressPage: React.FC<ProgressPageProps> = ({
               </div>
             </div>
 
-            {/* Quick Mentorship & Coaching Support Card */}
+            {/* Quick Mentorship & Coaching Support Card with Founder Profile */}
             <div className="bg-[#08231B] border border-[#C5A869]/40 rounded-xs p-6 text-white space-y-4">
-              <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-[#C5A869]">
-                <ShieldCheck className="w-4 h-4 text-[#DFCA96]" />
-                <span>1-on-1 Portfolio Guidance</span>
+              <div className="flex items-center gap-3">
+                <img
+                  src={FOUNDER_IMAGE_URL}
+                  alt="Founder & Head of Education"
+                  className="w-12 h-12 rounded-full object-cover border-2 border-[#C5A869] shadow-sm shrink-0"
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    if (!target.src.includes('ceo_suit_portrait')) {
+                      target.src = '/images/ceo_suit_portrait_1791395753240.jpg';
+                    }
+                  }}
+                />
+                <div>
+                  <div className="text-[10px] font-mono uppercase tracking-widest text-[#DFCA96]">
+                    Founder & Head of Education
+                  </div>
+                  <div className="font-serif text-sm font-bold text-white">
+                    Direct Diagnostic Guidance
+                  </div>
+                </div>
               </div>
-              <h4 className="font-serif text-lg font-bold text-white">
+              <h4 className="font-serif text-base font-bold text-white">
                 Need Feedback On Your Allocation?
               </h4>
               <p className="text-xs text-stone-300 leading-relaxed font-sans">
-                Review your Vanguard, Hargreaves Lansdown, or ISA asset allocation directly with an experienced wealth coach.
+                Review your Vanguard, Hargreaves Lansdown, ISA, or SIPP asset allocation directly with EB Wealth leadership.
               </p>
               <button
                 onClick={() => (onOpenMentorship ? onOpenMentorship() : onNavigate('mentorship'))}

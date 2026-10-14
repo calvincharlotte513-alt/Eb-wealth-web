@@ -1,5 +1,5 @@
 import React from 'react';
-import { COACHING_PACKAGES, REGULATORY_DISCLAIMER_SHORT, HERO_BACKGROUNDS, HERO_FALLBACKS } from '../data/content';
+import { COACHING_PACKAGES, REGULATORY_DISCLAIMER_SHORT, HERO_BACKGROUNDS, HERO_FALLBACKS, FOUNDER_IMAGE_URL } from '../data/content';
 import { CoachingPackage } from '../types';
 import { Target, Clock, Check, ArrowRight, ShieldCheck, Calendar, FileText, Smartphone, Compass } from 'lucide-react';
 import { PageId } from '../types/navigation';
@@ -124,13 +124,51 @@ export const CoachingPage: React.FC<CoachingPageProps> = ({
       {/* Package Options */}
       <section className="py-20 border-b border-stone-200 bg-[#FAF9F5]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-2xl mx-auto mb-14">
+          <div className="text-center max-w-2xl mx-auto mb-10">
             <span className="text-[11px] font-mono font-bold uppercase tracking-widest text-[#C5A869]">
               Consultation Formats
             </span>
             <h2 className="font-serif text-3xl sm:text-4xl font-bold text-[#0D3B2E] mt-1">
               Select Your Consultation Engagement
             </h2>
+            <p className="text-xs text-stone-600 mt-2 font-mono">
+              All 1-on-1 private strategy sessions are conducted directly by EB Wealth executive leadership.
+            </p>
+          </div>
+
+          {/* Founder Executive Consultation Profile Banner */}
+          <div className="mb-12 p-6 sm:p-8 bg-white border border-[#C5A869]/40 rounded-xs shadow-xs max-w-4xl mx-auto flex flex-col sm:flex-row items-center gap-6 sm:gap-8">
+            <div className="relative w-32 h-32 sm:w-36 sm:h-36 shrink-0 rounded-xs overflow-hidden border-2 border-[#C5A869] shadow-sm bg-black/10">
+              <img
+                src={FOUNDER_IMAGE_URL}
+                alt="Founder & Head of Investment Education"
+                className="w-full h-full object-cover object-top"
+                loading="eager"
+                referrerPolicy="no-referrer"
+                onError={(e) => {
+                  const target = e.target as HTMLImageElement;
+                  if (!target.src.includes('ceo_suit_portrait')) {
+                    target.src = '/images/ceo_suit_portrait_1791395753240.jpg';
+                  }
+                }}
+              />
+              <div className="absolute inset-x-0 bottom-0 bg-[#08231B]/95 text-[9px] font-mono font-bold text-[#E2C98A] text-center py-1 uppercase tracking-wider">
+                Founder Lead
+              </div>
+            </div>
+            <div className="text-center sm:text-left space-y-2">
+              <div className="inline-flex items-center gap-2 text-[10px] font-mono font-bold uppercase tracking-widest text-[#9E8040]">
+                <span>Senior Pedagogical Advisory</span>
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                <span className="text-emerald-700">Accepting Q2/Q3 Bookings</span>
+              </div>
+              <h3 className="font-serif text-xl sm:text-2xl font-bold text-[#0D3B2E]">
+                Direct Consultation with the Founder & Head of Education
+              </h3>
+              <p className="text-xs sm:text-sm text-stone-600 leading-relaxed font-sans">
+                Review your asset allocation, HMRC tax wrapper utilization (ISAs & SIPPs), fee drag elimination, and family compounding goals in a private, objective setting free from commercial bias.
+              </p>
+            </div>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
