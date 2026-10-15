@@ -2,9 +2,10 @@ import { Course, MentorshipTier, CoachingPackage, Testimonial } from '../types';
 
 export const FOUNDER_IMAGE_URL = 'https://res.cloudinary.com/frl7thhq/image/upload/v1791447447/9a493f0e-a0ed-4fd1-ae45-37d9f285a283.png';
 
-// Cloudinary Hero Backgrounds specifically provided for all pages
+// High-definition institutional backgrounds with crisp visibility on mobile & desktop
 export const HERO_BACKGROUNDS = {
-  home: 'https://res.cloudinary.com/frl7thhq/image/upload/v1791465333/e6cc4392-70e8-45cc-91ed-c9e870a8bd7f.png',
+  home: '/images/home_hero_institutional.jpg',
+  homeMobile: '/images/home_hero_mobile.jpg',
   about: 'https://res.cloudinary.com/frl7thhq/image/upload/v1791465314/f95bb6fb-06c5-468b-b068-12d5e4127cab.png',
   academy: 'https://res.cloudinary.com/frl7thhq/image/upload/v1791465292/a796c6bb-aebc-46cd-888a-0c68d1ebd91b.png',
   mentorship: 'https://res.cloudinary.com/frl7thhq/image/upload/v1791465221/199519bd-f834-4298-a101-ba8d2acd129e.png',
@@ -15,7 +16,8 @@ export const HERO_BACKGROUNDS = {
 
 // Local bundled fallbacks matching Goldman Sachs institutional aesthetic
 export const HERO_FALLBACKS = {
-  home: '/images/gs_institutional_hero_1791537955295.jpg',
+  home: '/images/home_hero_institutional.jpg',
+  homeMobile: '/images/home_hero_mobile.jpg',
   about: '/images/hero_eb_wealth_1791394753165.jpg',
   academy: '/images/gs_academy_seminar_1791537976945.jpg',
   mentorship: '/images/mentorship_coaching_1791394783951.jpg',

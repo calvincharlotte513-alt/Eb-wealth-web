@@ -1,8 +1,9 @@
 import React from 'react';
 import { ArrowRight, Smartphone, ShieldCheck, CheckCircle2 } from 'lucide-react';
-import { FOUNDER_IMAGE_URL, HERO_BACKGROUNDS } from '../data/content';
+import { FOUNDER_IMAGE_URL } from '../data/content';
 import { HeroBackground } from './HeroBackground';
-import gsHeroAtrium from '../assets/images/gs_institutional_hero_1791537955295.jpg';
+import homeHeroInstitutional from '../assets/images/home_hero_institutional_1792051387413.jpg';
+import homeHeroMobile from '../assets/images/home_hero_mobile_1792051415139.jpg';
 
 interface HeroProps {
   onGetStarted: () => void;
@@ -12,19 +13,21 @@ interface HeroProps {
 
 export const Hero: React.FC<HeroProps> = ({ onGetStarted, onExploreApp, onExploreAcademy }) => {
   return (
-    <section className="relative pt-24 pb-14 lg:pt-32 lg:pb-20 overflow-hidden border-b border-[#C5A869]/30 bg-[#071F18]">
-      {/* High-definition background image vividly visible across entire hero banner */}
+    <section className="relative pt-20 pb-12 sm:pt-24 sm:pb-14 lg:pt-32 lg:pb-20 overflow-hidden border-b border-[#C5A869]/30 bg-[#071F18]">
+      {/* High-definition background image vividly visible across entire hero banner with dedicated mobile portrait orientation */}
       <HeroBackground
-        imageSrc={HERO_BACKGROUNDS.home}
-        fallbackSrc={gsHeroAtrium}
-        overlayOpacity="none"
+        imageSrc={homeHeroInstitutional}
+        mobileImageSrc={homeHeroMobile}
+        fallbackSrc="/images/home_hero_institutional.jpg"
+        mobileFallbackSrc="/images/home_hero_mobile.jpg"
+        overlayOpacity="subtle"
         imageOpacity="opacity-100"
       />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-10 items-stretch">
-          {/* Left Column: Transparent Editorial Glass Card */}
-          <div className="lg:col-span-7 space-y-6 bg-black/40 backdrop-blur-md p-7 sm:p-10 rounded-sm border border-[#C5A869]/50 shadow-2xl flex flex-col justify-between">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-10 lg:gap-10 items-stretch">
+          {/* Left Column: Transparent Editorial Glass Card - no blur on mobile for razor sharp background visibility */}
+          <div className="lg:col-span-7 space-y-6 bg-[#071F18]/85 sm:bg-black/55 md:bg-black/40 backdrop-blur-none sm:backdrop-blur-xs md:backdrop-blur-md p-6 sm:p-10 rounded-sm border border-[#C5A869]/50 shadow-2xl flex flex-col justify-between">
             <div className="space-y-5">
               {/* Gold Eyebrow */}
               <div className="flex items-center gap-2.5 text-xs font-mono font-semibold uppercase tracking-widest text-[#E2C98A]">
@@ -83,7 +86,7 @@ export const Hero: React.FC<HeroProps> = ({ onGetStarted, onExploreApp, onExplor
           {/* Right Column: Founder & Executive Frame with Transparent Backing */}
           <div className="lg:col-span-5 flex justify-center">
             <div className="relative w-full max-w-md h-full flex flex-col">
-              <div className="relative rounded-sm overflow-hidden bg-black/40 backdrop-blur-md border border-[#C5A869]/50 shadow-2xl p-3 flex-1 flex flex-col justify-between">
+              <div className="relative rounded-sm overflow-hidden bg-[#071F18]/85 sm:bg-black/55 md:bg-black/40 backdrop-blur-none sm:backdrop-blur-xs md:backdrop-blur-md border border-[#C5A869]/50 shadow-2xl p-3 flex-1 flex flex-col justify-between">
                 <div className="relative rounded-sm overflow-hidden aspect-[4/5] bg-black/30">
                   <img
                     src={FOUNDER_IMAGE_URL}
@@ -128,8 +131,8 @@ export const Hero: React.FC<HeroProps> = ({ onGetStarted, onExploreApp, onExplor
           </div>
         </div>
 
-        {/* Full-width 4-Column Institutional KPI Strip — Transparent Glass */}
-        <div className="mt-10 grid grid-cols-2 md:grid-cols-4 gap-4 p-5 sm:p-6 bg-black/40 backdrop-blur-md rounded-sm border border-[#C5A869]/50 shadow-2xl text-white">
+        {/* Full-width 4-Column Institutional KPI Strip — Transparent Glass without mobile blur */}
+        <div className="mt-8 sm:mt-10 grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 p-4 sm:p-6 bg-[#071F18]/85 sm:bg-black/55 md:bg-black/40 backdrop-blur-none sm:backdrop-blur-xs md:backdrop-blur-md rounded-sm border border-[#C5A869]/50 shadow-2xl text-white">
           <div className="space-y-1 pr-4 border-r border-white/15 last:border-0">
             <div className="text-[10px] font-mono uppercase tracking-wider text-[#DFCA96]">
               Tax-Free Allowance
